@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "frontend-angular": {
+    "school-application": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,18 +17,22 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/frontend-angular",
+            "outputPath": "dist/school-application",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/theme/variables.scss",
+              "src/global.scss"
             ],
             "scripts": []
           },
@@ -69,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "frontend-angular:build:production"
+              "browserTarget": "school-application:build:production"
             },
             "development": {
-              "browserTarget": "frontend-angular:build:development"
+              "browserTarget": "school-application:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "frontend-angular:build"
+            "browserTarget": "school-application:build"
           }
         },
         "test": {
@@ -95,9 +99,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": [],
             "scripts": []
           }
         }
