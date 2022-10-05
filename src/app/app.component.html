@@ -1,1 +1,32 @@
-<router-outlet></router-outlet>
+<mat-toolbar color="primary">
+  <section class="left">
+    <span>School application</span>
+  </section>
+  <section class="right">
+    <button
+      mat-icon-button
+      (click)="this.toggleSideNav()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+  </section>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav mode="side" [(opened)]="this.sideNavVisibility">
+    <mat-nav-list>
+      <mat-list-item *ngFor="let link of links">
+         <a matLine [href]="link.path">{{ link.name }}</a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+<footer>
+  Created by Julien Pinson, 2022
+</footer>
