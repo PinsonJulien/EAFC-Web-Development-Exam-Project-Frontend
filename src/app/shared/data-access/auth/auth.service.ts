@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { switchMap } from "rxjs";
+import { firstValueFrom, throwError } from "rxjs";
 import { environment } from "src/environments/environment";
 
 // Why "//" instead of "http" -> angular will ignore the cookie setup to X-XSRF-TOKEN header.
@@ -31,7 +31,7 @@ export class AuthService {
     return this.http.get(`${this.apiURL}/sanctum/csrf-cookie`, this.httpOptions);
   }
 
-  public register(name: string, email: string, password: string, password_confirmation: string) {
+  public async register(name: string, email: string, password: string, password_confirmation: string) {
     const body = {
       name,
       email,
@@ -39,37 +39,37 @@ export class AuthService {
       password_confirmation
     }
 
-    return this.csrf()
-      .pipe(
-        switchMap(() => {
-          return this.http.post(`${this.apiURL}/register`, body, this.httpOptions);
-        })
-      );
+    try {
+      await firstValueFrom(this.csrf());
+      return this.http.post(`${this.apiURL}/register`, body, this.httpOptions);
+    } catch(e:any) {
+      return throwError(() => new Error(e))
+    }
   }
 
-  public login(email: string, password: string) {
+  public async login(email: string, password: string) {
     const body = {
       email,
       password
     };
 
-    return this.csrf()
-      .pipe(
-        switchMap(() => {
-          return this.http.post(`${this.apiURL}/login`, body, this.httpOptions);
-        })
-      );
+    try {
+      await firstValueFrom(this.csrf());
+      return this.http.post(`${this.apiURL}/login`, body, this.httpOptions);
+    } catch( e:any ) {
+      return throwError(() => new Error(e))
+    }
   }
 
-  public logout() {
+  public async logout() {
     const body = {};
 
-    return this.csrf()
-      .pipe(
-        switchMap(() => {
-          return this.http.post(`${this.apiURL}/logout`, body, this.httpOptions);
-        })
-      );
+    try {
+      await firstValueFrom(this.csrf());
+      return this.http.post(`${this.apiURL}/logout`, body, this.httpOptions);
+    } catch( e:any ) {
+      return throwError(() => new Error(e))
+    }
   }
 
   public user() {

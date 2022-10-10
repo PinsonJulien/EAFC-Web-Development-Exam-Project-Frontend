@@ -44,26 +44,29 @@ export class LoginPage {
     private snackBar: MatSnackBar,
   ) {}
 
-  public onSubmit() {
+  public async onSubmit() {
     if (this.getEmailErrorMessage() !== '') return;
     if (this.getPasswordErrorMessage() !== '') return;
 
     const email = this.getEmail()?.value || '';
     const password = this.getPassword()?.value || '';
 
-    this.authService.login(email, password)
+    (await this.authService.login(email, password))
     .subscribe({
-      next: (v) => console.log("success" + v),
+      next: (v) => {
+        // Redirection
+        console.log("success")
+      },
       error: (e) => {
         const status: number = e.status;
         let message = "";
-        console.log(status);
+        console.log("error !! " + status);
 
         switch(status) {
           case 0:
             message = 'Server cannot be reached';
             break;
-          case 422: // Probably not 422
+          case 422:
             message = 'Invalid credentials';
             break;
           default:

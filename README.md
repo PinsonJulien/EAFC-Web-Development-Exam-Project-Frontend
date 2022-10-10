@@ -15,10 +15,10 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
 ## Bugs to fix
-- AuthService Login should chain properly the CSRF and login http requests.
-  - Currently returns the CSRF subscription instead of login.
+Currently none.
 
 ## Features to implement
+- Successful login should redirect.
 - Accessibility with theme color pickers.
 - Ensure all components are standalone : https://angular.io/guide/standalone-components
 - Route guards: https://jacobneterer.medium.com/angular-authentication-securing-routes-with-route-guards-2be6c51b6a23
