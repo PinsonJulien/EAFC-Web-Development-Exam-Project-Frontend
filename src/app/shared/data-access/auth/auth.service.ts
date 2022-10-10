@@ -8,9 +8,11 @@ import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: 'root'})
 export class AuthService {
-  private apiURL = `//${environment.baseUrl}`;
+  public static isLogged: boolean = false;
 
-  private httpOptions = {
+  private readonly apiURL = `//${environment.baseUrl}`;
+
+  private readonly httpOptions = {
     headers: new HttpHeaders({
       'X-Requested-With': 'XMLHttpRequest',
       'Content-Type' : 'application/json',
@@ -26,9 +28,7 @@ export class AuthService {
   }
 
   private csrf() {
-    const request = this.http.get(`${this.apiURL}/sanctum/csrf-cookie`, this.httpOptions)
-    request.subscribe((e) => {console.log(e)});
-    return request;
+    return this.http.get(`${this.apiURL}/sanctum/csrf-cookie`, this.httpOptions);
   }
 
   public register(name: string, email: string, password: string, password_confirmation: string) {
