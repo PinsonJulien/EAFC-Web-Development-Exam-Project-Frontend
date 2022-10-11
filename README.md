@@ -18,9 +18,13 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 Currently none.
 
 ## Features to implement
+- Login: Set the field groups before the form
+- Register : Mark invalid the email on 422 error
+  - Store every failed attempt in a Set to ensure uniqueness.
+  - Check every input.
 - Clear button on fields
 - Successful login should redirect.
-- Register should trigger login and redirect.
+- Register should trigger login and redirect. (It's possible that the server defaults to login after registration, so that may not be an issue.)
 - Remind me functionality : https://stackoverflow.com/questions/49508979/how-to-implement-a-remember-me-function
 - Accessibility with theme color pickers.
 - Ensure all components are standalone : https://angular.io/guide/standalone-components
