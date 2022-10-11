@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -21,6 +22,7 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
+    MatIconModule,
   ],
   providers: [
     // Auto check every fields on change and submit.

@@ -18,7 +18,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 Currently none.
 
 ## Features to implement
+- Clear button on fields
 - Successful login should redirect.
+- Register should trigger login and redirect.
+- Remind me functionality : https://stackoverflow.com/questions/49508979/how-to-implement-a-remember-me-function
 - Accessibility with theme color pickers.
 - Ensure all components are standalone : https://angular.io/guide/standalone-components
 - Route guards: https://jacobneterer.medium.com/angular-authentication-securing-routes-with-route-guards-2be6c51b6a23

@@ -11,6 +11,7 @@
       formControlName = "email"
       autocomplete="email"
     >
+    <mat-icon matSuffix>email</mat-icon>
     <mat-error *ngIf="getEmail()?.invalid">{{ getEmailErrorMessage() }}</mat-error>
   </mat-form-field>
 
@@ -24,6 +25,7 @@
       formControlName = "password"
       autocomplete="current-password"
     >
+    <mat-icon matSuffix>lock</mat-icon>
     <mat-error *ngIf="getPassword()?.invalid">{{ getPasswordErrorMessage() }}</mat-error>
   </mat-form-field>
 
