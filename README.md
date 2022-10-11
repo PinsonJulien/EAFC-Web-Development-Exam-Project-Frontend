@@ -20,8 +20,8 @@ Currently none.
 ## Features to implement
 - Login: Set the field groups before the form
 - Register : Mark invalid the email on 422 error
-  - Store every failed attempt in a Set to ensure uniqueness.
-  - Check every input.
+  - Store every failed attempt in a Set to ensure uniqueness. (trigger validation after insert)
+  - Check every input. (with custom validator ?)
 - Clear button on fields
 - Successful login should redirect.
 - Register should trigger login and redirect. (It's possible that the server defaults to login after registration, so that may not be an issue.)
@@ -31,3 +31,4 @@ Currently none.
 - Route guards: https://jacobneterer.medium.com/angular-authentication-securing-routes-with-route-guards-2be6c51b6a23
   - Once logged in, register and login should not be available.
   - Main content requires to be logged in.
+- Keep the favorite language (or the one selected before login / register) in state, use it to fill the favorite language field default value on registration.
