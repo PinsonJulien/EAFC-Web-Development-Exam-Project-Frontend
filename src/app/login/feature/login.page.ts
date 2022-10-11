@@ -101,10 +101,10 @@ export class LoginPage {
   }
 
   public getPasswordErrorMessage() {
-    const password = this.getPassword()
+    const password = this.getPassword();
     if (!password || password.hasError('required'))
       return 'You must enter a value.';
-    else if (password.hasError('minLength'))
+    else if (password.hasError('minlength'))
       return 'The password must have minimum 8 characters'
     else
       return '';

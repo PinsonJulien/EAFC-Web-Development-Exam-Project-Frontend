@@ -1,1 +1,31 @@
-<router-outlet></router-outlet>
+<mat-card>
+  <mat-card-title>
+    <h1>
+      Welcome !
+    </h1>
+    <nav
+      mat-tab-nav-bar
+      [tabPanel]="tabPanel"
+      mat-align-tabs="center"
+    >
+      <a
+        *ngFor="let link of links"
+        mat-tab-link
+        [routerLink]="link.path"
+        routerLinkActive
+        #rla="routerLinkActive"
+        [active]="rla.isActive"
+      >
+        {{link.name}}
+      </a>
+    </nav>
+    <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+  </mat-card-title>
+
+  <mat-card-content>
+    <router-outlet></router-outlet>
+  </mat-card-content>
+</mat-card>
+
+
+

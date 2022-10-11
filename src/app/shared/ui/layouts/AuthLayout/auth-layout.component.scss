@@ -1,0 +1,27 @@
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: #CFD8DC;
+
+  > mat-card {
+    margin: auto;
+    width: 70%;
+
+    > mat-card-title {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      padding: 0.5em;
+
+      > h1 {
+        text-align: center;
+      }
+
+      > nav {
+      }
+    }
+
+    > mat-card-content {}
+  }
+}

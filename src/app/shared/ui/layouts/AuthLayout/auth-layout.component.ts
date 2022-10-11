@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
+import { RouterModule } from "@angular/router";
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { CommonModule } from "@angular/common";
 
 @Component({
   standalone: true,
@@ -8,10 +11,25 @@ import { RouterOutlet } from "@angular/router";
   styleUrls: ['auth-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports:[
-    RouterOutlet
+    CommonModule,
+    RouterModule,
+    MatCardModule,
+    MatTabsModule,
   ]
 })
 export class AuthLayoutComponent {
+
+  public readonly links = [
+    {
+      path: 'login',
+      name: 'Login',
+    },
+    {
+      path: 'register',
+      name: 'Sign up',
+    }
+  ]
+
   constructor(
   ) {}
 }

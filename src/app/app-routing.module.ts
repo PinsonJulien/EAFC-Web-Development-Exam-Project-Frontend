@@ -19,6 +19,11 @@ const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./login/feature/login.page').then((m) => m.LoginPage),
         loadChildren: () => import('./login/feature/routes').then((m) => m.routes),
+      },
+      {
+        path: 'register',
+        loadComponent: () => import('./register/feature/register.page').then((m) => m.RegisterPage),
+        loadChildren: () => import('./register/feature/routes').then((m) => m.routes),
       }
     ]
   },
