@@ -30,15 +30,20 @@ import { MatIconModule } from '@angular/material/icon';
   ]
 })
 export class LoginPage {
+  // Controls
+  public email = new FormControl<string|null>(null, [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  public password = new FormControl<string|null>(null, [
+    Validators.required,
+    Validators.minLength(8),
+  ]);
+
   public loginForm = new FormGroup({
-    email : new FormControl<string|null>(null, [
-      Validators.required,
-      Validators.email,
-    ]),
-    password : new FormControl<string|null>(null, [
-      Validators.required,
-      Validators.minLength(8),
-    ])
+    email: this.email,
+    password: this.password,
   });
 
   constructor(
@@ -50,8 +55,8 @@ export class LoginPage {
     if (this.getEmailErrorMessage() !== '') return;
     if (this.getPasswordErrorMessage() !== '') return;
 
-    const email = this.getEmail()?.value || '';
-    const password = this.getPassword()?.value || '';
+    const email = this.email?.value || '';
+    const password = this.password?.value || '';
 
     (await this.authService.login(email, password))
     .subscribe({
@@ -84,29 +89,19 @@ export class LoginPage {
     });
   }
 
-  public getEmail() {
-    return this.loginForm.get('email');
-  }
-
   public getEmailErrorMessage() {
-    const email = this.loginForm // this.getEmail();
-    if (!email || email.hasError('required'))
+    if (this.email.hasError('required'))
       return 'You must enter a value.';
-    else if (email.hasError('email'))
+    else if (this.email.hasError('email'))
       return 'Not a valid email.'
     else
       return '';
   }
 
-  public getPassword() {
-    return this.loginForm.get('password');
-  }
-
   public getPasswordErrorMessage() {
-    const password = this.getPassword();
-    if (!password || password.hasError('required'))
+    if (this.password.hasError('required'))
       return 'You must enter a value.';
-    else if (password.hasError('minlength'))
+    else if (this.password.hasError('minlength'))
       return 'The password must have minimum 8 characters'
     else
       return '';
