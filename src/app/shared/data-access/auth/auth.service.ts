@@ -8,8 +8,6 @@ import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: 'root'})
 export class AuthService {
-  public static isLogged: boolean = false;
-
   private readonly apiURL = `//${environment.baseUrl}`;
 
   private readonly httpOptions = {
