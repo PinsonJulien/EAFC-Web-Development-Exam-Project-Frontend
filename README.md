@@ -18,21 +18,16 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 Currently none.
 
 ## Features to implement
-- if any request times out the token; delete from the cookies, and redirect to /login. (https://angular.io/guide/router)
-- reset the csrf cookie if the login/register failed. (https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie)
-
-- failed authentified request should redirect : https://angular.io/guide/http#intercepting-requests-and-responses
+- if any request times out the token; delete from the cookies, and redirect to /login. (https://angular.io/guide/router) (https://angular.io/guide/http#intercepting-requests-and-responses)
 
 - Register : Mark invalid the email on 422 error
   - Store every failed attempt in a Set to ensure uniqueness. (trigger validation after insert)
   - Check every input. (with custom validator ?)
 - Clear button on fields
-- Successful login should redirect.
-- Register should trigger login and redirect. (It's possible that the server defaults to login after registration, so that may not be an issue.)
-- Remind me functionality : https://stackoverflow.com/questions/49508979/how-to-implement-a-remember-me-function
+
 - Accessibility with theme color pickers.
 - Ensure all components are standalone : https://angular.io/guide/standalone-components
 - Route guards: https://jacobneterer.medium.com/angular-authentication-securing-routes-with-route-guards-2be6c51b6a23
   - Once logged in, register and login should not be available.
-  - Main content requires to be logged in.
+
 - Keep the favorite language (or the one selected before login / register) in state, use it to fill the favorite language field default value on registration.

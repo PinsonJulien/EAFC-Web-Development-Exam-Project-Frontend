@@ -79,14 +79,10 @@ export class RegisterPage {
 
     (await this.authService.register(name, email, password, passwordConfirmation))
     .subscribe({
-      next: (v) => {
-        // Redirection
-        console.log("success")
-      },
+      next: (v) => {},
       error: (e) => {
         const status: number = e.status;
         let message = "";
-        console.log("error !! " + status);
 
         switch(status) {
           case 0:

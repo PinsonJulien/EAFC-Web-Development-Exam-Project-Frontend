@@ -61,14 +61,10 @@ export class LoginPage {
 
     (await this.authService.login(email, password))
     .subscribe({
-      next: (v) => {
-        // Redirection
-        console.log("success")
-      },
+      next: (v) => {},
       error: (e) => {
         const status: number = e.status;
         let message = "";
-        console.log("error !! " + status);
 
         switch(status) {
           case 0:
