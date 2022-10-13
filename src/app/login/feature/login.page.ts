@@ -30,6 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
   ]
 })
 export class LoginPage {
+
   // Controls
   public email = new FormControl<string|null>(null, [
     Validators.required,

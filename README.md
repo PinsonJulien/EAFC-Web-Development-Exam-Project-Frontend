@@ -18,6 +18,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 Currently none.
 
 ## Features to implement
+- when accessing protected page : check if the XSRF cookie is set; 
+  - if any request times out the token; delete from the cookies, and redirect to /login.
+- reset the csrf cookie if the login/register failed.
+
 - Register : Mark invalid the email on 422 error
   - Store every failed attempt in a Set to ensure uniqueness. (trigger validation after insert)
   - Check every input. (with custom validator ?)
