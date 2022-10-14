@@ -8,6 +8,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { EraseButton } from 'src/app/shared/ui/forms/controls/buttons/erase-button/erase.button';
+import { PasswordRevealButton } from 'src/app/shared/ui/forms/controls/buttons/password-reveal-button/password.reveal.button';
 
 @Component({
   standalone: true,
@@ -23,6 +25,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatSnackBarModule,
     MatIconModule,
+    EraseButton,
+    PasswordRevealButton,
   ],
   providers: [
     // Auto check every fields on change and submit.

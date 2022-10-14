@@ -12,7 +12,11 @@
       formControlName = "email"
       autocomplete="email"
     >
-    <mat-icon matSuffix>email</mat-icon>
+    <div matSuffix class="suffix">
+      <erase-button
+        [control]="email"
+      ></erase-button>
+    </div>
     <mat-error *ngIf="email.invalid">{{ getEmailErrorMessage() }}</mat-error>
   </mat-form-field>
 
@@ -22,11 +26,23 @@
     </mat-label>
     <input
       matInput
+      #passwordInput
       type="password"
       formControlName = "password"
       autocomplete="current-password"
     >
-    <mat-icon matSuffix>lock</mat-icon>
+
+    <div matSuffix class="suffix">
+      <password-reveal-button
+        [control]="password"
+        [input]="passwordInput"
+      ></password-reveal-button>
+
+      <erase-button
+        [control]="password"
+      ></erase-button>
+    </div>
+
     <mat-error *ngIf="password.invalid">{{ getPasswordErrorMessage() }}</mat-error>
   </mat-form-field>
 

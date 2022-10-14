@@ -22,12 +22,9 @@ Currently none.
 
 - Register : Mark invalid the email on 422 error
   - Store every failed attempt in a Set to ensure uniqueness. (trigger validation after insert)
-  - Check every input. (with custom validator ?)
-- Clear button on fields
+  - Check every input. (with custom validator ? NotInArray ?)
 
 - Accessibility with theme color pickers.
 - Ensure all components are standalone : https://angular.io/guide/standalone-components
-- Route guards: https://jacobneterer.medium.com/angular-authentication-securing-routes-with-route-guards-2be6c51b6a23
-  - Once logged in, register and login should not be available.
 
 - Keep the favorite language (or the one selected before login / register) in state, use it to fill the favorite language field default value on registration.

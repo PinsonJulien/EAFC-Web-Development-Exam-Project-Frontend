@@ -1,0 +1,9 @@
+<button
+  type="button"
+  mat-icon-button
+  aria-label="Erase the field"
+  *ngIf="control.value"
+  (click)="control.setValue(null)"
+>
+  <mat-icon>close</mat-icon>
+</button>
