@@ -13,12 +13,18 @@ const routes: Routes = [
     loadChildren: () => import('./home/feature/home.module').then((m) => m.HomePageModule),
     canActivate: [AuthGuard],
     data: {
+      authentified: true,
       redirect: 'login',
     }
   },
   {
     path: '',
     loadComponent: () => import('./shared/ui/layouts/AuthLayout/auth-layout.component').then((m) => m.AuthLayoutComponent),
+    canActivate: [AuthGuard],
+    data: {
+      authentified: false,
+      redirect: 'home',
+    },
     children: [
       {
         path: 'login',

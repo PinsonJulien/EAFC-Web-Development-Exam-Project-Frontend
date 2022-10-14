@@ -17,8 +17,15 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const redirect = route.data['redirect'] as string || '';
+    // requires to be authentified by default.
+    const authentified = route.data['authentified'] ?? true;
 
-    if (!this.authService.isAuthenticated())
+    const isAuthenticated = this.authService.isAuthenticated();
+
+    if (
+      (authentified && !isAuthenticated) ||
+      (!authentified && isAuthenticated)
+    ) 
       return this.router.createUrlTree([redirect]);
 
     return true;
