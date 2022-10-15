@@ -1,0 +1,33 @@
+<mat-form-field
+  [formGroup]="form"
+  appearance="fill"
+>
+  <mat-label>
+    {{ label }}
+  </mat-label>
+  <input
+    matInput
+    #input
+    [type]="type"
+    [formControl]="control"
+    [autocomplete]="autocomplete"
+  >
+
+  <div
+    *ngIf="type !== 'select'"
+    matSuffix
+    class="suffix"
+  >
+    <password-reveal-button
+      *ngIf="type ==='password'"
+      [control]="control"
+      [input]="input"
+    ></password-reveal-button>
+
+    <erase-button
+      [control]="control"
+    ></erase-button>
+  </div>
+
+  <mat-error *ngIf="error !== ''">{{ error }}</mat-error>
+</mat-form-field>

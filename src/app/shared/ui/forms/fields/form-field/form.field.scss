@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  > mat-form-field {
+    margin: 0 auto 0 auto;
+    width: 75%;
+  }
+}
+
+.suffix {
+  display: flex;
+}

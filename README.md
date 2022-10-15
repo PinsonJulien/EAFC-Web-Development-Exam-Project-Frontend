@@ -18,7 +18,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 Currently none.
 
 ## Features to implement
-- if any request times out the token; delete from the cookies, and redirect to /login. (https://angular.io/guide/router) (https://angular.io/guide/http#intercepting-requests-and-responses)
+- if any request times out the token; delete from the cookies, and redirect to /login. (disconnect method in auth service) (https://angular.io/guide/router) (https://angular.io/guide/http#intercepting-requests-and-responses)
 
 - Register : Mark invalid the email on 422 error
   - Store every failed attempt in a Set to ensure uniqueness. (trigger validation after insert)

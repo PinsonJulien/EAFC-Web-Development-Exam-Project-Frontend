@@ -1,14 +1,12 @@
 import { AuthService } from 'src/app/shared/data-access/auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatInputModule } from '@angular/material/input';
 import { matchValidator } from 'src/app/shared/validators/match-validator';
+import { FormField } from 'src/app/shared/ui/forms/fields/form-field/form.field';
 
 @Component({
   standalone: true,
@@ -19,11 +17,9 @@ import { matchValidator } from 'src/app/shared/validators/match-validator';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatIconModule
+    FormField,
   ],
   providers: [
     // Auto check every fields on change and submit.

@@ -1,15 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/data-access/auth/auth.service';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { MatIconModule } from '@angular/material/icon';
-import { EraseButton } from 'src/app/shared/ui/forms/controls/buttons/erase-button/erase.button';
-import { PasswordRevealButton } from 'src/app/shared/ui/forms/controls/buttons/password-reveal-button/password.reveal.button';
+import { FormField } from 'src/app/shared/ui/forms/fields/form-field/form.field';
 
 @Component({
   standalone: true,
@@ -20,13 +16,9 @@ import { PasswordRevealButton } from 'src/app/shared/ui/forms/controls/buttons/p
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatIconModule,
-    EraseButton,
-    PasswordRevealButton,
+    FormField,
   ],
   providers: [
     // Auto check every fields on change and submit.
