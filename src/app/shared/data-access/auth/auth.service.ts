@@ -66,12 +66,13 @@ export class AuthService {
 
     try {
       await firstValueFrom(this.csrf());
-      return this.http.post(`${this.apiURL}/login`, body, this.httpOptions)
+      return this.http.post(`${this.apiURL}/api/v1/auth/login`, body, this.httpOptions)
         .pipe(
           tap(() => {
             this.router.navigate(['home']);
           }),
           catchError((e, c) => {
+            console.log(e)
             this.removeCsrfCookie();
             return e;
           })
@@ -108,7 +109,7 @@ export class AuthService {
   public isAuthenticated(): boolean {
     if (Cookie.getCookieValue('XSRF-TOKEN') === undefined)
       return false;
-    
+
     return true;
   }
 

@@ -1,7 +1,9 @@
 # School Website Frontend Angular
 
+# WORK IN PROGRESS
+
 ## Development server
-Run `ng serve` and access the application at `http://localhost:4200/`.
+Run `ng serve` and access the application at `http://127.0.0.1:4200/`.
 
 ## Build
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
