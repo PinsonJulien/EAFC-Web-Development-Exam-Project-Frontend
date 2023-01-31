@@ -10,7 +10,7 @@ export class ApiService {
 
   // Why "//" instead of "http" -> angular will ignore the cookie setup to X-XSRF-TOKEN header.
   // https://stackoverflow.com/questions/50510998/angular-6-does-not-add-x-xsrf-token-header-to-http-request
-  private readonly apiURL = `//${environment.baseUrl}/api/v1`;
+  protected readonly apiURL = `//${environment.baseUrl}/api/v1`;
 
   private readonly httpOptions = {
     headers: new HttpHeaders({
@@ -21,7 +21,7 @@ export class ApiService {
     withCredentials: true
   };
 
-  constructor( private http: HttpClient, private router: Router ) {
+  constructor( public http: HttpClient, private router: Router ) {
     //
   }
 

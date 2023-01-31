@@ -6,6 +6,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { FormField } from 'src/app/shared/ui/forms/fields/form-field/form.field';
+import AuthTestService  from 'src/app/core/services/AuthService';
+import CsrfService from 'src/app/core/services/CsrfService';
 
 @Component({
   standalone: true,
@@ -46,7 +48,28 @@ export class LoginPage {
   constructor(
     private authService: AuthService,
     private snackBar: MatSnackBar,
-  ) {}
+    private as: AuthTestService,
+    private cs: CsrfService
+  ) {
+
+    this.cs.getToken().subscribe({
+      next: (data) => {
+        console.log("cookies : ", document.cookie)
+
+        console.log(data)
+        this.as.login({
+          email: "administrator@site.com",
+          password: "administrator"
+        }).subscribe((response:any) => console.log(response))
+      },
+      error: (error) => {
+        console.error(error)
+      }
+
+    });
+
+
+  }
 
   public async onSubmit() {
     if (this.getEmailErrorMessage() !== '') return;
