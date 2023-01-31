@@ -56,11 +56,20 @@ export class LoginPage {
       next: (data) => {
         console.log("cookies : ", document.cookie)
 
-        console.log(data)
+        console.log("lol wha", data)
         this.as.login({
           email: "administrator@site.com",
           password: "administrator"
-        }).subscribe((response:any) => console.log(response))
+        }).subscribe({
+          next: (data) => {
+            console.log('passed')
+            console.log(data)
+          },
+          error: (err) => {
+            console.log('failed')
+            console.error(err)
+          }
+        })
       },
       error: (error) => {
         console.error(error)

@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -7,6 +7,14 @@ import { environment } from "src/environments/environment";
 export default class CsrfService
 {
   private readonly url = `//${environment.baseUrl}`;
+  private readonly httpOptions = {
+    headers: new HttpHeaders({
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type' : 'application/json',
+      'Accept' : 'application/json',
+    }),
+    withCredentials: true
+  };
 
   constructor(private http: HttpClient)
   {
@@ -15,13 +23,13 @@ export default class CsrfService
 
   public getToken()
   {
-    return this.http.get(`${this.url}/sanctum/csrf-cookie`)
-      .pipe(
+    return this.http.get(`${this.url}/sanctum/csrf-cookie`, this.httpOptions)
+      /*.pipe(
         map( (response: any) => {
           console.log("cookie : ", document.cookie);
           return response;
         })
-      );
+      );*/
   }
 
 

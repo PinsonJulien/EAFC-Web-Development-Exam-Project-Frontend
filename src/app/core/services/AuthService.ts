@@ -10,7 +10,7 @@ export default class AuthTestService extends ApiService
   public login(body: {email: string, password: string})
   {
     console.log('prout')
-    return this.http.post(`${this.apiURL}/auth/login`, body, {});
+    return this.http.post(`${this.apiURL}/auth/login`, body, this.httpOptions);
   }
 
 }

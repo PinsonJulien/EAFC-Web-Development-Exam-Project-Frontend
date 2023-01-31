@@ -12,7 +12,7 @@ export class ApiService {
   // https://stackoverflow.com/questions/50510998/angular-6-does-not-add-x-xsrf-token-header-to-http-request
   protected readonly apiURL = `//${environment.baseUrl}/api/v1`;
 
-  private readonly httpOptions = {
+  protected readonly httpOptions = {
     headers: new HttpHeaders({
       'X-Requested-With': 'XMLHttpRequest',
       'Content-Type' : 'application/json',
