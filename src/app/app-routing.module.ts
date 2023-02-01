@@ -33,8 +33,8 @@ const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadComponent: () => import('./login/feature/login.page').then((m) => m.LoginPage),
-        loadChildren: () => import('./login/feature/routes').then((m) => m.routes),
+        loadComponent: () => import('./login/login.page').then((m) => m.LoginPage),
+        loadChildren: () => import('./login/routes').then((m) => m.routes),
       },
       {
         path: 'register',
