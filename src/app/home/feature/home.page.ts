@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import CourseService from 'src/app/core/services/CourseService';
+import CsrfService from 'src/app/core/services/CsrfService';
+import { AuthService } from 'src/app/shared/data-access/auth/auth.service';
+import Cookie from 'src/helpers/cookie';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +12,9 @@ import CourseService from 'src/app/core/services/CourseService';
 })
 export class HomePage {
   constructor(
-    private courseService: CourseService
+    private courseService: CourseService,
+    private csrfService: CsrfService,
+    private authService: AuthService
   ) {
 
     this.courseService.getAll().subscribe({
@@ -20,14 +25,5 @@ export class HomePage {
         console.error(error)
       }
     });
-    /*
-      courses => {
-      },
-      error => {
-        console.error(error)
-      }
-    );
-      */
-
   }
 }
