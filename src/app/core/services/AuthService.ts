@@ -1,16 +1,21 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
+import { map } from "rxjs";
+import User from "../models/User";
 import { ApiService } from "./ApiService";
+import { RequestAction } from "./Types/Requests/RequestAction";
 
 @Injectable({providedIn: 'root'})
 export default class AuthTestService extends ApiService
 {
+  protected override readonly apiRoute: string = "api/v1/auth";
 
   public login(body: {email: string, password: string})
   {
-    console.log('prout')
-    return this.http.post(`${this.apiURL}/auth/login`, body, this.httpOptions);
+    return this.request(RequestAction.POST, 'login', {}, body).pipe(
+      map((response: any) => {
+        return new User(response.data);
+      })
+    );
   }
 
 }

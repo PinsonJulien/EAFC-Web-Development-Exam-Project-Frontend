@@ -52,31 +52,19 @@ export class LoginPage {
     private cs: CsrfService
   ) {
 
-    this.cs.getToken().subscribe({
+    this.as.login({
+      email: "administrator@site.com",
+      password: "administrator"
+    }).subscribe({
       next: (data) => {
-        console.log("cookies : ", document.cookie)
-
-        console.log("lol wha", data)
-        this.as.login({
-          email: "administrator@site.com",
-          password: "administrator"
-        }).subscribe({
-          next: (data) => {
-            console.log('passed')
-            console.log(data)
-          },
-          error: (err) => {
-            console.log('failed')
-            console.error(err)
-          }
-        })
+        console.log('passed')
+        console.log(data)
       },
-      error: (error) => {
-        console.error(error)
+      error: (err) => {
+        console.log('failed')
+        console.error(err)
       }
-
-    });
-
+    })
 
   }
 

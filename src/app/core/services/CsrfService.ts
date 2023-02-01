@@ -1,46 +1,16 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map } from "rxjs";
-import { environment } from "src/environments/environment";
+import { Observable } from "rxjs";
+import { ApiService } from "./ApiService";
+import { RequestAction } from "./Types/Requests/RequestAction";
 
 @Injectable({providedIn: 'root'})
-export default class CsrfService
+export default class CsrfService extends ApiService
 {
-  private readonly url = `//${environment.baseUrl}`;
-  private readonly httpOptions = {
-    headers: new HttpHeaders({
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type' : 'application/json',
-      'Accept' : 'application/json',
-    }),
-    withCredentials: true
-  };
 
-  constructor(private http: HttpClient)
+  protected override readonly apiRoute: string = "sanctum";
+
+  public getToken(): Observable<Object>
   {
-
+    return this.request(RequestAction.GET, 'csrf-cookie');
   }
-
-  public getToken()
-  {
-    return this.http.get(`${this.url}/sanctum/csrf-cookie`, this.httpOptions)
-      /*.pipe(
-        map( (response: any) => {
-          console.log("cookie : ", document.cookie);
-          return response;
-        })
-      );*/
-  }
-
-
-  public test() {
-    const req = this.http.post(`${this.url}/api/v1/courses`, {}, {
-      /*headers: {
-        'X-XSRF-TOKEN' : "eyJpdiI6IkJxbFAvK3BiNDkwb0xYejA3Q0FjT0E9PSIsInZhbHVlIjoiRDRIZVpMRVF5WEVDeERlM1ZGUkF1UTJqVXVyVWJ3bmFHc3BXYkVRQ2NIQmFrQitKZVlPZ3NPaEJ5ZnVEenRCQlBSb3gwQUpGaldkYWRrSHduNFNmNVE3UUQ4dCsyV1hJSS96WUg5bW5vWUYyY2c0YTlPZWo5OHBlYm1pZEwrZmwiLCJtYWMiOiJmZWFhOTkzMjllYjNiZTkwYzZjYzc1MGQzMmNhOWQ0OGVkZDhiNzkzMWVjZGNiODlhNGVjMmY4YzZjOGIyMTA1IiwidGFnIjoiIn0%3D; expires=Tue, 31 Jan 2023 15:11:40 GMT; Max-Age=7200; path=/; httponly; samesite=lax"
-      }*/
-    })
-
-    return req;
-  }
-
 }

@@ -17,10 +17,6 @@ export class HomePage {
     private authService: AuthService
   ) {
 
-    this.authService.logout();
-
-
-
     this.courseService.getAll().subscribe({
       next: (data) => {
         console.log(data)
@@ -29,40 +25,5 @@ export class HomePage {
         console.error(error)
       }
     });
-
-    this.csrfService.getToken().subscribe({
-      next: (data) => {
-
-        this.csrfService.test().subscribe(
-          response => {
-            console.log(response)
-          }
-
-          /*{
-          next: (data) => {
-            console.log(data)
-          },
-          error: (error) => {
-            console.log("lol err")
-            console.error(error)
-          }
-        }*/);
-
-
-      },
-      error: (error) => {
-        console.error(error.headers)
-      }
-    });
-
-    /*
-      courses => {
-      },
-      error => {
-        console.error(error)
-      }
-    );
-      */
-
   }
 }
