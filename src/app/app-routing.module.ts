@@ -9,6 +9,11 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'formations',
+    loadComponent: () => import('./formations/formations.page').then((c) => c.FormationsPage),
+    loadChildren: () => import('./formations/routes').then((r) => r.routes),
+  },
+  {
     path: 'home',
     loadChildren: () => import('./home/feature/home.module').then((m) => m.HomePageModule),
     canActivate: [AuthGuard],

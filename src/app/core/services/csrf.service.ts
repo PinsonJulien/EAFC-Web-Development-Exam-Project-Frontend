@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { ApiService } from "./ApiService";
+import { ApiService } from "./api.service";
 import { RequestAction } from "./Types/Requests/RequestAction";
 
 @Injectable({providedIn: 'root'})

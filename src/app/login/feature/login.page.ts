@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/shared/data-access/auth/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { FormField } from 'src/app/shared/ui/forms/fields/form-field/form.field';
-import AuthTestService  from 'src/app/core/services/AuthService';
-import CsrfService from 'src/app/core/services/CsrfService';
+import AuthService  from 'src/app/core/services/auth.service';
 
 @Component({
   standalone: true,
@@ -46,13 +44,11 @@ export class LoginPage {
   });
 
   constructor(
-    private authService: AuthService,
     private snackBar: MatSnackBar,
-    private as: AuthTestService,
-    private cs: CsrfService
+    private authService: AuthService,
   ) {
 
-    this.as.login({
+    this.authService.login({
       email: "administrator@site.com",
       password: "administrator"
     }).subscribe({
@@ -74,7 +70,7 @@ export class LoginPage {
 
     const email = this.email?.value || '';
     const password = this.password?.value || '';
-
+    /*
     (await this.authService.login(email, password))
     .subscribe({
       next: (v) => {},
@@ -100,6 +96,7 @@ export class LoginPage {
       },
       complete: () => {}
     });
+    */
   }
 
   public getEmailErrorMessage() {

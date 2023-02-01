@@ -31,13 +31,14 @@ export class ApiService {
   {
     const url = `${this.apiURL}/${this.apiRoute}/${path}`;
 
-    const params = new HttpParams();
-    params.appendAll(parameters);
+    const params = new HttpParams({ fromObject: parameters });
 
     const options = {
       ...this.httpOptions,
-      parameters: params
+      params: params,
     };
+
+    console.log(options)
 
     switch (action) {
       case RequestAction.GET :

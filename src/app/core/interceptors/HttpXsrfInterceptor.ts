@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpXsrfTokenExtractor } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { from, lastValueFrom, mergeMap, Observable } from "rxjs";
-import CsrfService from "../services/CsrfService";
+import CsrfService from "../services/csrf.service";
 
 @Injectable()
 export class HttpXsrfInterceptor implements HttpInterceptor

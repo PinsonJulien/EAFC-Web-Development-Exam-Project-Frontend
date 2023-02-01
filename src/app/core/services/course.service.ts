@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { map, tap } from "rxjs";
+import { map } from "rxjs";
 import Course from "../models/Course";
-import { ApiService } from "./ApiService";
+import { ApiService } from "./api.service";
 import { RequestAction } from "./Types/Requests/RequestAction";
 
 @Injectable({ providedIn: 'root'})
