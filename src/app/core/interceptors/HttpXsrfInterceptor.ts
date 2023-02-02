@@ -1,12 +1,17 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpXsrfTokenExtractor } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { from, lastValueFrom, mergeMap, Observable } from "rxjs";
-import CsrfService from "../services/csrf.service";
+import CsrfApiService from "../services/api/csrf-api.service";
 
 @Injectable()
 export class HttpXsrfInterceptor implements HttpInterceptor
 {
-  constructor(private tokenExtractor: HttpXsrfTokenExtractor, private csrfService: CsrfService) {}
+  constructor(
+    private tokenExtractor: HttpXsrfTokenExtractor,
+    private csrfService: CsrfApiService
+  ) {
+    //
+  }
 
   /**
    * Intercept every requests made, will get a new CSRF token if the action needs it.

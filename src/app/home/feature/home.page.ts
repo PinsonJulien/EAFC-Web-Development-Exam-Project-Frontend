@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import CourseService from 'src/app/core/services/course.service';
+import CourseApiService from 'src/app/core/services/api/course-api.service';
 
 @Component({
   selector: 'app-home',
@@ -9,14 +9,14 @@ import CourseService from 'src/app/core/services/course.service';
 })
 export class HomePage {
   constructor(
-    private courseService: CourseService,
+    private courseService: CourseApiService,
   ) {
 
     this.courseService.getAll().subscribe({
-      next: (data) => {
+      next: (data: any) => {
         console.log(data)
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error(error)
       }
     });

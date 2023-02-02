@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import { ApiService } from "./api.service";
 import { map } from "rxjs";
-import Formation from "../models/Formation";
-import { RequestAction } from "./Types/Requests/RequestAction";
+import Formation from "../../models/Formation";
+import { RequestAction } from "../Types/Requests/RequestAction";
+import { ApiService } from "./api.service";
 
 @Injectable({providedIn: 'root'})
-export default class FormationService extends ApiService
+export default class FormationApiService extends ApiService
 {
   protected override readonly apiRoute: string = "api/v1/formations";
 

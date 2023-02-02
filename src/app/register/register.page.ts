@@ -8,10 +8,9 @@ import { matchValidator } from 'src/app/shared/validators/match-validator';
 import { FormField } from 'src/app/shared/ui/forms/fields/form-field/form.field';
 import { Router } from '@angular/router';
 import Country from '../core/models/Country';
-import CountryService from '../core/services/country.service';
-import AuthService from '../core/services/auth.service';
+import AuthApiService from '../core/services/api/auth-api.service';
 import { FormFieldOption } from '../shared/ui/forms/types/FormFieldOption';
-import { MatIconModule } from '@angular/material/icon';
+import CountryApiService from '../core/services/api/country-api.service';
 
 @Component({
   standalone: true,
@@ -25,7 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatSnackBarModule,
     FormField,
-    MatIconModule,
   ],
   providers: [
     // Auto check every fields on change and submit.
@@ -35,8 +33,8 @@ import { MatIconModule } from '@angular/material/icon';
 export class RegisterPage implements OnInit
 {
   constructor(
-    private authService: AuthService,
-    private countryService: CountryService,
+    private authService: AuthApiService,
+    private countryService: CountryApiService,
     private snackBar: MatSnackBar,
     private router: Router,
   ) {}
@@ -45,7 +43,7 @@ export class RegisterPage implements OnInit
     // Fetch the list of countries to populate selects.
 
     this.countryService.get().subscribe({
-      next: (countries) => {
+      next: (countries: Country[]) => {
         this.countryOptions = countries.map((country: Country): FormFieldOption => {
           return {
             label: country.name,
@@ -53,7 +51,7 @@ export class RegisterPage implements OnInit
           }
         });
       },
-      error: (error) => {
+      error: (error: any) => {
         this.snackBar.open(error.error.message);
       }
     });

@@ -5,7 +5,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { FormField } from 'src/app/shared/ui/forms/fields/form-field/form.field';
-import AuthService  from 'src/app/core/services/auth.service';
+import AuthApiService  from 'src/app/core/services/api/auth-api.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -30,7 +30,7 @@ export class LoginPage
 {
   constructor(
     private snackBar: MatSnackBar,
-    private authService: AuthService,
+    private authService: AuthApiService,
     private router: Router
   ) {}
 

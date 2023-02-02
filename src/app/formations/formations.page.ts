@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import Formation from "../core/models/Formation";
-import FormationService from "../core/services/formation.service";
+import FormationApiService from "../core/services/api/formation-api.service";
 
 @Component({
   standalone: true,
@@ -17,7 +17,7 @@ export class FormationsPage implements OnInit
   protected formations!: Observable<Formation[]>;
 
   constructor(
-    private formationService: FormationService
+    private formationService: FormationApiService
   ) {
 
   }

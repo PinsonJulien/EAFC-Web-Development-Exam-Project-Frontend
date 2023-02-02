@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { RequestAction } from "../Types/Requests/RequestAction";
 import { ApiService } from "./api.service";
-import { RequestAction } from "./Types/Requests/RequestAction";
 
 @Injectable({providedIn: 'root'})
-export default class CsrfService extends ApiService
+export default class CsrfApiService extends ApiService
 {
 
   protected override readonly apiRoute: string = "sanctum";

@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { map } from "rxjs";
-import Course from "../models/Course";
+import Course from "../../models/Course";
+import { RequestAction } from "../Types/Requests/RequestAction";
 import { ApiService } from "./api.service";
-import { RequestAction } from "./Types/Requests/RequestAction";
 
 @Injectable({ providedIn: 'root'})
-export default class CourseService extends ApiService {
+export default class CourseApiService extends ApiService {
 
   public getAll()
   {

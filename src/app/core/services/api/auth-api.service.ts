@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { map } from "rxjs";
-import User from "../models/User";
+import User from "../../models/User";
 import { ApiService } from "./api.service";
-import { RequestAction } from "./Types/Requests/RequestAction";
+import { RequestAction } from "../Types/Requests/RequestAction";
 
 @Injectable({providedIn: 'root'})
-export default class AuthService extends ApiService
+export default class AuthApiService extends ApiService
 {
   protected override readonly apiRoute: string = "api/v1/auth";
 
