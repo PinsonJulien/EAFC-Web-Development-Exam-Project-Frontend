@@ -34,3 +34,7 @@ Currently none.
 
 ## Todo
 - Must use the snackbar for every failed/successful requests.
+
+
+## Features to improve :
+- Create a custom file import component to avoid using the default input style. The style is unavailable in Angular Material.

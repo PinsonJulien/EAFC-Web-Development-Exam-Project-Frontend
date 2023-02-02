@@ -11,6 +11,7 @@ import Country from '../core/models/Country';
 import CountryService from '../core/services/country.service';
 import AuthService from '../core/services/auth.service';
 import { FormFieldOption } from '../shared/ui/forms/types/FormFieldOption';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -24,6 +25,7 @@ import { FormFieldOption } from '../shared/ui/forms/types/FormFieldOption';
     MatButtonModule,
     MatSnackBarModule,
     FormField,
+    MatIconModule,
   ],
   providers: [
     // Auto check every fields on change and submit.
@@ -113,7 +115,7 @@ export class RegisterPage implements OnInit
     Validators.maxLength(50)
   ]);
 
-  protected picture = new FormControl<File|null>(null, []);
+  protected picture!: File;
 
   // Form
   protected registerForm: FormGroup = new FormGroup({
@@ -129,7 +131,6 @@ export class RegisterPage implements OnInit
     postCode: this.postalCode,
     addressCountry: this.addressCountry,
     phone: this.phone,
-    picture: this.picture,
   });
 
   // Methods
@@ -144,18 +145,17 @@ export class RegisterPage implements OnInit
       lastname: this.lastname.value ?? '',
       firstname: this.firstname.value ?? '',
       nationalityCountryId: this.nationality.value ?? 0,
-      birthdate: new Date(this.birthdate.value ?? ''),
+      birthdate:  (new Date(this.birthdate.value ?? '')).toISOString(),
       address: this.address.value ?? '',
       postalCode: this.postalCode.value ?? '',
       addressCountryId: this.addressCountry.value ?? 0,
       phone: this.phone.value ?? '',
     };
-    console.log(this.nationality)
-    console.log(body)
 
-    this.authService.register(body).subscribe({
+    this.authService.register(body, this.picture).subscribe({
       next: (v) => {
         // Save the user
+        console.log(v);
 
         // Notify
         this.snackBar.open('Your account was successfully created !', 'close', {
@@ -172,6 +172,12 @@ export class RegisterPage implements OnInit
       },
       complete: () => {}
     });
+  }
+
+  protected uploadPicture(event: any) {
+    if (event.target && event.target.files) {
+      this.picture = event.target.files[0];
+    }
   }
 
   // Validation messages

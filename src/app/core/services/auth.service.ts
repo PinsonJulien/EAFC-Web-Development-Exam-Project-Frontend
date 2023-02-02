@@ -18,9 +18,19 @@ export default class AuthService extends ApiService
     );
   }
 
-  public register(body: RegisterRequestBody)
+  public register(body: RegisterRequestBody, picture?: File)
   {
-    return this.request(RequestAction.POST, 'register', {}, body).pipe(
+    // Object body must be converted to a FormData to be able to send the picture.
+    const formData = new FormData();
+    for (const [key, value] of Object.entries(body)) {
+      formData.append(key, String(value))
+    }
+
+    if (picture)
+      formData.append('picture', picture);
+
+
+    return this.request(RequestAction.POST, 'register', {}, formData).pipe(
       map((response: any) => {
         return new User(response.data);
       })

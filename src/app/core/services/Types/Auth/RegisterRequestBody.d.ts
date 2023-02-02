@@ -6,7 +6,7 @@ declare type RegisterRequestBody = {
   lastname: string;
   firstname: string;
   nationalityCountryId: number;
-  birthdate: Date;
+  birthdate: string;
   address: string;
   postalCode: string;
   addressCountryId: number;

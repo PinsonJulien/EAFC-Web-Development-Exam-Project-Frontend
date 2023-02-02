@@ -16,13 +16,14 @@ export class ApiService {
   protected readonly httpOptions = {
     headers: new HttpHeaders({
       'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type' : 'application/json',
       'Accept' : 'application/json',
     }),
     withCredentials: true, // Absolutely needed parameter for session cookies.
   };
 
-  constructor( public http: HttpClient) {
+  constructor(
+    protected http: HttpClient
+  ) {
     //
   }
 

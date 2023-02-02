@@ -110,12 +110,13 @@
     [error]="getPhoneErrorMessage()"
   ></form-field>
 
-  <form-field
-    [form]="registerForm"
-    label="Picture (optional)"
-    [control]="picture"
+  <label for="pictureInput">Profile picture (optional)</label>
+  <input
     type="file"
-  ></form-field>
+    id="pictureInput"
+    accept="image/png, image/jpeg, image/jpg, image/bmp, image/gif, image/svg, image/webp"
+    (change)="uploadPicture($event)"
+  >
 
   <button
     type="submit"
