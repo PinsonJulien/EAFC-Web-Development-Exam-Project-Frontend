@@ -16,20 +16,20 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/feature/home.module').then((m) => m.HomePageModule),
-    canActivate: [AuthGuard],
+    /*canActivate: [AuthGuard],
     data: {
       authentified: true,
       redirect: 'login',
-    }
+    }*/
   },
   {
     path: '',
     loadComponent: () => import('./shared/ui/layouts/AuthLayout/auth-layout.component').then((m) => m.AuthLayoutComponent),
-    canActivate: [AuthGuard],
+    /*canActivate: [AuthGuard],
     data: {
       authentified: false,
       redirect: 'home',
-    },
+    },*/
     children: [
       {
         path: 'login',
@@ -38,8 +38,8 @@ const routes: Routes = [
       },
       {
         path: 'register',
-        loadComponent: () => import('./register/feature/register.page').then((m) => m.RegisterPage),
-        loadChildren: () => import('./register/feature/routes').then((m) => m.routes),
+        loadComponent: () => import('./register/register.page').then((m) => m.RegisterPage),
+        loadChildren: () => import('./register/routes').then((m) => m.routes),
       }
     ]
   },

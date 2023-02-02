@@ -5,6 +5,8 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { EraseButton } from "../../controls/buttons/erase-button/erase.button";
 import { PasswordRevealButton } from "../../controls/buttons/password-reveal-button/password.reveal.button";
+import {MatSelectModule} from '@angular/material/select';
+import { FormFieldOption } from "../../types/FormFieldOption";
 
 @Component({
   standalone: true,
@@ -15,6 +17,7 @@ import { PasswordRevealButton } from "../../controls/buttons/password-reveal-but
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     ReactiveFormsModule,
     EraseButton,
     PasswordRevealButton,
@@ -39,7 +42,7 @@ export class FormField {
   public type: 'select' | HTMLInputElement['type'] = 'text';
 
   @Input()
-  public options: string[] = [];
+  public options: FormFieldOption[] = [];
 
   @Input()
   public error: string = '';

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import Formation from "../core/models/Formation";
-import FormationService from "../core/services/Formation.service";
+import FormationService from "../core/services/formation.service";
 
 @Component({
   standalone: true,

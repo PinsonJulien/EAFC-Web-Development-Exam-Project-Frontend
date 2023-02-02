@@ -18,6 +18,12 @@ export default class AuthService extends ApiService
     );
   }
 
-
-
+  public register(body: RegisterRequestBody)
+  {
+    return this.request(RequestAction.POST, 'register', {}, body).pipe(
+      map((response: any) => {
+        return new User(response.data);
+      })
+    )
+  }
 }

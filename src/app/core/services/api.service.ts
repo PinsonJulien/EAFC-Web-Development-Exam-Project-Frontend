@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { RequestAction } from "./Types/Requests/RequestAction";
@@ -23,7 +22,7 @@ export class ApiService {
     withCredentials: true, // Absolutely needed parameter for session cookies.
   };
 
-  constructor( public http: HttpClient, private router: Router ) {
+  constructor( public http: HttpClient) {
     //
   }
 
@@ -37,8 +36,6 @@ export class ApiService {
       ...this.httpOptions,
       params: params,
     };
-
-    console.log(options)
 
     switch (action) {
       case RequestAction.GET :

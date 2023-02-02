@@ -52,8 +52,7 @@ export class LoginPage
 
   public onSubmit()
   {
-    if (this.getEmailErrorMessage() !== '') return;
-    if (this.getPasswordErrorMessage() !== '') return;
+    if (!this.loginForm.valid) return;
 
     const body = {
       email: this.email.value ?? '',

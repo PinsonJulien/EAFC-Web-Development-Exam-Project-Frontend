@@ -1,0 +1,128 @@
+<form
+  [formGroup]="registerForm"
+  (ngSubmit)="onSubmit()"
+>
+  <form-field
+    [form]="registerForm"
+    label="Email"
+    [control]="email"
+    type="text"
+    autocomplete="email"
+    [error]="getEmailErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Username"
+    [control]="username"
+    type="text"
+    autocomplete="username"
+    [error]="getUsernameErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Password"
+    [control]="password"
+    type="password"
+    autocomplete="new-password"
+    [error]="getPasswordErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Password confirmation"
+    [control]="passwordConfirmation"
+    type="password"
+    autocomplete="new-password"
+    [error]="getPasswordConfirmationErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Lastname"
+    [control]="lastname"
+    type="text"
+    autocomplete="Lastname"
+    [error]="getLastnameErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Firstname"
+    [control]="firstname"
+    type="text"
+    autocomplete="Firstname"
+    [error]="getLastnameErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Nationality"
+    [control]="nationality"
+    type="select"
+    [options]="countryOptions"
+    [error]="getNationalityErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Birthdate"
+    [control]="birthdate"
+    type="date"
+    autocomplete="on"
+    [error]="getBirthdateErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Address"
+    [control]="address"
+    type="text"
+    autocomplete="address"
+    [error]="getAddressErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Postal code"
+    [control]="postalCode"
+    type="text"
+    autocomplete="postal-code"
+    [error]="getPostalCodeErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Address country"
+    [control]="addressCountry"
+    type="select"
+    [options]="countryOptions"
+    [error]="getAddressCountryErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Phone"
+    [control]="phone"
+    type="text"
+    autocomplete="phone"
+    [error]="getPhoneErrorMessage()"
+  ></form-field>
+
+  <form-field
+    [form]="registerForm"
+    label="Picture (optional)"
+    [control]="picture"
+    type="file"
+  ></form-field>
+
+  <button
+    type="submit"
+    mat-raised-button
+    color="primary"
+    [disabled]="!registerForm.valid"
+  >
+    Sign up
+  </button>
+</form>

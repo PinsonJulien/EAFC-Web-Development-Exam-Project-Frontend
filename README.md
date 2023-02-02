@@ -30,3 +30,7 @@ Currently none.
 - Ensure all components are standalone : https://angular.io/guide/standalone-components
 
 - Keep the favorite language (or the one selected before login / register) in state, use it to fill the favorite language field default value on registration.
+
+
+## Todo
+- Must use the snackbar for every failed/successful requests.

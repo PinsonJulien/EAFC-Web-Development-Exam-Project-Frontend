@@ -1,33 +1,57 @@
-<mat-form-field
-  [formGroup]="form"
-  appearance="fill"
->
-  <mat-label>
-    {{ label }}
-  </mat-label>
-  <input
-    matInput
-    #input
-    [type]="type"
-    [formControl]="control"
-    [autocomplete]="autocomplete"
+<ng-container [ngSwitch] = "type">
+  <mat-form-field
+    *ngSwitchCase="'select'"
+    [formGroup]="form"
+    appearance="fill"
   >
+    <mat-label>
+      {{ label }}
+    </mat-label>
 
-  <div
-    *ngIf="type !== 'select'"
-    matSuffix
-    class="suffix"
+    <mat-select
+      [formControl]="control"
+      #input
+    >
+      <mat-option *ngFor="let option of options" [value]="option.value">
+        {{ option.label }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="error !== ''">{{ error }}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field
+    *ngSwitchDefault
+    [formGroup]="form"
+    appearance="fill"
   >
-    <password-reveal-button
-      *ngIf="type ==='password'"
-      [control]="control"
-      [input]="input"
-    ></password-reveal-button>
+    <mat-label>
+      {{ label }}
+    </mat-label>
 
-    <erase-button
-      [control]="control"
-    ></erase-button>
-  </div>
+    <input
+      matInput
+      #input
+      [type]="type"
+      [formControl]="control"
+      [autocomplete]="autocomplete"
+    >
 
-  <mat-error *ngIf="error !== ''">{{ error }}</mat-error>
-</mat-form-field>
+    <div
+      matSuffix
+      class="suffix"
+    >
+      <password-reveal-button
+        *ngIf="type ==='password'"
+        [control]="control"
+        [input]="input"
+      ></password-reveal-button>
+
+      <erase-button
+        [control]="control"
+      ></erase-button>
+    </div>
+
+    <mat-error *ngIf="error !== ''">{{ error }}</mat-error>
+
+  </mat-form-field>
+</ng-container>
