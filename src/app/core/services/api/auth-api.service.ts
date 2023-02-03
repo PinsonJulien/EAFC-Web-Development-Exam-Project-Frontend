@@ -3,13 +3,14 @@ import { map } from "rxjs";
 import User from "../../models/User";
 import { ApiService } from "./api.service";
 import { RequestAction } from "../Types/Requests/RequestAction";
+import { LoginRequestBody } from "../../types/auth/login-request-body";
 
 @Injectable({providedIn: 'root'})
 export default class AuthApiService extends ApiService
 {
   protected override readonly apiRoute: string = "api/v1/auth";
 
-  public login(body: {email: string, password: string})
+  public login(body: LoginRequestBody)
   {
     return this.request(RequestAction.POST, 'login', {}, body).pipe(
       map((response: any) => {
