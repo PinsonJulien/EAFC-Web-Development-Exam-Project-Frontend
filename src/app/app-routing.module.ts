@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './shared/guards/auth/auth.guard';
+import { AuthGuard } from './core/guards/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,20 +16,20 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/feature/home.module').then((m) => m.HomePageModule),
-    /*canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: {
       authentified: true,
       redirect: 'login',
-    }*/
+    }
   },
   {
     path: '',
     loadComponent: () => import('./shared/ui/layouts/AuthLayout/auth-layout.component').then((m) => m.AuthLayoutComponent),
-    /*canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     data: {
       authentified: false,
       redirect: 'home',
-    },*/
+    },
     children: [
       {
         path: 'login',

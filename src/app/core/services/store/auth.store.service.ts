@@ -6,6 +6,7 @@ import { ApiError } from "../../types/api/api-error";
 import { LoginRequestBody } from "../../types/auth/login-request-body";
 import { RegisterRequestBody } from "../../types/auth/register-request-body";
 import AuthApiService from "../api/auth-api.service";
+import { LocalStorageService } from "../local-storage/local-storage.service";
 
 @Injectable({ providedIn: 'root'})
 export default class AuthStoreService
@@ -18,8 +19,12 @@ export default class AuthStoreService
 
   constructor(
     private authApiService: AuthApiService,
+    private localStorageService: LocalStorageService,
   ) {
-    //
+    // On instantiation, the store service will retrieve the locally stored user.
+    this._user.next(
+      this.retrieveUser()
+    );
   }
 
   /**
@@ -33,6 +38,9 @@ export default class AuthStoreService
       next: (user: User) => {
         this._user.next(user);
         this._error.next(null);
+
+        // Save in local storage
+        this.storeUser(user);
       },
       error: (error: HttpErrorResponse) => {
         this._error.next(error.error);
@@ -52,6 +60,9 @@ export default class AuthStoreService
       next: (user: User) => {
         this._user.next(user);
         this._error.next(null);
+
+        // Save in local storage
+        this.storeUser(user);
       },
       error: (error: HttpErrorResponse) => {
         this._error.next(error.error);
@@ -59,4 +70,41 @@ export default class AuthStoreService
     });
   }
 
+
+  // Local storage methods for data persistance.
+
+  /**
+   * Retrieve the user model that is stored in the local storage.
+   *
+   * @return User | null
+   */
+  protected retrieveUser(): User | null
+  {
+    const user = this.localStorageService.getItem('user');
+
+    return (user)
+      ? new User(user)
+      : null;
+  }
+
+  /**
+   * Store the user model to the local storage for data persistance.
+   *
+   * @param user User
+   * @return void
+   */
+  protected storeUser(user: User): void
+  {
+    this.localStorageService.setItem('user', user);
+  }
+
+  /**
+   * Remove the user model from the local storage
+   *
+   * @return void
+   */
+  protected removeUser(): void
+  {
+    this.localStorageService.removeItem('user');
+  }
 }
