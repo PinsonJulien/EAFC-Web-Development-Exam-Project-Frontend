@@ -39,14 +39,14 @@ export class LoginPage implements OnInit
   public ngOnInit(): void
   {
     // Listen to user being received upon successful login. Redirects to /home
-    this.authStoreService.user.subscribe((user: User|null) => {
+    this.authStoreService.user$.subscribe((user: User|null) => {
       if (!user) return;
 
       this.router.navigate(['home']);
     });
 
     // Listen to errors, they will be returned with a visual message.
-    this.authStoreService.error.subscribe((error: ApiError|null) => {
+    this.authStoreService.error$.subscribe((error: ApiError|null) => {
       if (!error) return;
 
       this.snackBar.open(error.message, 'close');

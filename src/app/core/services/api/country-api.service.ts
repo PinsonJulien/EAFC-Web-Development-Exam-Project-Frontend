@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { map } from "rxjs";
 import Country from "../../models/Country";
-import { RequestAction } from "../Types/Requests/RequestAction";
+import { RequestAction } from "../../types/requests/request-action.enum";
 import { ApiService } from "./api.service";
 
 

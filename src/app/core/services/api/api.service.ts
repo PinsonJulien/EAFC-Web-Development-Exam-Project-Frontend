@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { RequestAction } from "../Types/Requests/RequestAction";
+import { RequestAction } from "../../types/requests/request-action.enum";
+import { RequestParameters } from "../../types/requests/request-parameters";
 
 @Injectable({providedIn: 'root'})
 export class ApiService {
@@ -27,7 +28,18 @@ export class ApiService {
     //
   }
 
-  protected request(action: RequestAction, path: string, parameters: RequestParameters = {}, body: Object = {}): Observable<Object>
+  /**
+   * Call the given path api endpoint using a specified action, body and options.
+   * Will stream a Observable of the dynamic type <T>.
+   * <T> can either be an object or an array of objects.
+   *
+   * @param action RequestAction
+   * @param path string
+   * @param parameters RequestParameter
+   * @param body Object
+   * @returns Observable<T>
+   */
+  protected request<T extends (object|object[])>(action: RequestAction, path: string, parameters: RequestParameters = {}, body: Object = {}): Observable<T>
   {
     const url = `${this.apiURL}/${this.apiRoute}/${path}`;
 
@@ -40,19 +52,19 @@ export class ApiService {
 
     switch (action) {
       case RequestAction.GET :
-        return this.http.get(url, options);
+        return this.http.get<T>(url, options);
 
       case RequestAction.POST :
-        return this.http.post(url, body, options);
+        return this.http.post<T>(url, body, options);
 
       case RequestAction.PUT :
-        return this.http.put(url, body, options);
+        return this.http.put<T>(url, body, options);
 
       case RequestAction.PATCH :
-        return this.http.patch(url, body, options);
+        return this.http.patch<T>(url, body, options);
 
       case RequestAction.DELETE :
-        return this.http.delete(url, options);
+        return this.http.delete<T>(url, options);
 
       default :
         throw new Error(`Invalid HTTP action : ${action}`);

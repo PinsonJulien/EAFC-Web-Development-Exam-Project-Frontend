@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { RequestAction } from "../Types/Requests/RequestAction";
+import { RequestAction } from "../../types/requests/request-action.enum";
 import { ApiService } from "./api.service";
 
 @Injectable({providedIn: 'root'})

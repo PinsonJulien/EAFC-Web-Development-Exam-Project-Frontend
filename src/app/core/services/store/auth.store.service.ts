@@ -11,10 +11,10 @@ import AuthApiService from "../api/auth-api.service";
 export default class AuthStoreService
 {
   private _user = new BehaviorSubject<User | null>(null);
-  public user = this._user.asObservable();
+  public user$ = this._user.asObservable();
 
   private _error = new BehaviorSubject<ApiError | null>(null);
-  public error = this._error.asObservable();
+  public error$ = this._error.asObservable();
 
   constructor(
     private authApiService: AuthApiService,
