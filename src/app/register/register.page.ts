@@ -13,6 +13,7 @@ import CountryApiService from '../core/services/api/country-api.service';
 import AuthStoreService from '../core/services/store/auth.store.service';
 import { RegisterRequestBody } from '../core/types/auth/register-request-body';
 import User from '../core/models/User';
+import { ApiError } from '../core/types/api/api-error';
 
 @Component({
   standalone: true,
@@ -44,14 +45,16 @@ export class RegisterPage implements OnInit
   public ngOnInit(): void {
     // Listen to user being received upon successful register. Redirects to /home
     this.authStoreService.user.subscribe((user: User|null) => {
-      if (user)
-        this.router.navigate(['home']);
+      if (!user) return;
+
+      this.router.navigate(['home']);
     });
 
     // Listen to errors, they will be returned with a visual message.
-    this.authStoreService.error.subscribe((error: string|null) => {
-      if (error)
-        this.snackBar.open(error, 'close');
+    this.authStoreService.error.subscribe((error: ApiError|null) => {
+      if (!error) return;
+
+      this.snackBar.open(error.message, 'close');
     });
 
     // Fetch the list of countries to populate selects.

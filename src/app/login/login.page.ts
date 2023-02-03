@@ -8,6 +8,7 @@ import { FormField } from 'src/app/shared/ui/forms/fields/form-field/form.field'
 import { Router } from '@angular/router';
 import AuthStoreService from '../core/services/store/auth.store.service';
 import User from '../core/models/User';
+import { ApiError } from '../core/types/api/api-error';
 
 @Component({
   standalone: true,
@@ -39,14 +40,16 @@ export class LoginPage implements OnInit
   {
     // Listen to user being received upon successful login. Redirects to /home
     this.authStoreService.user.subscribe((user: User|null) => {
-      if (user)
-        this.router.navigate(['home']);
+      if (!user) return;
+
+      this.router.navigate(['home']);
     });
 
     // Listen to errors, they will be returned with a visual message.
-    this.authStoreService.error.subscribe((error: string|null) => {
-      if (error)
-        this.snackBar.open(error, 'close');
+    this.authStoreService.error.subscribe((error: ApiError|null) => {
+      if (!error) return;
+
+      this.snackBar.open(error.message, 'close');
     });
   }
 

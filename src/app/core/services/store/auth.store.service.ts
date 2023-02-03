@@ -2,6 +2,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import User from "../../models/User";
+import { ApiError } from "../../types/api/api-error";
 import { LoginRequestBody } from "../../types/auth/login-request-body";
 import { RegisterRequestBody } from "../../types/auth/register-request-body";
 import AuthApiService from "../api/auth-api.service";
@@ -12,7 +13,7 @@ export default class AuthStoreService
   private _user = new BehaviorSubject<User | null>(null);
   public user = this._user.asObservable();
 
-  private _error = new BehaviorSubject<string | null>(null);
+  private _error = new BehaviorSubject<ApiError | null>(null);
   public error = this._error.asObservable();
 
   constructor(
@@ -34,8 +35,7 @@ export default class AuthStoreService
         this._error.next(null);
       },
       error: (error: HttpErrorResponse) => {
-        console.log(error)
-        this._error.next(error.error.message);
+        this._error.next(error.error);
       }
     });
   }
@@ -54,7 +54,7 @@ export default class AuthStoreService
         this._error.next(null);
       },
       error: (error: HttpErrorResponse) => {
-        this._error.next(error.error.message);
+        this._error.next(error.error);
       }
     });
   }
