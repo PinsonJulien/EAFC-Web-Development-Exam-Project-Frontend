@@ -1,0 +1,19 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+:host {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "top-bar"
+    "side-nav";
+
+  mat-tool-bar {
+    grid-area: "top-bar";
+  }
+
+  mat-sidenav-container {
+    grid-area: "side-nav";
+  }
+}

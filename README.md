@@ -36,6 +36,11 @@ Currently none.
 - Must use the snackbar for every failed/successful requests.
 
 
+- Topbar : show an admin button if the user is secretary or admin; 
+  - on click go to admin page;
+  - when in admin pages, the button is "home"
+
+
 ## Features to improve :
 - Create a custom file import component to avoid using the default input style. The style is unavailable in Angular Material.
 - AuthStore should only store the user id in local storage and perform a getById on instantiation. This will ensure the right user is logged in and no personal data is locally stored. If the UserApiService got an authorization error, the store will trigger the logout().

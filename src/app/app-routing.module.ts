@@ -14,14 +14,23 @@ const routes: Routes = [
     loadChildren: () => import('./formations/routes').then((r) => r.routes),
   },
   {
-    path: 'home',
-    loadChildren: () => import('./home/feature/home.module').then((m) => m.HomePageModule),
+    path: '',
+    loadComponent: () => import('./shared/layouts/app-layout/app-layout.component').then((m) => m.AppLayoutComponent),
     canActivate: [AuthGuard],
     data: {
       authentified: true,
       redirect: 'login',
-    }
+    },
+    children: [
+      {
+        path: 'courses',
+        loadComponent: () => import('./courses/course.page').then((m) => m.CoursePage),
+        loadChildren: () => import('./courses/routes').then((m) => m.routes),
+      },
+    ]
   },
+
+
   {
     path: '',
     loadComponent: () => import('./shared/ui/layouts/AuthLayout/auth-layout.component').then((m) => m.AuthLayoutComponent),
