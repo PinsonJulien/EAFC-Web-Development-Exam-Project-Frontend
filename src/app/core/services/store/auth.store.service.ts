@@ -1,7 +1,9 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import User from "../../models/User";
 import { LoginRequestBody } from "../../types/auth/login-request-body";
+import { RegisterRequestBody } from "../../types/auth/register-request-body";
 import AuthApiService from "../api/auth-api.service";
 
 @Injectable({ providedIn: 'root'})
@@ -19,6 +21,11 @@ export default class AuthStoreService
     //
   }
 
+  /**
+   * Login using the Auth api and update the behavior subjects using the results.
+   *
+   * @param credentials
+   */
   public login(credentials: LoginRequestBody): void
   {
     this.authApiService.login(credentials).subscribe({
@@ -26,9 +33,30 @@ export default class AuthStoreService
         this._user.next(user);
         this._error.next(null);
       },
-      error: (error: any) => {
+      error: (error: HttpErrorResponse) => {
+        console.log(error)
         this._error.next(error.error.message);
       }
     });
   }
+
+  /**
+   * Register using the Auth api and update the behavior subjects using the results.
+   *
+   * @param body
+   * @param picture
+   */
+  public register(body: RegisterRequestBody, picture?: File): void
+  {
+    this.authApiService.register(body, picture).subscribe({
+      next: (user: User) => {
+        this._user.next(user);
+        this._error.next(null);
+      },
+      error: (error: HttpErrorResponse) => {
+        this._error.next(error.error.message);
+      }
+    });
+  }
+
 }

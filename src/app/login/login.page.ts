@@ -46,7 +46,7 @@ export class LoginPage implements OnInit
     // Listen to errors, they will be returned with a visual message.
     this.authStoreService.error.subscribe((error: string|null) => {
       if (error)
-        this.snackBar.open(error);
+        this.snackBar.open(error, 'close');
     });
   }
 

@@ -1,4 +1,4 @@
-declare type RegisterRequestBody = {
+export declare type RegisterRequestBody = {
   email: string;
   username: string;
   password: string;

@@ -4,6 +4,7 @@ import User from "../../models/User";
 import { ApiService } from "./api.service";
 import { RequestAction } from "../Types/Requests/RequestAction";
 import { LoginRequestBody } from "../../types/auth/login-request-body";
+import { RegisterRequestBody } from "../../types/auth/register-request-body";
 
 @Injectable({providedIn: 'root'})
 export default class AuthApiService extends ApiService

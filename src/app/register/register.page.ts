@@ -8,9 +8,11 @@ import { matchValidator } from 'src/app/shared/validators/match-validator';
 import { FormField } from 'src/app/shared/ui/forms/fields/form-field/form.field';
 import { Router } from '@angular/router';
 import Country from '../core/models/Country';
-import AuthApiService from '../core/services/api/auth-api.service';
 import { FormFieldOption } from '../shared/ui/forms/types/FormFieldOption';
 import CountryApiService from '../core/services/api/country-api.service';
+import AuthStoreService from '../core/services/store/auth.store.service';
+import { RegisterRequestBody } from '../core/types/auth/register-request-body';
+import User from '../core/models/User';
 
 @Component({
   standalone: true,
@@ -33,15 +35,26 @@ import CountryApiService from '../core/services/api/country-api.service';
 export class RegisterPage implements OnInit
 {
   constructor(
-    private authService: AuthApiService,
+    private authStoreService: AuthStoreService,
     private countryService: CountryApiService,
     private snackBar: MatSnackBar,
     private router: Router,
   ) {}
 
-  ngOnInit(): void {
-    // Fetch the list of countries to populate selects.
+  public ngOnInit(): void {
+    // Listen to user being received upon successful register. Redirects to /home
+    this.authStoreService.user.subscribe((user: User|null) => {
+      if (user)
+        this.router.navigate(['home']);
+    });
 
+    // Listen to errors, they will be returned with a visual message.
+    this.authStoreService.error.subscribe((error: string|null) => {
+      if (error)
+        this.snackBar.open(error, 'close');
+    });
+
+    // Fetch the list of countries to populate selects.
     this.countryService.get().subscribe({
       next: (countries: Country[]) => {
         this.countryOptions = countries.map((country: Country): FormFieldOption => {
@@ -150,7 +163,9 @@ export class RegisterPage implements OnInit
       phone: this.phone.value ?? '',
     };
 
-    this.authService.register(body, this.picture).subscribe({
+    this.authStoreService.register(body, this.picture);
+
+    /*this.authService.register(body, this.picture).subscribe({
       next: (v) => {
         // Save the user
         console.log(v);
@@ -169,7 +184,7 @@ export class RegisterPage implements OnInit
         });
       },
       complete: () => {}
-    });
+    });*/
   }
 
   protected uploadPicture(event: any) {
