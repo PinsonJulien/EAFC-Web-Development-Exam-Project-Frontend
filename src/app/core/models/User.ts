@@ -106,4 +106,43 @@ export default class User extends Model {
         this.relations.cohortMembers = relations.cohortMembers.map((cohortMember) => new CohortMember(cohortMember));
     }
   }
+
+
+  // Methods
+
+
+  /**
+   * Checks if the user site role is Secretary
+   *
+   * @returns boolean
+   */
+  public isSecretary(): boolean
+  {
+    if (!this.account) return false;
+
+    return (this.account.siteRole.isSecretary());
+  }
+
+  /**
+   * Checks if the user site role is Administrator
+   *
+   * @returns boolean
+   */
+  public isAdministrator(): boolean
+  {
+    if (!this.account) return false;
+
+    return (this.account.siteRole.isAdministrator());
+  }
+
+
+  /**
+   * Checks if the user site role is Secretary or Administrator
+   *
+   * @returns boolean
+   */
+  public isSecretaryOrAdministrator(): boolean
+  {
+    return (this.isSecretary() || this.isAdministrator());
+  }
 }

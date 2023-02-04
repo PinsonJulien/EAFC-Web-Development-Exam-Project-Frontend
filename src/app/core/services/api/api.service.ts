@@ -39,7 +39,7 @@ export class ApiService {
    * @param body Object
    * @returns Observable<T>
    */
-  protected request<T extends (object|object[])>(action: RequestAction, path: string, parameters: RequestParameters = {}, body: Object = {}): Observable<T>
+  protected request<T extends (object|object[]|void)>(action: RequestAction, path: string, parameters: RequestParameters = {}, body: Object = {}): Observable<T>
   {
     const url = `${this.apiURL}/${this.apiRoute}/${path}`;
 

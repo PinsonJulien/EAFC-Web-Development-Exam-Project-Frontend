@@ -1,4 +1,4 @@
-.example-spacer {
+.spacer {
   flex: 1 1 auto;
 }
 
@@ -15,5 +15,17 @@
 
   mat-sidenav-container {
     grid-area: "side-nav";
+
+    #layout-right-sidenav {
+      padding: 1em;
+      height:fit-content;
+    }
   }
+}
+
+.avatar {
+  aspect-ratio: 1 / 1;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }

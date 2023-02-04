@@ -37,7 +37,6 @@ export class AuthGuard implements CanActivate {
 
    return this.authStoreService.user$.pipe(
     map((user: User | null) => {
-      console.log(user)
       if ((authentified && !user) || (!authentified && user)) {
         return this.router.createUrlTree([redirect]);
       }

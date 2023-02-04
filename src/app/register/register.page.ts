@@ -40,14 +40,16 @@ export class RegisterPage implements OnInit
     private countryService: CountryApiService,
     private snackBar: MatSnackBar,
     private router: Router,
-  ) {}
+  ) {
+    //
+  }
 
   public ngOnInit(): void {
     // Listen to user being received upon successful register. Redirects to /home
     this.authStoreService.user$.subscribe((user: User|null) => {
       if (!user) return;
 
-      this.router.navigate(['home']);
+      this.router.navigate(['courses']);
     });
 
     // Listen to errors, they will be returned with a visual message.

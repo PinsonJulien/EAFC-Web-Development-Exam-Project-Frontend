@@ -1,12 +1,50 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button (click)="sideNav.toggle()">
+  <button mat-icon-button (click)="leftSideNav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Admin Dashboard</span>
+  <span>School website</span>
+
+  <span class="spacer"></span>
+
+  <ng-container
+    *ngIf="user && (user.isAdministrator() || user.isSecretary() )"
+  >
+    <a
+      [routerLink]="'admin'"
+      mat-mini-fab
+      color="primary"
+      aria-label="Icon button for the admin panel"
+    >
+      <mat-icon>shield</mat-icon>
+    </a>
+  </ng-container>
+
+  <button
+    mat-icon-button
+    color="primary"
+    (click)="rightSideNav.toggle()"
+  >
+    <mat-icon>
+      <img
+        [src]="(user) ? user.picture : ''"
+        alt="user avatar"
+        class="avatar"
+      />
+    </mat-icon>
+
+  </button>
+
 </mat-toolbar>
 
-<mat-sidenav-container>
-  <mat-sidenav #sideNav mode="side" role="navigation">
+<mat-sidenav-container
+  hasBackdrop="false"
+>
+  <mat-sidenav
+    #leftSideNav
+    id="layout-left-sidenav"
+    mode="side"
+    role="navigation"
+  >
     <mat-nav-list>
       <a mat-list-item routerLink="dashboard">Dashboard</a>
       <a mat-list-item routerLink="users">Users</a>
@@ -17,4 +55,25 @@
   <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
+
+  <mat-sidenav
+    #rightSideNav
+    id="layout-right-sidenav"
+    mode="over"
+    position="end"
+    role="navigation"
+  >
+    <button
+      mat-raised-button
+      (click)="logout()"
+    >
+      <mat-icon>
+        logout
+      </mat-icon>
+      Logout
+
+    </button>
+
+  </mat-sidenav>
+
 </mat-sidenav-container>

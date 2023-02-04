@@ -30,4 +30,24 @@ export default class SiteRole extends Model {
         this.relations.users = relations.users.map((user) => new User(user));
     }
   }
+
+  /**
+   * Checks if the site role is secretary
+   *
+   * @returns boolean
+   */
+  public isSecretary(): boolean
+  {
+    return this.id === 3;
+  }
+
+  /**
+   * Checks if the site role is administrator
+   *
+   * @returns boolean
+   */
+  public isAdministrator(): boolean
+  {
+    return this.id === 4;
+  }
 }

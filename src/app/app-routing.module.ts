@@ -37,7 +37,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       authentified: false,
-      redirect: 'home',
+      redirect: 'courses',
     },
     children: [
       {

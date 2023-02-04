@@ -29,7 +29,7 @@ export default class AuthApiService extends ApiService
 
   /**
    * Call the /register api endpoint and stream as Observable.
-   * On success the data is mapped to a User mode;.
+   * On success the data is mapped to a User mode.
    * Will transform the given body to a FormData to include the picture.
    *
    * @param body RegisterRequestBody
@@ -53,5 +53,16 @@ export default class AuthApiService extends ApiService
         return new User(response.data);
       })
     )
+  }
+
+  /**
+   * Call the /logout api endpoint and stream as Observable.
+   * The expected result is a no content request.
+   *
+   * @returns Observable<void>
+   */
+  public logout(): Observable<void>
+  {
+    return this.request(RequestAction.POST, 'logout');
   }
 }
