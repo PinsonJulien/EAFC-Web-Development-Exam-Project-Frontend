@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth/auth.guard';
+import SiteRole from './core/models/SiteRole';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    redirectTo: 'courses',
   },
   {
     path: 'formations',
@@ -27,6 +32,16 @@ const routes: Routes = [
         loadComponent: () => import('./courses/course.page').then((m) => m.CoursePage),
         loadChildren: () => import('./courses/routes').then((m) => m.routes),
       },
+      {
+        path: 'admin',
+        /*canActivate: [SiteRoleGuard],
+        data: {
+          roles: [SiteRole.SECRETARY, SiteRole.ADMINISTRATOR],
+          redirect: 'courses'
+        },*/
+        loadComponent: () => import('./admin/admin.page').then((m) => m.AdminPage),
+        loadChildren: () => import('./admin/routes').then((m) => m.routes),
+      }
     ]
   },
 

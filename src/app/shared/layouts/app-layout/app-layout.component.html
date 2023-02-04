@@ -1,21 +1,26 @@
-<mat-toolbar color="primary">
+<mat-toolbar
+  [color]="isAdminRoute ? 'accent' : 'primary'"
+>
   <button mat-icon-button (click)="leftSideNav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>School website</span>
+  <span>
+    School website {{isAdminRoute ? '- Administration' : ''}}
+  </span>
 
   <span class="spacer"></span>
 
   <ng-container
-    *ngIf="user && (user.isAdministrator() || user.isSecretary() )"
+    *ngIf="(user && user.isSecretaryOrAdministrator())"
   >
     <a
-      [routerLink]="'admin'"
+      [routerLink]="isAdminRoute ? 'home' : 'admin'"
       mat-mini-fab
-      color="primary"
-      aria-label="Icon button for the admin panel"
+      [color]="isAdminRoute ? 'primary' : 'accent'"
     >
-      <mat-icon>shield</mat-icon>
+      <mat-icon>
+        {{ isAdminRoute ? 'home' : 'shield' }}
+      </mat-icon>
     </a>
   </ng-container>
 
