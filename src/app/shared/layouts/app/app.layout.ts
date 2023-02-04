@@ -3,12 +3,12 @@ import User from "src/app/core/models/User";
 import AuthStoreService from "src/app/core/services/store/auth.store.service";
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatIconModule } from "@angular/material/icon";
-import { MatButtonModule } from "@angular/material/button";
+import { MatLegacyButtonModule as MatButtonModule } from "@angular/material/legacy-button";
 import { MatSidenavModule } from "@angular/material/sidenav";
-import { MatListModule } from "@angular/material/list";
+import { MatLegacyListModule as MatListModule } from "@angular/material/legacy-list";
 import { NavigationEnd, Router, RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatLegacySnackBar as MatSnackBar, MatLegacySnackBarModule as MatSnackBarModule } from "@angular/material/legacy-snack-bar";
 import { ApiError } from "src/app/core/types/api/api-error";
 
 @Component({
