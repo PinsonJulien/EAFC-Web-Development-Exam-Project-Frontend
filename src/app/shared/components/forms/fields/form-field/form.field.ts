@@ -1,11 +1,11 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
-import { MatLegacyFormFieldModule as MatFormFieldModule } from "@angular/material/legacy-form-field";
-import { MatLegacyInputModule as MatInputModule } from "@angular/material/legacy-input";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
 import { EraseButton } from "../../controls/buttons/erase-button/erase.button";
 import { PasswordRevealButton } from "../../controls/buttons/password-reveal-button/password.reveal.button";
-import {MatLegacySelectModule as MatSelectModule} from '@angular/material/legacy-select';
+import { MatSelectModule} from '@angular/material/select';
 import { FormFieldOption } from "../../types/FormFieldOption";
 
 @Component({

@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { MatLegacySnackBar as MatSnackBar, MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
 import { matchValidator } from 'src/app/shared/validators/match-validator';
 import { Router } from '@angular/router';
 import Country from '../core/models/Country';
@@ -14,6 +12,8 @@ import User from '../core/models/User';
 import { ApiError } from '../core/types/api/api-error';
 import { FormField } from '../shared/components/forms/fields/form-field/form.field';
 import { FormFieldOption } from '../shared/components/forms/types/FormFieldOption';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   standalone: true,

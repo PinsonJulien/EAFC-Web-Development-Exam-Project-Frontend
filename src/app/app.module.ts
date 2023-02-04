@@ -1,4 +1,3 @@
-/*
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -37,4 +36,3 @@ import { HttpXsrfInterceptor } from './core/interceptors/HttpXsrfInterceptor';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-*/
