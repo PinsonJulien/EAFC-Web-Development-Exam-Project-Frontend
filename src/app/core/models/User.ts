@@ -6,6 +6,8 @@ import Grade from "./Grade";
 import Model from "./Model";
 import SiteRole from "./SiteRole";
 
+export type UserRelations = keyof NonNullable<User['relations']>;
+
 export default class User extends Model {
 
   public id: number;

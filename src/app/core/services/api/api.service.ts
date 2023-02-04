@@ -34,12 +34,12 @@ export class ApiService {
    * <T> can either be an object or an array of objects.
    *
    * @param action RequestAction
-   * @param path string
+   * @param path string | number
    * @param parameters RequestParameter
    * @param body Object
    * @returns Observable<T>
    */
-  protected request<T extends (object|object[]|void)>(action: RequestAction, path: string, parameters: RequestParameters = {}, body: Object = {}): Observable<T>
+  protected request<T extends (object|object[]|void)>(action: RequestAction, path: string|number, parameters: RequestParameters = {}, body: Object = {}): Observable<T>
   {
     const url = `${this.apiURL}/${this.apiRoute}/${path}`;
 

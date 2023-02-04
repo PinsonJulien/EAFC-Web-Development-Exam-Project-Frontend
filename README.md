@@ -39,6 +39,7 @@ Currently none.
 - Must use the snackbar for every failed/successful requests.
 
 - Fix style issue in auth.layout
+- Register form will be in a linear stepper https://material.angular.io/components/stepper/overview
 
 ## Features to improve :
 - Create a custom file import component to avoid using the default input style. The style is unavailable in Angular Material.

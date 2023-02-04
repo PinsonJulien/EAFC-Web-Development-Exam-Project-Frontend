@@ -1,11 +1,12 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import User from "../../models/User";
+import User, { UserRelations } from "../../models/User";
 import { ApiError } from "../../types/api/api-error";
 import { LoginRequestBody } from "../../types/auth/login-request-body";
 import { RegisterRequestBody } from "../../types/auth/register-request-body";
 import AuthApiService from "../api/auth-api.service";
+import UserApiService from "../api/user-api.service";
 import { LocalStorageService } from "../local-storage/local-storage.service";
 
 @Injectable({ providedIn: 'root'})
@@ -20,11 +21,13 @@ export default class AuthStoreService
   constructor(
     private authApiService: AuthApiService,
     private localStorageService: LocalStorageService,
+    private userApiService: UserApiService,
   ) {
     // On instantiation, the store service will retrieve the locally stored user.
-    this._user.next(
-      this.retrieveUserFromLocalStorage()
-    );
+    this.user = this.retrieveUserFromLocalStorage();
+
+    // Refresh the user to get it's relational data.
+    this.refreshUser();
   }
 
   // GETTERS SETTERS
@@ -85,6 +88,9 @@ export default class AuthStoreService
       next: (user: User) => {
         this.user = user;
         this.error = null;
+
+        // Refresh the user to get it's relational data.
+        this.refreshUser();
       },
       error: (error: HttpErrorResponse) => {
         this.error = error.error;
@@ -105,6 +111,9 @@ export default class AuthStoreService
       next: (user: User) => {
         this.user = user;
         this.error = null;
+
+        // Refresh the user to get it's relational data.
+        this.refreshUser();
       },
       error: (error: HttpErrorResponse) => {
         this.error = error.error;
@@ -134,6 +143,43 @@ export default class AuthStoreService
           return;
         }
 
+        this.error = error.error;
+      }
+    });
+  }
+
+  /**
+   * Refresh the current authenticated user and update it's behavior subject.
+   * Uses the UserApiService getById and asks for specific relations to be included.
+   *
+   * @returns void
+   */
+  public refreshUser(): void
+  {
+    if (!this.user) {
+      this.error = {
+        message: "No user is currently set in the store.",
+        errors: {}
+      };
+
+      return;
+    }
+
+    const id = this.user.id;
+
+    // Include relations
+    const relations: UserRelations[] = [
+      'enrollments',
+      'grades',
+      'cohortMembers'
+    ];
+
+    this.userApiService.getById(id, relations).subscribe({
+      next: (user: User) => {
+        this.user = user;
+        this.error = null;
+      },
+      error: (error: HttpErrorResponse) => {
         this.error = error.error;
       }
     });
