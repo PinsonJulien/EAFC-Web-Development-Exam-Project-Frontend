@@ -3,13 +3,13 @@ import User from "src/app/core/models/User";
 import AuthStoreService from "src/app/core/services/store/auth.store.service";
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatIconModule } from "@angular/material/icon";
-import { MatButtonModule } from "@angular/material/button";
 import { MatSidenavModule } from "@angular/material/sidenav";
-import { MatListModule } from "@angular/material/list";
 import { NavigationEnd, Router, RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { ApiError } from "src/app/core/types/api/api-error";
+import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatButtonModule } from "@angular/material/button";
+import { MatListModule } from "@angular/material/list";
 
 @Component({
   standalone: true,
@@ -65,7 +65,7 @@ export class AppLayout implements OnInit
     this.isAdminRoute = this.router.url.startsWith('/admin');
 
     this.router.events.subscribe({
-      next: (event) => {
+      next: (event: any) => {
         // Update the isAdminRoute every navigation change.
         if (event instanceof NavigationEnd)
           this.updateIsAdminRoute();

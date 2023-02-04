@@ -18,7 +18,11 @@
 
     #layout-right-sidenav {
       padding: 1em;
-      height:fit-content;
+      height: fit-content;
+
+      button {
+        margin: 1em;
+      }
     }
   }
 }

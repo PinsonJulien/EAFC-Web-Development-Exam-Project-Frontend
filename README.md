@@ -2,6 +2,9 @@
 
 # WORK IN PROGRESS
 
+## System requirements
+- NodeJS v16.13.1
+
 ## Development server
 Run `ng serve` and access the application at `http://127.0.0.1:4200/`.
 
@@ -35,11 +38,7 @@ Currently none.
 ## Todo
 - Must use the snackbar for every failed/successful requests.
 
-
-- Topbar : show an admin button if the user is secretary or admin; 
-  - on click go to admin page;
-  - when in admin pages, the button is "home"
-
+- Fix style issue in auth.layout
 
 ## Features to improve :
 - Create a custom file import component to avoid using the default input style. The style is unavailable in Angular Material.
