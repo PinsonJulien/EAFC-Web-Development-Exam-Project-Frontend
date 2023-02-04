@@ -14,8 +14,8 @@ import { ApiError } from "src/app/core/types/api/api-error";
 @Component({
   standalone: true,
   selector: 'app-layout',
-  templateUrl: 'app-layout.component.html',
-  styleUrls: ['app-layout.component.scss'],
+  templateUrl: 'app.layout.html',
+  styleUrls: ['app.layout.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
@@ -28,7 +28,7 @@ import { ApiError } from "src/app/core/types/api/api-error";
     MatSnackBarModule,
   ]
 })
-export class AppLayoutComponent implements OnInit
+export class AppLayout implements OnInit
 {
   constructor(
     private authStoreService: AuthStoreService,

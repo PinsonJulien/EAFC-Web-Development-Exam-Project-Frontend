@@ -5,15 +5,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { matchValidator } from 'src/app/shared/validators/match-validator';
-import { FormField } from 'src/app/shared/ui/forms/fields/form-field/form.field';
 import { Router } from '@angular/router';
 import Country from '../core/models/Country';
-import { FormFieldOption } from '../shared/ui/forms/types/FormFieldOption';
 import CountryApiService from '../core/services/api/country-api.service';
 import AuthStoreService from '../core/services/store/auth.store.service';
 import { RegisterRequestBody } from '../core/types/auth/register-request-body';
 import User from '../core/models/User';
 import { ApiError } from '../core/types/api/api-error';
+import { FormField } from '../shared/components/forms/fields/form-field/form.field';
+import { FormFieldOption } from '../shared/components/forms/types/FormFieldOption';
 
 @Component({
   standalone: true,

@@ -4,11 +4,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { FormField } from 'src/app/shared/ui/forms/fields/form-field/form.field';
 import { Router } from '@angular/router';
 import AuthStoreService from '../core/services/store/auth.store.service';
 import User from '../core/models/User';
 import { ApiError } from '../core/types/api/api-error';
+import { FormField } from '../shared/components/forms/fields/form-field/form.field';
 
 @Component({
   standalone: true,

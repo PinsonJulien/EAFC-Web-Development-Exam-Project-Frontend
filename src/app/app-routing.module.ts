@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () => import('./shared/layouts/app-layout/app-layout.component').then((m) => m.AppLayoutComponent),
+    loadComponent: () => import('./shared/layouts/app/app.layout').then((m) => m.AppLayout),
     canActivate: [AuthGuard],
     data: {
       authentified: true,
@@ -46,11 +46,9 @@ const routes: Routes = [
       }
     ]
   },
-
-
   {
     path: '',
-    loadComponent: () => import('./shared/ui/layouts/AuthLayout/auth-layout.component').then((m) => m.AuthLayoutComponent),
+    loadComponent: () => import('./shared/layouts/auth/auth.layout').then((m) => m.AuthLayout),
     canActivate: [AuthGuard],
     data: {
       authentified: false,
@@ -77,6 +75,8 @@ const routes: Routes = [
       preloadingStrategy: PreloadAllModules
     }),
   ],
-  exports: [RouterModule]
+  exports: [
+    RouterModule
+  ]
 })
 export class AppRoutingModule {}
