@@ -1,8 +1,16 @@
 import Model from "./Model";
 import User from "./User";
 
-export default class SiteRole extends Model {
+export default class SiteRole extends Model
+{
+  // Constants
+  public static readonly GUEST = 1;
+  public static readonly USER = 2;
+  public static readonly SECRETARY = 3;
+  public static readonly ADMINISTRATOR = 4;
+  public static readonly BANNED = 5;
 
+  // Properties
   public id: number;
   public createdAt: Date;
   public updatedAt: Date;
@@ -31,6 +39,8 @@ export default class SiteRole extends Model {
     }
   }
 
+  // Methods
+
   /**
    * Checks if the site role is secretary
    *
@@ -38,7 +48,7 @@ export default class SiteRole extends Model {
    */
   public isSecretary(): boolean
   {
-    return this.id === 3;
+    return this.id === SiteRole.SECRETARY;
   }
 
   /**
@@ -48,6 +58,6 @@ export default class SiteRole extends Model {
    */
   public isAdministrator(): boolean
   {
-    return this.id === 4;
+    return this.id === SiteRole.ADMINISTRATOR;
   }
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth/auth.guard';
+import { SiteRoleGuard } from './core/guards/site-role/site-role.guard';
 import SiteRole from './core/models/SiteRole';
 
 const routes: Routes = [
@@ -34,11 +35,12 @@ const routes: Routes = [
       },
       {
         path: 'admin',
-        /*canActivate: [SiteRoleGuard],
+        canActivate: [SiteRoleGuard],
         data: {
-          roles: [SiteRole.SECRETARY, SiteRole.ADMINISTRATOR],
+          acceptedRoles: [SiteRole.SECRETARY, SiteRole.ADMINISTRATOR],
+          forbiddenRoles: [],
           redirect: 'courses'
-        },*/
+        },
         loadComponent: () => import('./admin/admin.page').then((m) => m.AdminPage),
         loadChildren: () => import('./admin/routes').then((m) => m.routes),
       }
