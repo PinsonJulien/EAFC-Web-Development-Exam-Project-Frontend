@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { map, Observable, take } from "rxjs";
+import { combineLatest, map, Observable } from "rxjs";
 import Enrollment from "../core/models/Enrollment";
 import Formation from "../core/models/Formation";
 import AuthStoreService from "../core/services/store/auth.store.service";
@@ -10,6 +10,7 @@ import EnrollmentStoreService from "../core/services/store/enrollment-store.serv
 import { ApiError } from "../core/types/api/api-error";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatButtonModule } from "@angular/material/button";
+import User from "../core/models/User";
 
 @Component({
   standalone: true,
@@ -28,13 +29,16 @@ import { MatButtonModule } from "@angular/material/button";
 export class FormationsPage implements OnInit
 {
   /************************************************************/
+  //
   // Properties
+  //
   /************************************************************/
-  protected _userEnrollments: Enrollment[] = [];
   protected filteredFormations!: Observable<Formation[]|null>;
 
   /************************************************************/
+  //
   // Constructor
+  //
   /************************************************************/
 
   constructor(
@@ -47,24 +51,38 @@ export class FormationsPage implements OnInit
   }
 
   /************************************************************/
+  //
   // Implemented Methods
+  //
   /************************************************************/
 
   ngOnInit(): void {
-    // Listen to the formation array from the store.
-    this.filteredFormations = this.formationStoreService.formations$.pipe(
-      map((formations: Formation[] | null) => {
-        if (!formations) return null;
+    // Listen to the either formations or user changes to update the filtered formations observable.
+    this.filteredFormations = combineLatest([
+      this.formationStoreService.formations$,
+      this.authStoreService.user$
+    ]).pipe(
+      map(([formations, user]) => {
+        if (!formations || !user) {
+          return null;
+        }
 
-        return this.filterFormations(formations);
+        return this.filterFormations(formations, user);
       })
     );
 
-    // Get all user enrollments.
-    this._userEnrollments = this.authStoreService.user?.relations?.enrollments ?? [];
+    // Subscribe to the changes of the enrollment store
+    // This will trigger on the post.
+    this.enrollmentStoreService.enrollment$.subscribe((enrollment: Enrollment|null) => {
+      if (!enrollment) return;
 
-    // Refresh the formations.
-    this.formationStoreService.refreshFormations();
+      // When a new enrollment was changed, refresh the user.
+      this.authStoreService.refreshUser();
+
+      // Inform the user of the successul operation
+      const message = `Your enrollment to the formation '${enrollment.formation!.name}' was received.`;
+      this.snackBar.open(message, 'close');
+    });
 
     // Listen to enrollment errors and throw them in the snackBar.
     this.enrollmentStoreService.error$.subscribe((error: ApiError | null) => {
@@ -72,10 +90,18 @@ export class FormationsPage implements OnInit
 
       this.snackBar.open(error.message, 'close');
     });
+
+    // Refresh the user
+    this.authStoreService.refreshUser();
+
+    // Refresh the formations.
+    this.formationStoreService.refreshFormations();
   }
 
   /************************************************************/
+  //
   // Methods
+  //
   /************************************************************/
 
   /**
@@ -87,15 +113,18 @@ export class FormationsPage implements OnInit
    * @param formations Formation[]
    * @returns Formation[]
    */
-  protected filterFormations(formations: Formation[]): Formation[]
+  protected filterFormations(formations: Formation[], user: User): Formation[]
   {
+    const userEnrollments = user.relations!.enrollments! ?? [];
+    if (!userEnrollments.length)
+      return formations;
+
     // filters all approved/pending enrollments of the user and map them to an array of formations id's.
-    const filteredIds = this._userEnrollments.filter((enrollment: Enrollment) => {
+    const filteredIds = userEnrollments.filter((enrollment: Enrollment) => {
       return (enrollment.isApproved() || enrollment.isPending());
     }).map((enrollment: any): number => {
       return enrollment.formation.id;
     });
-
 
     // Use these filtered Id's to filter out the formations that are available to enroll to.
     return formations.filter((formation: Formation) => {
@@ -105,7 +134,6 @@ export class FormationsPage implements OnInit
 
   /**
    * Enroll the user to the given formation
-   * On success the formation is filtered out from the filteredFormations observable.
    *
    * @param formation
    * @returns void
@@ -119,25 +147,6 @@ export class FormationsPage implements OnInit
       userId,
       formationId
     };
-
-    // Subscribe to the next change of the enrollment store
-    this.enrollmentStoreService.enrollment$.pipe(take(1))
-      .subscribe((enrollment: Enrollment|null) => {
-        if (!enrollment) return;
-
-        // The enrollment was successful, remove the formation from the filtered list.
-        this.filteredFormations = this.filteredFormations.pipe(
-          map((formations: Formation[]|null) => {
-            if (!formations) return null;
-            return formations.filter((formation: Formation) => formation.id !== formationId);
-          })
-        );
-
-        // Inform the user of the successul operation
-        const message = `Your enrollment to the formation '${formation.name}' was received.`;
-        this.snackBar.open(message, 'close');
-
-      });
 
     // Call the enroll method from store.
     this.enrollmentStoreService.create(body);

@@ -35,11 +35,14 @@ Currently none.
 - Keep the favorite language (or the one selected before login / register) in state, use it to fill the favorite language field default value on registration.
 
 
+
 ## Todo
 - Must use the snackbar for every failed/successful requests.
 
 - Fix style issue in auth.layout
 - Register form will be in a linear stepper https://material.angular.io/components/stepper/overview
+
+- refresh user on page change
 
 ## Features to improve :
 - Create a custom file import component to avoid using the default input style. The style is unavailable in Angular Material.
