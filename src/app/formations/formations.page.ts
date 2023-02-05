@@ -11,6 +11,9 @@ import { ApiError } from "../core/types/api/api-error";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatButtonModule } from "@angular/material/button";
 import User from "../core/models/User";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatListModule } from "@angular/material/list";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   standalone: true,
@@ -23,8 +26,13 @@ import User from "../core/models/User";
     MatExpansionModule,
     MatSnackBarModule,
     MatButtonModule,
+    MatTabsModule,
+    MatListModule,
+    MatIconModule,
   ],
-  providers: [],
+  providers: [
+    //
+  ],
 })
 export class FormationsPage implements OnInit
 {

@@ -10,28 +10,28 @@
     "top-bar"
     "side-nav";
 
-  mat-tool-bar {
+  > mat-tool-bar {
     grid-area: "top-bar";
   }
 
-  mat-sidenav-container {
+  > mat-sidenav-container {
     grid-area: "side-nav";
     height: 100%;
 
-    #layout-right-sidenav {
+    > #layout-right-sidenav {
       padding: 1em;
       height: fit-content;
 
-      button {
+      > button {
         margin: 1em;
       }
     }
 
-    mat-sidenav {
+    > mat-sidenav {
       overflow-y: auto;
     }
 
-    mat-sidenav-content {
+    > mat-sidenav-content {
       overflow-y: auto;
       padding: 1em;
     }

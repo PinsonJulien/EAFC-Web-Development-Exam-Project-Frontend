@@ -1,37 +1,78 @@
-<mat-accordion
-  *ngIf="filteredFormations | async as formations"
+
+<mat-tab-group
 >
-  <mat-expansion-panel
-    *ngFor="let formation of formations; index as i"
+  <mat-tab
+    label="Available formations"
   >
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{ formation.name }}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-
-    <ng-container
-      *ngIf="formation.relations && formation.relations.courses"
+    <div
+      class="wrapper-formations"
     >
-      Courses:
-      <div
-        *ngFor="let course of formation.relations.courses"
-      >
-        <p>
-          {{course.name}}
-        </p>
-      </div>
-    </ng-container>
+      <h2>
+        List of all available formations
+      </h2>
 
-    <mat-action-row>
-      <button
-        mat-button color="primary"
-        (click)="enroll(formation)"
-      >
-        Enroll
-      </button>
-      <button mat-button color="primary">Cancel</button>
-    </mat-action-row>
-  </mat-expansion-panel>
+      <p>
+        This list contains every formation you can enroll to.
+      </p>
 
-</mat-accordion>
+      <mat-accordion
+        *ngIf="filteredFormations | async as formations"
+        class="formation-accordion"
+      >
+        <mat-expansion-panel
+          *ngFor="let formation of formations; index as i"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ formation.name }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <ng-container
+            *ngIf="formation.relations && formation.relations.courses"
+          >
+            <p>
+              This formation include these courses:
+            </p>
+
+            <mat-list
+              *ngFor="let course of formation.relations.courses"
+              role="list"
+            >
+              <mat-list-item
+                role="listitem"
+              >
+                <mat-icon matListItemIcon>library_books</mat-icon>
+                {{course.name}}
+              </mat-list-item>
+            </mat-list>
+          </ng-container>
+
+          <mat-action-row>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="enroll(formation)"
+            >
+              Enroll
+            </button>
+          </mat-action-row>
+        </mat-expansion-panel>
+
+      </mat-accordion>
+    </div>
+
+  </mat-tab>
+
+  <mat-tab
+    label="History"
+  >
+
+  </mat-tab>
+
+
+
+</mat-tab-group>
+
+
+
