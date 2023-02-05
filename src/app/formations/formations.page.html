@@ -1,1 +1,32 @@
-<p>test formations</p>
+<mat-accordion
+  *ngIf="filteredFormations | async as formations"
+>
+  <mat-expansion-panel
+    *ngFor="let formation of formations; index as i"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ formation.name }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ng-container
+      *ngIf="formation.relations && formation.relations.courses"
+    >
+      Courses:
+      <div
+        *ngFor="let course of formation.relations.courses"
+      >
+        <p>
+          {{course.name}}
+        </p>
+      </div>
+    </ng-container>
+
+    <mat-action-row>
+      <button mat-button color="primary">Enroll</button>
+      <button mat-button color="primary">Cancel</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+</mat-accordion>

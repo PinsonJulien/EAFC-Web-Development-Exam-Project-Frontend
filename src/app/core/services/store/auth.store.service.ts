@@ -2,27 +2,26 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import User, { UserRelations } from "../../models/User";
-import { ApiError } from "../../types/api/api-error";
 import { LoginRequestBody } from "../../types/auth/login-request-body";
 import { RegisterRequestBody } from "../../types/auth/register-request-body";
 import AuthApiService from "../api/auth-api.service";
 import UserApiService from "../api/user-api.service";
 import { LocalStorageService } from "../local-storage/local-storage.service";
+import StoreService from "./store.service";
 
 @Injectable({ providedIn: 'root'})
-export default class AuthStoreService
+export default class AuthStoreService extends StoreService
 {
-  private _user = new BehaviorSubject<User | null>(null);
+  protected _user = new BehaviorSubject<User | null>(null);
   public user$ = this._user.asObservable();
 
-  private _error = new BehaviorSubject<ApiError | null>(null);
-  public error$ = this._error.asObservable();
-
   constructor(
-    private authApiService: AuthApiService,
-    private localStorageService: LocalStorageService,
-    private userApiService: UserApiService,
+    protected authApiService: AuthApiService,
+    protected localStorageService: LocalStorageService,
+    protected userApiService: UserApiService,
   ) {
+    super();
+
     // On instantiation, the store service will retrieve the locally stored user.
     this.user = this.retrieveUserFromLocalStorage();
 
@@ -45,6 +44,7 @@ export default class AuthStoreService
   /**
    * Set the value of the user behavior subject and add/remove it from the localstore.
    *
+   * @param user User | null
    * @returns void
    */
   protected set user(user: User | null)
@@ -53,25 +53,6 @@ export default class AuthStoreService
     else this.storeUserInLocalStorage(user);
 
     this._user.next(user);
-  }
-
-  /**
-   * Get the current error from the behavior subject.
-   *
-   * @returns ApiError | null
-   */
-  public get error(): ApiError | null
-  {
-    return this._error.getValue();
-  }
-
-  /**
-   * Set the value of the error behavior subject.
-   *
-   */
-  protected set error(error: ApiError | null)
-  {
-    this._error.next(error);
   }
 
   // METHODS

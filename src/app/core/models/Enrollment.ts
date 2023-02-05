@@ -3,7 +3,9 @@ import Model from "./Model";
 import Status from "./Status";
 import User from "./User";
 
-export default class Enrollment extends Model {
+export default class Enrollment extends Model
+{
+  // Properties
 
   public id: number;
   public createdAt: Date;
@@ -30,4 +32,27 @@ export default class Enrollment extends Model {
     this.status = new Status(object.status);
     this.message = object.message;
   }
+
+  // Methods
+
+  /**
+   * Checks if the enrollment has a pending status.
+   *
+   * @returns boolean
+   */
+  public isPending(): boolean
+  {
+    return this.status.isPending();
+  }
+
+  /**
+  * Checks if the enrollment has a approved status.
+  *
+  * @returns boolean
+  */
+  public isApproved(): boolean
+  {
+    return this.status.isApproved();
+  }
+
 }

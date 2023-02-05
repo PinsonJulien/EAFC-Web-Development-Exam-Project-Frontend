@@ -15,11 +15,6 @@ const routes: Routes = [
     redirectTo: 'courses',
   },
   {
-    path: 'formations',
-    loadComponent: () => import('./formations/formations.page').then((c) => c.FormationsPage),
-    loadChildren: () => import('./formations/routes').then((r) => r.routes),
-  },
-  {
     path: '',
     loadComponent: () => import('./shared/layouts/app/app.layout').then((m) => m.AppLayout),
     canActivate: [AuthGuard],
@@ -32,6 +27,11 @@ const routes: Routes = [
         path: 'courses',
         loadComponent: () => import('./courses/course.page').then((m) => m.CoursePage),
         loadChildren: () => import('./courses/routes').then((m) => m.routes),
+      },
+      {
+        path: 'formations',
+        loadComponent: () => import('./formations/formations.page').then((m) => m.FormationsPage),
+        loadChildren: () => import('./formations/routes').then((m) => m.routes),
       },
       {
         path: 'admin',
