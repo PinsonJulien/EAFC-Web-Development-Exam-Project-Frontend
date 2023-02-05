@@ -32,6 +32,7 @@ export default class FormationStoreService extends StoreService
   /**
    * Set the value of the user behavior subject and add/remove it from the localstore.
    *
+   * @param formation Formation[] | null
    * @returns void
    */
   protected set formations(formations: Formation[] | null)

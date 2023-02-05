@@ -24,7 +24,12 @@
     </ng-container>
 
     <mat-action-row>
-      <button mat-button color="primary">Enroll</button>
+      <button
+        mat-button color="primary"
+        (click)="enroll(formation)"
+      >
+        Enroll
+      </button>
       <button mat-button color="primary">Cancel</button>
     </mat-action-row>
   </mat-expansion-panel>
