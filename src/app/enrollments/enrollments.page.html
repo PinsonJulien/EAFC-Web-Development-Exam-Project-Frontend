@@ -1,0 +1,18 @@
+<nav
+  mat-tab-nav-bar
+  [tabPanel]="tabPanel"
+>
+  <a
+    mat-tab-link
+    *ngFor="let subPage of subPages"
+    (click)="activeSubPage = subPage"
+    [active]="activeSubPage == subPage"
+    [routerLink]="subPage.path"
+  >
+    {{ subPage.name }}
+  </a>
+
+</nav>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+
+<router-outlet></router-outlet>

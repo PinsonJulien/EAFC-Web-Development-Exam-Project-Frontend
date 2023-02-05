@@ -24,6 +24,11 @@ const routes: Routes = [
     },
     children: [
       {
+        path: 'enrollments',
+        loadComponent: () => import('./enrollments/enrollments.page').then((m) => m.EnrollmentsPage),
+        loadChildren: () => import('./enrollments/routes').then((m) => m.routes),
+      },
+      {
         path: 'courses',
         loadComponent: () => import('./courses/course.page').then((m) => m.CoursePage),
         loadChildren: () => import('./courses/routes').then((m) => m.routes),
