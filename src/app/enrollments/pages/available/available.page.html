@@ -1,1 +1,52 @@
-Available page
+<h2>
+  List of all available formations
+</h2>
+
+<p>
+  This list contains every formation you can enroll to.
+</p>
+
+<mat-accordion
+  *ngIf="filteredFormations | async as formations"
+  class="formation-accordion"
+>
+  <mat-expansion-panel
+    *ngFor="let formation of formations; index as i"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ formation.name }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ng-container
+      *ngIf="formation.relations && formation.relations.courses"
+    >
+      <p>
+        This formation include these courses:
+      </p>
+
+      <mat-list
+        *ngFor="let course of formation.relations.courses"
+        role="list"
+      >
+        <mat-list-item
+          role="listitem"
+        >
+          <mat-icon matListItemIcon>library_books</mat-icon>
+          {{course.name}}
+        </mat-list-item>
+      </mat-list>
+    </ng-container>
+
+    <mat-action-row>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="enroll(formation)"
+      >
+        Enroll
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

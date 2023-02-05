@@ -1,0 +1,12 @@
+:host {
+  padding: 2em 1em 1em 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.formation-accordion {
+  mat-action-row {
+    place-content: center;
+  }
+}
