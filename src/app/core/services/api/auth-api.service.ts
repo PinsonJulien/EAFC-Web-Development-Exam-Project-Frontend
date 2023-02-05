@@ -57,7 +57,7 @@ export default class AuthApiService extends ApiService
 
   /**
    * Call the /logout api endpoint and stream as Observable.
-   * The expected result is a no content request.
+   * The expected result is a no content response.
    *
    * @returns Observable<void>
    */

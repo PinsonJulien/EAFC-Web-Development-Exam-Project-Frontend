@@ -14,6 +14,11 @@ import User from "../core/models/User";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatListModule } from "@angular/material/list";
 import { MatIconModule } from "@angular/material/icon";
+import Status from "../core/models/Status";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatSelectModule } from "@angular/material/select";
+import StatusStoreService from "../core/services/store/status-store.service";
 
 @Component({
   standalone: true,
@@ -23,12 +28,15 @@ import { MatIconModule } from "@angular/material/icon";
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MatExpansionModule,
     MatSnackBarModule,
     MatButtonModule,
     MatTabsModule,
     MatListModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatSelectModule,
   ],
   providers: [
     //
@@ -41,7 +49,13 @@ export class FormationsPage implements OnInit
   // Properties
   //
   /************************************************************/
+
+  protected statuses!: Observable<Status[]|null>;
+
   protected filteredFormations!: Observable<Formation[]|null>;
+  protected filteredEnrollments!: Observable<Enrollment[]|null>;
+
+  protected selectedStatuses = new FormControl<Status[]>([]);
 
   /************************************************************/
   //
@@ -53,6 +67,7 @@ export class FormationsPage implements OnInit
     protected formationStoreService: FormationStoreService,
     protected authStoreService: AuthStoreService,
     protected enrollmentStoreService: EnrollmentStoreService,
+    protected statusStoreService: StatusStoreService,
     protected snackBar: MatSnackBar,
   ) {
     //
@@ -65,6 +80,8 @@ export class FormationsPage implements OnInit
   /************************************************************/
 
   ngOnInit(): void {
+    this.statuses = this.statusStoreService.statuses$;
+
     // Listen to the either formations or user changes to update the filtered formations observable.
     this.filteredFormations = combineLatest([
       this.formationStoreService.formations$,
@@ -76,6 +93,22 @@ export class FormationsPage implements OnInit
         }
 
         return this.filterFormations(formations, user);
+      })
+    );
+
+    // Listen to the auth store to keep the enrollments up to date.
+    // Automatically filter on selectedStatuses change.
+    this.filteredEnrollments = combineLatest([
+      this.authStoreService.user$,
+      this.selectedStatuses.valueChanges,
+    ]).pipe(
+      map(([user, statuses]) => {
+        if (!user || !user.relations?.enrollments) return [];
+        statuses = statuses ?? [];
+
+        const enrollments = user.relations.enrollments;
+
+        return this.filterEnrollmentsByStatus(enrollments, statuses);
       })
     );
 
@@ -104,6 +137,9 @@ export class FormationsPage implements OnInit
 
     // Refresh the formations.
     this.formationStoreService.refreshFormations();
+
+    // Refresh the statuses.
+    this.statusStoreService.refreshStatuses();
   }
 
   /************************************************************/
@@ -141,6 +177,26 @@ export class FormationsPage implements OnInit
   }
 
   /**
+   * Filter out all the enrollments that do not have a matching status.
+   *
+   * @param enrollments Enrollment[]
+   * @param statuses Status[]
+   * @returns Enrollment[]
+   */
+  protected filterEnrollmentsByStatus(enrollments: Enrollment[], statuses: Status[]): Enrollment[]
+  {
+    if (!enrollments.length || !statuses.length)
+      return enrollments;
+
+    // Filter all the enrollments by the given statuses.
+    return enrollments.filter((enrollement: Enrollment) => {
+      return statuses.some((status: Status) => {
+        return status.id === enrollement.status.id;
+      });
+    });
+  }
+
+  /**
    * Enroll the user to the given formation
    *
    * @param formation
@@ -159,4 +215,18 @@ export class FormationsPage implements OnInit
     // Call the enroll method from store.
     this.enrollmentStoreService.create(body);
   }
+
+  /**
+   * Delete the given enrollment using the store
+   *
+   * @param enrollment Enrollment
+   * @returns void
+   */
+  protected deleteEnrollment(enrollment: Enrollment): void
+  {
+    const enrollmentId = enrollment.id;
+
+    this.enrollmentStoreService.delete(enrollmentId);
+  }
+
 }

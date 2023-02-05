@@ -1,5 +1,6 @@
 
 <mat-tab-group
+  selectedIndex="1"
 >
   <mat-tab
     label="Available formations"
@@ -67,6 +68,39 @@
   <mat-tab
     label="History"
   >
+    <mat-form-field
+      *ngIf="statuses | async as statuses"
+    >
+      <mat-label>
+        Filter by status:
+      </mat-label>
+      <mat-select
+        [formControl]="selectedStatuses"
+        multiple
+
+      >
+        <mat-option
+          *ngFor="let status of statuses"
+          [value] = "status"
+        >
+          {{ status.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+
+    <ng-container
+      *ngIf="filteredEnrollments | async as enrollments"
+    >
+      <mat-list
+        *ngFor="let enrollment of enrollments"
+      >
+        <mat-list-item>
+          {{ enrollment.status.id }}
+        </mat-list-item>
+      </mat-list>>
+    </ng-container>
 
   </mat-tab>
 

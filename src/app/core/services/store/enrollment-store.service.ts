@@ -10,14 +10,18 @@ import StoreService from "./store.service";
 export default class EnrollmentStoreService extends StoreService
 {
   /**************************************************/
+  //
   // Properties
+  //
   /**************************************************/
 
   protected _enrollment = new BehaviorSubject<Enrollment | null>(null);
   public enrollment$ = this._enrollment.asObservable();
 
   /**************************************************/
+  //
   // Constructor
+  //
   /**************************************************/
 
   constructor(
@@ -27,7 +31,9 @@ export default class EnrollmentStoreService extends StoreService
   }
 
   /**************************************************/
+  //
   // Getters / setters
+  //
   /**************************************************/
 
   /**
@@ -52,9 +58,18 @@ export default class EnrollmentStoreService extends StoreService
   }
 
   /**************************************************/
+  //
   // Methods
+  //
   /**************************************************/
 
+  /**
+   * Create a new enrollment using the Enrollment api.
+   * Streams the new enrollment if created or the error received.
+   *
+   * @param body CreateEnrollmentBody
+   * @returns void
+   */
   public create(body: CreateEnrollmentBody): void
   {
     this.enrollmentApiService.create(body).subscribe({
@@ -68,5 +83,24 @@ export default class EnrollmentStoreService extends StoreService
     });
   }
 
+  /**
+   * Delete a given enrollment using the Enrollment api
+   * Streams errors
+   *
+   * @param id number
+   * @returns void
+   */
+  public delete(id: number): void
+  {
+    this.enrollmentApiService.delete(id).subscribe({
+      next: () => {
+        this.enrollment = null;
+        this.error = null;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.error = error.error;
+      }
+    });
+  }
 
 }
