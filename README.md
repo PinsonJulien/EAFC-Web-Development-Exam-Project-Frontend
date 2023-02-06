@@ -45,7 +45,8 @@ Currently none.
   - formation name asc
   - status asc 
 
-- button to show in modal(?) the message on enrollment if it's not NULL.
+- button to show in modal(?) the message on enrollment if it's not NULL. (Message for the school)
+- table header sort ? will it work ?
 
 
 ## Features to improve :
