@@ -34,11 +34,6 @@ const routes: Routes = [
         loadChildren: () => import('./courses/routes').then((m) => m.routes),
       },
       {
-        path: 'formations',
-        loadComponent: () => import('./formations/formations.page').then((m) => m.FormationsPage),
-        loadChildren: () => import('./formations/routes').then((m) => m.routes),
-      },
-      {
         path: 'admin',
         canActivate: [SiteRoleGuard],
         data: {
