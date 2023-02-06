@@ -8,11 +8,15 @@
     (click)="activeSubPage = subPage"
     [active]="activeSubPage == subPage"
     [routerLink]="subPage.path"
+    routerLinkActive
+    #rla="routerLinkActive"
+    [active]="rla.isActive"
   >
     {{ subPage.name }}
   </a>
-
 </nav>
 <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
 
-<router-outlet></router-outlet>
+<div class="route-container">
+  <router-outlet></router-outlet>
+</div>

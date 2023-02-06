@@ -15,8 +15,11 @@ export default class EnrollmentStoreService extends StoreService
   //
   /**************************************************/
 
-  protected _enrollment = new BehaviorSubject<Enrollment | null>(null);
-  public enrollment$ = this._enrollment.asObservable();
+  protected _createdEnrollment = new BehaviorSubject<Enrollment | null>(null);
+  public createdEnrollment$ = this._createdEnrollment.asObservable();
+
+  protected _deletedEnrollment = new BehaviorSubject<boolean>(false);
+  public deletedEnrollment$ = this._deletedEnrollment.asObservable();
 
   /**************************************************/
   //
@@ -37,25 +40,46 @@ export default class EnrollmentStoreService extends StoreService
   /**************************************************/
 
   /**
-   * Get the current enrollment from the behavior subject.
+   * Get the current createdEnrollment from the behavior subject.
    *
    * @returns Enrollment | null
    */
-  public get enrollment(): Enrollment| null
+  public get createdEnrollment(): Enrollment| null
   {
-    return this._enrollment.getValue();
+    return this._createdEnrollment.getValue();
   }
 
   /**
-   * Set the value of the enrollment behavior subject.
+   * Set the value of the createdEnrollment behavior subject.
    *
-   * @param enrollment Enrollment | null
+   * @param createdEnrollment Enrollment | null
    * @returns void
    */
-  protected set enrollment(enrollment: Enrollment | null)
+  protected set createdEnrollment(createdEnrollment: Enrollment | null)
   {
-    this._enrollment.next(enrollment);
+    this._createdEnrollment.next(createdEnrollment);
   }
+
+  /**
+   * Get the current deletedEnrollment from the behavior subject.
+   *
+   * @returns boolean
+   */
+   public get deletedEnrollment(): boolean
+   {
+     return this._deletedEnrollment.getValue();
+   }
+
+   /**
+    * Set the value of the deletedEnrollment behavior subject.
+    *
+    * @param deletedEnrollment boolean
+    * @returns void
+    */
+   protected set deletedEnrollment(deletedEnrollment: boolean)
+   {
+     this._deletedEnrollment.next(deletedEnrollment);
+   }
 
   /**************************************************/
   //
@@ -74,7 +98,7 @@ export default class EnrollmentStoreService extends StoreService
   {
     this.enrollmentApiService.create(body).subscribe({
       next: (enrollment: Enrollment) => {
-        this.enrollment = enrollment;
+        this.createdEnrollment = enrollment;
         this.error = null;
       },
       error: (error: HttpErrorResponse) => {
@@ -94,10 +118,11 @@ export default class EnrollmentStoreService extends StoreService
   {
     this.enrollmentApiService.delete(id).subscribe({
       next: () => {
-        this.enrollment = null;
+        this.deletedEnrollment = true;
         this.error = null;
       },
       error: (error: HttpErrorResponse) => {
+        this.deletedEnrollment = false;
         this.error = error.error;
       }
     });

@@ -5,7 +5,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
-import { combineLatest, map, Observable } from "rxjs";
+import { combineLatest, first, map, Observable, skip } from "rxjs";
 import Enrollment from "src/app/core/models/Enrollment";
 import Formation from "src/app/core/models/Formation";
 import User from "src/app/core/models/User";
@@ -78,18 +78,6 @@ export class AvailableEnrollmentsPage implements OnInit
       })
     );
 
-    // Listen to the enrollment store changes
-    this.enrollmentStoreService.enrollment$.subscribe((enrollment: Enrollment|null) => {
-      if (!enrollment) return;
-
-      // When a new enrollment was changed, refresh the user.
-      this.authStoreService.refreshUser();
-
-      // Inform the user of the successul operation
-      const message = `Your enrollment to the formation '${enrollment.formation!.name}' was received.`;
-      this.snackBar.open(message, 'close');
-    });
-
     // Refresh the user
     this.authStoreService.refreshUser();
 
@@ -146,6 +134,22 @@ export class AvailableEnrollmentsPage implements OnInit
         userId,
         formationId
       };
+
+      // Listen to the first new value, which will be the newly created enrollment.
+      // Skip the original value and take the first one (which closes the subscription)
+      this.enrollmentStoreService.createdEnrollment$
+      .pipe(skip(1), first())
+      .subscribe((enrollment: Enrollment|null) => {
+        if (!enrollment) return;
+
+        // When a new enrollment was changed, refresh the user.
+        this.authStoreService.refreshUser();
+        console.log('rest')
+
+        // Inform the user of the successul operation
+        const message = `Your enrollment to the formation '${enrollment.formation!.name}' was received.`;
+        this.snackBar.open(message, 'close');
+      });
 
       // Call the enroll method from store.
       this.enrollmentStoreService.create(body);

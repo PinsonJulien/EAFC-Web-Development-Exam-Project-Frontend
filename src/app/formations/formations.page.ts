@@ -114,7 +114,7 @@ export class FormationsPage implements OnInit
 
     // Subscribe to the changes of the enrollment store
     // This will trigger on the post.
-    this.enrollmentStoreService.enrollment$.subscribe((enrollment: Enrollment|null) => {
+    this.enrollmentStoreService.createdEnrollment$.subscribe((enrollment: Enrollment|null) => {
       if (!enrollment) return;
 
       // When a new enrollment was changed, refresh the user.
@@ -226,6 +226,7 @@ export class FormationsPage implements OnInit
   {
     const enrollmentId = enrollment.id;
 
+    // Call the delete method from the store
     this.enrollmentStoreService.delete(enrollmentId);
   }
 
