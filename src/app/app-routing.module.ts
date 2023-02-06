@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    redirectTo: 'courses',
+    redirectTo: 'enrollments',
   },
   {
     path: '',
@@ -29,17 +29,12 @@ const routes: Routes = [
         loadChildren: () => import('./enrollments/routes').then((m) => m.routes),
       },
       {
-        path: 'courses',
-        loadComponent: () => import('./courses/course.page').then((m) => m.CoursePage),
-        loadChildren: () => import('./courses/routes').then((m) => m.routes),
-      },
-      {
         path: 'admin',
         canActivate: [SiteRoleGuard],
         data: {
           acceptedRoles: [SiteRole.SECRETARY, SiteRole.ADMINISTRATOR],
           forbiddenRoles: [],
-          redirect: 'courses'
+          redirect: 'home'
         },
         loadComponent: () => import('./admin/admin.page').then((m) => m.AdminPage),
         loadChildren: () => import('./admin/routes').then((m) => m.routes),
