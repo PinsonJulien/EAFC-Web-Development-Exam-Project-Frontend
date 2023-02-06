@@ -42,7 +42,7 @@ export class LoginPage implements OnInit
     this.authStoreService.user$.subscribe((user: User|null) => {
       if (!user) return;
 
-      this.router.navigate(['courses']);
+      this.router.navigate(['home']);
     });
 
     // Listen to errors, they will be returned with a visual message.
