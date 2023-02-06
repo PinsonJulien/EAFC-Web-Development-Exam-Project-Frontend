@@ -1,1 +1,83 @@
-Enrollments page
+<ng-container
+  *ngIf="enrollments | async as enrollments"
+>
+
+  <table
+    mat-table
+    multiTemplateDataRows
+    [dataSource]="enrollments"
+    class="mat-elevation-z8"
+  >
+    <ng-container matColumnDef="formation">
+      <th mat-header-cell *matHeaderCellDef> Formation </th>
+      <td mat-cell *matCellDef="let enrollment">
+        {{ enrollment.formation.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let enrollment">
+        {{ enrollment.status.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let enrollment">
+
+        <button
+          *ngIf="enrollment.isPending()"
+          mat-mini-fab
+          color="primary"
+          [attr.aria-label]="'Icon button to show the update modal of enrollment n°' + enrollment.id"
+        >
+          <mat-icon>
+            update
+          </mat-icon>
+        </button>
+
+        <!-- Expand button -->
+        <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === enrollment ? null : enrollment); $event.stopPropagation()">
+          <mat-icon *ngIf="expandedElement !== enrollment">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="expandedElement === enrollment">keyboard_arrow_up</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Expanded content -->
+    <ng-container matColumnDef="expanded-row">
+      <td mat-cell *matCellDef="let enrollment" [attr.colspan]="tableColumns.length">
+        <div
+          class="expanded-content"
+          [@detailExpand]="enrollment == expandedElement ? 'expanded' : 'collapsed'"
+        >
+          CONTENT
+        </div>
+      </td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="tableColumns"
+    >
+    </tr>
+
+    <tr
+      mat-row
+      *matRowDef="let enrollment; columns: tableColumns;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === enrollment"
+
+    >
+    </tr>
+
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expanded-row']"
+      class="expanded-row-line"
+    >
+    </tr>
+  </table>
+
+</ng-container>
