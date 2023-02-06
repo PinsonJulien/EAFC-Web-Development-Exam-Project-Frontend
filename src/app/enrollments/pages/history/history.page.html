@@ -20,11 +20,39 @@
 <ng-container
   *ngIf="filteredEnrollments | async as enrollments"
 >
-  <mat-list
-    *ngFor="let enrollment of enrollments"
+  <table
+    mat-table
+    [dataSource]="enrollments"
   >
-    <mat-list-item>
-      {{ enrollment.status.id }}
-    </mat-list-item>
-  </mat-list>>
+    <ng-container matColumnDef="formation-name">
+      <th mat-header-cell *matHeaderCellDef> Formation Name </th>
+      <td mat-cell *matCellDef="let enrollment"> {{ enrollment.formation.name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status-name">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let enrollment"> {{ enrollment.status.name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let enrollment">
+        <button
+          mat-raised-button
+          color="warn"
+          *ngIf="enrollment.isPending()"
+          (click)="deleteEnrollment(enrollment)"
+        >
+          Cancel
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: tableColumns"></tr>
+  </table>
+
 </ng-container>
+
+
+

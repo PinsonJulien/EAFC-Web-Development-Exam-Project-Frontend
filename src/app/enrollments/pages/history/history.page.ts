@@ -2,7 +2,6 @@ import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatListModule } from "@angular/material/list";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { combineLatest, first, map, Observable, skip, startWith } from "rxjs";
@@ -11,6 +10,9 @@ import Status from "src/app/core/models/Status";
 import AuthStoreService from "src/app/core/services/store/auth-store.service";
 import EnrollmentStoreService from "src/app/core/services/store/enrollment-store.service";
 import StatusStoreService from "src/app/core/services/store/status-store.service";
+import {MatTableModule} from '@angular/material/table';
+import { MatButtonModule } from "@angular/material/button";
+
 
 @Component({
   standalone: true,
@@ -24,7 +26,8 @@ import StatusStoreService from "src/app/core/services/store/status-store.service
     MatSnackBarModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatListModule
+    MatTableModule,
+    MatButtonModule,
   ],
   providers: [
     //
@@ -43,6 +46,8 @@ export class HistoryEnrollmentsPage implements OnInit
   protected filteredEnrollments!: Observable<Enrollment[]|null>;
 
   protected selectedStatuses = new FormControl<Status[]>([]);
+
+  protected tableColumns = ['formation-name', 'status-name', 'action'];
 
   /************************************************************/
   //

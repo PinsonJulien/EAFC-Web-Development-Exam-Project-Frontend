@@ -25,24 +25,28 @@ Currently none.
 ## Features to implement
 - if any request times out the token; delete from the cookies, and redirect to /login. (disconnect method in auth service) (https://angular.io/guide/router) (https://angular.io/guide/http#intercepting-requests-and-responses)
 
-- Register : Mark invalid the email on 422 error
-  - Store every failed attempt in a Set to ensure uniqueness. (trigger validation after insert)
-  - Check every input. (with custom validator ? NotInArray ?)
-
 - Accessibility with theme color pickers.
-- Ensure all components are standalone : https://angular.io/guide/standalone-components
 
 - Keep the favorite language (or the one selected before login / register) in state, use it to fill the favorite language field default value on registration.
-
-
 
 ## Todo
 - Must use the snackbar for every failed/successful requests.
 
-- Fix style issue in auth.layout
 - Register form will be in a linear stepper https://material.angular.io/components/stepper/overview
+- Register : Mark invalid the email on 422 error
+  - Store every failed attempt in a Set to ensure uniqueness. (trigger validation after insert)
+  - Check every input. (with custom validator ? NotInArray ?)
+
+- Fix style issue in auth.layout
 
 - refresh user on page change
+
+- sort the enrollments after filter by : 
+  - formation name asc
+  - status asc 
+
+- button to show in modal(?) the message on enrollment if it's not NULL.
+
 
 ## Features to improve :
 - Create a custom file import component to avoid using the default input style. The style is unavailable in Angular Material.

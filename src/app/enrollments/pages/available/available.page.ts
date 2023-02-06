@@ -140,11 +140,10 @@ export class AvailableEnrollmentsPage implements OnInit
       this.enrollmentStoreService.createdEnrollment$
       .pipe(skip(1), first())
       .subscribe((enrollment: Enrollment|null) => {
-        if (!enrollment) return;
-
-        // When a new enrollment was changed, refresh the user.
+        // refresh the user data
         this.authStoreService.refreshUser();
-        console.log('rest')
+
+        if (!enrollment) return;
 
         // Inform the user of the successul operation
         const message = `Your enrollment to the formation '${enrollment.formation!.name}' was received.`;

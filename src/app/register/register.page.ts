@@ -169,27 +169,6 @@ export class RegisterPage implements OnInit
     };
 
     this.authStoreService.register(body, this.picture);
-
-    /*this.authService.register(body, this.picture).subscribe({
-      next: (v) => {
-        // Save the user
-        console.log(v);
-
-        // Notify
-        this.snackBar.open('Your account was successfully created !', 'close', {
-          duration: 300
-        });
-
-        // Redirect
-        this.router.navigate(['home']);
-      },
-      error: (e) => {
-        this.snackBar.open(e.error.message, 'close', {
-          duration: 3000
-        });
-      },
-      complete: () => {}
-    });*/
   }
 
   protected uploadPicture(event: any) {
