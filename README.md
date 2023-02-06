@@ -19,8 +19,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Bugs to fix
-Currently none.
+
 
 ## Features to implement
 - if any request times out the token; delete from the cookies, and redirect to /login. (disconnect method in auth service) (https://angular.io/guide/router) (https://angular.io/guide/http#intercepting-requests-and-responses)
@@ -55,3 +54,26 @@ Currently none.
 - AuthStore should only store the user id in local storage and perform a getById on instantiation. This will ensure the right user is logged in and no personal data is locally stored. If the UserApiService got an authorization error, the store will trigger the logout().
 
 - login/register If role is secretary, go to /admin instead of /courses
+
+## Planned refactors :
+
+### Login / register
+- should have a function called "setupFormErrors()"
+
+    Normal error methods will be removed.
+
+    which will consist of these for each fields and errors :
+    control.setErrors({'required': 'Field is required'});
+
+    Errors will be handled like so : 
+    `<div *ngIf="form.get('fieldName').invalid && form.get('fieldName').touched">
+      <div *ngIf="form.get('fieldName').errors['required']">
+        {{ form.get('fieldName').errors['required'] }}
+      </div>
+      <div *ngIf="form.get('fieldName').errors['custom']">
+        {{ form.get('fieldName').errors['custom'] }}
+      </div>
+    </div>
+    `
+
+- Register should use a CountryStore instead of the service. Only one fetch will be necessary.

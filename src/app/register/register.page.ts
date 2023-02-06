@@ -14,6 +14,8 @@ import { FormField } from '../shared/components/forms/fields/form-field/form.fie
 import { FormFieldOption } from '../shared/components/forms/types/FormFieldOption';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { skip } from 'rxjs/internal/operators/skip';
+import { first } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -35,45 +37,11 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 })
 export class RegisterPage implements OnInit
 {
-  constructor(
-    private authStoreService: AuthStoreService,
-    private countryService: CountryApiService,
-    private snackBar: MatSnackBar,
-    private router: Router,
-  ) {
-    //
-  }
-
-  public ngOnInit(): void {
-    // Listen to user being received upon successful register. Redirects to /home
-    this.authStoreService.user$.subscribe((user: User|null) => {
-      if (!user) return;
-
-      this.router.navigate(['home']);
-    });
-
-    // Listen to errors, they will be returned with a visual message.
-    this.authStoreService.error$.subscribe((error: ApiError|null) => {
-      if (!error) return;
-
-      this.snackBar.open(error.message, 'close');
-    });
-
-    // Fetch the list of countries to populate selects.
-    this.countryService.get().subscribe({
-      next: (countries: Country[]) => {
-        this.countryOptions = countries.map((country: Country): FormFieldOption => {
-          return {
-            label: country.name,
-            value: country.id,
-          }
-        });
-      },
-      error: (error: any) => {
-        this.snackBar.open(error.error.message);
-      }
-    });
-  }
+  /************************************************************/
+  //
+  // Properties
+  //
+  /************************************************************/
 
   protected countryOptions!: FormFieldOption[];
 
@@ -133,7 +101,7 @@ export class RegisterPage implements OnInit
 
   protected picture!: File;
 
-  // Form
+  // Form group
   protected registerForm: FormGroup = new FormGroup({
     username: this.username,
     email: this.email,
@@ -149,8 +117,60 @@ export class RegisterPage implements OnInit
     phone: this.phone,
   });
 
+  /************************************************************/
+  //
+  // Constructor
+  //
+  /************************************************************/
+
+  constructor(
+    protected authStoreService: AuthStoreService,
+    protected countryService: CountryApiService,
+    protected snackBar: MatSnackBar,
+    protected router: Router,
+  ) {
+    //
+  }
+
+  /************************************************************/
+  //
+  // Implemented Methods
+  //
+  /************************************************************/
+
+  public ngOnInit(): void
+  {
+    // Fetch the list of countries to populate selects.
+    this.countryService.get().subscribe({
+      next: (countries: Country[]) => {
+        this.countryOptions = countries.map((country: Country): FormFieldOption => {
+          return {
+            label: country.name,
+            value: country.id,
+          }
+        });
+      },
+      error: (error: any) => {
+        this.snackBar.open(error.error.message);
+      }
+    });
+  }
+
+  /************************************************************/
+  //
   // Methods
-  protected async onSubmit() {
+  //
+  /************************************************************/
+
+    /**
+   * Sends the form data to the AuthStore register method.
+   * On success: redirects to the /home page.
+   * On failure: shows a error message.
+   *
+   * @returns void
+   */
+  protected onSubmit()
+  {
     if (!this.registerForm.valid) return;
 
     const body: RegisterRequestBody = {
@@ -168,17 +188,47 @@ export class RegisterPage implements OnInit
       phone: this.phone.value ?? '',
     };
 
+    // Try to register using the given data.
     this.authStoreService.register(body, this.picture);
+
+    // Listen to the next value of user which will change with the register call.
+    // If it succeeded, user is set and we navigate to /home
+    this.authStoreService.user$
+    .pipe(skip(1), first())
+    .subscribe((user: User|null) => {
+      if (!user) return;
+
+      this.router.navigate(['home']);
+    });
+
+    // Listen to the next error
+    this.authStoreService.error$
+    .pipe(skip(1), first())
+    .subscribe((error: ApiError|null) => {
+      if (!error) return;
+
+      this.snackBar.open(error.message, 'close');
+    });
   }
 
-  protected uploadPicture(event: any) {
+  /**
+   * Set the value of the picture property with the memory address of the input 'file'.
+   *
+   * @param event
+   * @returns void
+   */
+  protected uploadPicture(event: any): void
+  {
     if (event.target && event.target.files) {
       this.picture = event.target.files[0];
     }
   }
 
-  // Validation messages
-
+  /**
+   * Get the error message based on the email field error.
+   *
+   * @returns string
+   */
   protected getEmailErrorMessage(): string
   {
     switch(true) {
@@ -191,6 +241,11 @@ export class RegisterPage implements OnInit
     }
   }
 
+  /**
+   * Get the error message based on the username field error.
+   *
+   * @returns string
+   */
   protected getUsernameErrorMessage(): string
   {
     switch(true) {
@@ -201,6 +256,11 @@ export class RegisterPage implements OnInit
     }
   }
 
+  /**
+   * Get the error message based on the password field error.
+   *
+   * @returns string
+   */
   protected getPasswordErrorMessage(): string
   {
     switch(true) {
@@ -213,6 +273,11 @@ export class RegisterPage implements OnInit
     }
   }
 
+  /**
+   * Get the error message based on the confirmation password field error.
+   *
+   * @returns string
+   */
   protected getPasswordConfirmationErrorMessage(): string
   {
     switch(true) {
@@ -227,6 +292,11 @@ export class RegisterPage implements OnInit
     }
   }
 
+  /**
+   * Get the error message based on the lastname field error.
+   *
+   * @returns string
+   */
   protected getLastnameErrorMessage(): string
   {
     switch(true) {
@@ -237,6 +307,11 @@ export class RegisterPage implements OnInit
     }
   }
 
+  /**
+   * Get the error message based on the firstname field error.
+   *
+   * @returns string
+   */
   protected getFirstnameErrorMessage(): string
   {
     switch(true) {
@@ -247,6 +322,11 @@ export class RegisterPage implements OnInit
     }
   }
 
+  /**
+   * Get the error message based on the nationality field error.
+   *
+   * @returns string
+   */
   protected getNationalityErrorMessage(): string
   {
     switch(true) {
@@ -257,6 +337,11 @@ export class RegisterPage implements OnInit
     }
   }
 
+  /**
+   * Get the error message based on the birthdate field error.
+   *
+   * @returns string
+   */
   protected getBirthdateErrorMessage(): string
   {
     switch(true) {
@@ -267,6 +352,11 @@ export class RegisterPage implements OnInit
     }
   }
 
+  /**
+   * Get the error message based on the address field error.
+   *
+   * @returns string
+   */
   protected getAddressErrorMessage(): string
   {
     switch(true) {
@@ -277,6 +367,11 @@ export class RegisterPage implements OnInit
     }
   }
 
+  /**
+   * Get the error message based on the postal code field error.
+   *
+   * @returns string
+   */
   protected getPostalCodeErrorMessage(): string
   {
     switch(true) {
@@ -287,6 +382,11 @@ export class RegisterPage implements OnInit
     }
   }
 
+  /**
+   * Get the error message based on the country field error.
+   *
+   * @returns string
+   */
   protected getAddressCountryErrorMessage(): string
   {
     switch(true) {
@@ -297,6 +397,11 @@ export class RegisterPage implements OnInit
     }
   }
 
+  /**
+   * Get the error message based on the phone field error.
+   *
+   * @returns string
+   */
   protected getPhoneErrorMessage(): string
   {
     switch(true) {

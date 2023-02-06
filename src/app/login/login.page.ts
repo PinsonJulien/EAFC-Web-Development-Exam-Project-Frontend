@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
@@ -9,6 +9,7 @@ import { ApiError } from '../core/types/api/api-error';
 import { FormField } from '../shared/components/forms/fields/form-field/form.field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { first, skip } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -28,48 +29,57 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
   ]
 })
-export class LoginPage implements OnInit
+export class LoginPage
 {
-  constructor(
-    private snackBar: MatSnackBar,
-    private authStoreService: AuthStoreService,
-    private router: Router
-  ) {}
+  /************************************************************/
+  //
+  // Properties
+  //
+  /************************************************************/
 
-  public ngOnInit(): void
-  {
-    // Listen to user being received upon successful login. Redirects to /home
-    this.authStoreService.user$.subscribe((user: User|null) => {
-      if (!user) return;
-
-      this.router.navigate(['home']);
-    });
-
-    // Listen to errors, they will be returned with a visual message.
-    this.authStoreService.error$.subscribe((error: ApiError|null) => {
-      if (!error) return;
-
-      this.snackBar.open(error.message, 'close');
-    });
-  }
-
-  // Controls
-  public email = new FormControl<string|null>(null, [
+  protected email = new FormControl<string|null>(null, [
     Validators.required,
     Validators.email,
   ]);
 
-  public password = new FormControl<string|null>(null, [
+  protected password = new FormControl<string|null>(null, [
     Validators.required,
-    Validators.minLength(8),
   ]);
 
-  public loginForm = new FormGroup({
+  // Form group
+  protected loginForm = new FormGroup({
     email: this.email,
     password: this.password,
   });
 
-  public onSubmit()
+  /************************************************************/
+  //
+  // Constructor
+  //
+  /************************************************************/
+
+  constructor(
+    protected snackBar: MatSnackBar,
+    protected authStoreService: AuthStoreService,
+    protected router: Router
+  ) {
+    //
+  }
+
+  /************************************************************/
+  //
+  // Methods
+  //
+  /************************************************************/
+
+  /**
+   * Sends the form data to the AuthStore login method.
+   * On success: redirects to the /home page.
+   * On failure: shows a error message.
+   *
+   * @returns void
+   */
+  protected onSubmit(): void
   {
     if (!this.loginForm.valid) return;
 
@@ -78,10 +88,35 @@ export class LoginPage implements OnInit
       password: this.password.value ?? '',
     }
 
+    // Login using the given credentials.
     this.authStoreService.login(credentials);
+
+    // Listen to the next value of user which will change with the login call.
+    // If it succeeded, user is set and we navigate to /home
+    this.authStoreService.user$
+    .pipe(skip(1), first())
+    .subscribe((user: User|null) => {
+      if (!user) return;
+
+      this.router.navigate(['home']);
+    });
+
+    // Listen to the next error
+    this.authStoreService.error$
+    .pipe(skip(1), first())
+    .subscribe((error: ApiError|null) => {
+      if (!error) return;
+
+      this.snackBar.open(error.message, 'close');
+    });
   }
 
-  public getEmailErrorMessage()
+  /**
+   * Get the error message based on the email field error.
+   *
+   * @returns string
+   */
+  protected getEmailErrorMessage(): string
   {
     switch (true) {
       case this.email.hasError('required'):
@@ -93,7 +128,12 @@ export class LoginPage implements OnInit
     }
   }
 
-  public getPasswordErrorMessage()
+  /**
+   * Get the error message based on the password field error.
+   *
+   * @returns string
+   */
+  protected getPasswordErrorMessage(): string
   {
     switch (true) {
       case this.password.hasError('required'):
