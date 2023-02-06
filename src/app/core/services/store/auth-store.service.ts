@@ -12,8 +12,20 @@ import StoreService from "./store.service";
 @Injectable({ providedIn: 'root'})
 export default class AuthStoreService extends StoreService
 {
+  /**************************************************/
+  //
+  // Properties
+  //
+  /**************************************************/
+
   protected _user = new BehaviorSubject<User | null>(null);
   public user$ = this._user.asObservable();
+
+  /**************************************************/
+  //
+  // Constructor
+  //
+  /**************************************************/
 
   constructor(
     protected authApiService: AuthApiService,
@@ -29,7 +41,11 @@ export default class AuthStoreService extends StoreService
     this.refreshUser();
   }
 
-  // GETTERS SETTERS
+  /**************************************************/
+  //
+  // Getters / setters
+  //
+  /**************************************************/
 
   /**
    * Get the current user from the behavior subject.
@@ -55,7 +71,11 @@ export default class AuthStoreService extends StoreService
     this._user.next(user);
   }
 
-  // METHODS
+  /**************************************************/
+  //
+  // Methods
+  //
+  /**************************************************/
 
   /**
    * Login using the Auth api and update the behavior subjects using the results.
@@ -166,7 +186,11 @@ export default class AuthStoreService extends StoreService
     });
   }
 
-  // Local storage methods for data persistance.
+  /**************************************************/
+  //
+  // Data persistance methods (Local storage)
+  //
+  /**************************************************/
 
   /**
    * Retrieve the user model that is stored in the local storage.

@@ -9,7 +9,19 @@ import { RequestAction } from "../../types/requests/request-action.enum";
 @Injectable({providedIn: 'root'})
 export default class AuthApiService extends ApiService
 {
+  /**************************************************/
+  //
+  // Properties
+  //
+  /**************************************************/
+
   protected override readonly apiRoute: string = "api/v1/auth";
+
+  /**************************************************/
+  //
+  // Methods
+  //
+  /**************************************************/
 
   /**
    * Call the /login api endpoint and stream as Observable.

@@ -1,24 +1,23 @@
 import { Injectable } from "@angular/core";
-import { map } from "rxjs";
-import Course from "../../models/Course";
-import { RequestAction } from "../../types/requests/request-action.enum";
 import { ApiService } from "./api.service";
 
 @Injectable({ providedIn: 'root'})
-export default class CourseApiService extends ApiService {
+export default class CourseApiService extends ApiService
+{
+  /**************************************************/
+  //
+  // Properties
+  //
+  /**************************************************/
 
-  public getAll()
-  {
-    return this.request(RequestAction.GET, 'courses', {}, {})
-      .pipe(
-        map( (response: any) => {
-          return response.data.map((course: Course) => new Course(course))
-        })
-      );
-  }
+  protected override readonly apiRoute: string = "api/v1/courses";
 
-  public getById()
-  {
+  /**************************************************/
+  //
+  // Methods
+  //
+  /**************************************************/
 
-  }
+  //
+
 }

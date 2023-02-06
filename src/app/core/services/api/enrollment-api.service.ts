@@ -13,6 +13,7 @@ export default class EnrollmentApiService extends ApiService
   // Properties
   //
   /**************************************************/
+
   protected override readonly apiRoute: string = "api/v1/enrollments";
 
   /**************************************************/
@@ -26,6 +27,7 @@ export default class EnrollmentApiService extends ApiService
    * On success the data is mapped to an instance of Enrollment.
    *
    * @param body CreateEnrollmentBody
+   * @returns Observable<Enrollment>
    */
   public create(body: CreateEnrollmentBody): Observable<Enrollment>
   {

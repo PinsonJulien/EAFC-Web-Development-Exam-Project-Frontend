@@ -9,9 +9,9 @@ import { combineLatest, first, map, Observable, skip } from "rxjs";
 import Enrollment from "src/app/core/models/Enrollment";
 import Formation from "src/app/core/models/Formation";
 import User from "src/app/core/models/User";
-import AuthStoreService from "src/app/core/services/store/auth.store.service";
+import AuthStoreService from "src/app/core/services/store/auth-store.service";
 import EnrollmentStoreService from "src/app/core/services/store/enrollment-store.service";
-import FormationStoreService from "src/app/core/services/store/formation.store.service";
+import FormationStoreService from "src/app/core/services/store/formation-store.service";
 
 @Component({
   standalone: true,

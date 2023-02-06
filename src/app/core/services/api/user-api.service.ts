@@ -7,7 +7,19 @@ import { ApiService } from "./api.service";
 @Injectable({providedIn: 'root'})
 export default class UserApiService extends ApiService
 {
+  /**************************************************/
+  //
+  // Properties
+  //
+  /**************************************************/
+
   protected override readonly apiRoute: string = "api/v1/users";
+
+  /**************************************************/
+  //
+  // Methods
+  //
+  /**************************************************/
 
   /**
    * Fetch a user by it's id and stream it as Observable.
@@ -31,4 +43,5 @@ export default class UserApiService extends ApiService
       })
     );
   }
+
 }

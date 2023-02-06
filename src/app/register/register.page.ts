@@ -6,7 +6,7 @@ import { matchValidator } from 'src/app/shared/validators/match-validator';
 import { Router } from '@angular/router';
 import Country from '../core/models/Country';
 import CountryApiService from '../core/services/api/country-api.service';
-import AuthStoreService from '../core/services/store/auth.store.service';
+import AuthStoreService from '../core/services/store/auth-store.service';
 import { RegisterRequestBody } from '../core/types/auth/register-request-body';
 import User from '../core/models/User';
 import { ApiError } from '../core/types/api/api-error';

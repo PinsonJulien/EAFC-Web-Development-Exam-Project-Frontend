@@ -6,7 +6,13 @@ import { RequestAction } from "../../types/requests/request-action.enum";
 import { RequestParameters } from "../../types/requests/request-parameters";
 
 @Injectable({providedIn: 'root'})
-export class ApiService {
+export class ApiService
+{
+  /**************************************************/
+  //
+  // Properties
+  //
+  /**************************************************/
 
   // Why "//" instead of "http" -> angular will ignore the cookie setup to X-XSRF-TOKEN header.
   // https://stackoverflow.com/questions/50510998/angular-6-does-not-add-x-xsrf-token-header-to-http-request
@@ -22,11 +28,31 @@ export class ApiService {
     withCredentials: true, // Absolutely needed parameter for session cookies.
   };
 
+  /**************************************************/
+  //
+  // Constructor
+  //
+  /**************************************************/
+
   constructor(
     protected http: HttpClient
   ) {
     //
   }
+
+  /**************************************************/
+  //
+  // Getters / setters
+  //
+  /**************************************************/
+
+  //
+
+  /**************************************************/
+  //
+  // Methods
+  //
+  /**************************************************/
 
   /**
    * Call the given path api endpoint using a specified action, body and options.

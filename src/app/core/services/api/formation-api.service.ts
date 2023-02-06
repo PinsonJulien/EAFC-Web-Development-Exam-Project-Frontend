@@ -8,12 +8,26 @@ import { ApiService } from "./api.service";
 @Injectable({providedIn: 'root'})
 export default class FormationApiService extends ApiService
 {
+
+  /**************************************************/
+  //
+  // Properties
+  //
+  /**************************************************/
+
   protected override readonly apiRoute: string = "api/v1/formations";
+
+  /**************************************************/
+  //
+  // Methods
+  //
+  /**************************************************/
 
   /**
    * Fetch all formations and stream them as Observable.
    * On success the data is mapped to an array of formations.
    *
+   * @param parameters RequestParameters
    * @returns Observable<Formation[]>
    */
   public get(parameters: RequestParameters): Observable<Formation[]>
@@ -24,4 +38,5 @@ export default class FormationApiService extends ApiService
       })
     );
   }
+
 }

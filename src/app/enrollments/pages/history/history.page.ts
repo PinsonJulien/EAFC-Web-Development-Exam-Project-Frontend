@@ -8,7 +8,7 @@ import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { combineLatest, first, map, Observable, skip, startWith } from "rxjs";
 import Enrollment from "src/app/core/models/Enrollment";
 import Status from "src/app/core/models/Status";
-import AuthStoreService from "src/app/core/services/store/auth.store.service";
+import AuthStoreService from "src/app/core/services/store/auth-store.service";
 import EnrollmentStoreService from "src/app/core/services/store/enrollment-store.service";
 import StatusStoreService from "src/app/core/services/store/status-store.service";
 

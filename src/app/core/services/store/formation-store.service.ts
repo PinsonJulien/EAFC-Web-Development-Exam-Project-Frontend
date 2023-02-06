@@ -8,8 +8,20 @@ import StoreService from "./store.service";
 @Injectable({ providedIn: 'root'})
 export default class FormationStoreService extends StoreService
 {
+  /**************************************************/
+  //
+  // Properties
+  //
+  /**************************************************/
+
   protected _formations = new BehaviorSubject<Formation[] | null>(null);
   public formations$ = this._formations.asObservable();
+
+  /**************************************************/
+  //
+  // Constructor
+  //
+  /**************************************************/
 
   constructor(
     protected formationApiService: FormationApiService,
@@ -17,7 +29,11 @@ export default class FormationStoreService extends StoreService
     super();
   }
 
-  // GETTERS SETTERS
+  /**************************************************/
+  //
+  // Getters / setters
+  //
+  /**************************************************/
 
   /**
    * Get the current formations from the behavior subject.
@@ -32,13 +48,19 @@ export default class FormationStoreService extends StoreService
   /**
    * Set the value of the user behavior subject and add/remove it from the localstore.
    *
-   * @param formation Formation[] | null
+   * @param formations Formation[] | null
    * @returns void
    */
   protected set formations(formations: Formation[] | null)
   {
     this._formations.next(formations);
   }
+
+  /**************************************************/
+  //
+  // Methods
+  //
+  /**************************************************/
 
   /**
    * Refresh the list of formations and update it's behavior subject.

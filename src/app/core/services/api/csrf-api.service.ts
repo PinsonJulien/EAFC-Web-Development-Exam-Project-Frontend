@@ -6,8 +6,19 @@ import { ApiService } from "./api.service";
 @Injectable({providedIn: 'root'})
 export default class CsrfApiService extends ApiService
 {
+  /**************************************************/
+  //
+  // Properties
+  //
+  /**************************************************/
 
   protected override readonly apiRoute: string = "sanctum";
+
+  /**************************************************/
+  //
+  // Methods
+  //
+  /**************************************************/
 
   public getToken(): Observable<Object>
   {

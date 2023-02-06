@@ -5,9 +5,20 @@ import { ApiError } from "../../types/api/api-error";
 @Injectable({ providedIn: 'root'})
 export default abstract class StoreService
 {
+  /**************************************************/
+  //
   // Properties
+  //
+  /**************************************************/
+
   protected _error = new BehaviorSubject<ApiError | null>(null);
   public error$ = this._error.asObservable();
+
+  /**************************************************/
+  //
+  // Constructor
+  //
+  /**************************************************/
 
   constructor(
     //
@@ -15,7 +26,11 @@ export default abstract class StoreService
     //
   }
 
+  /**************************************************/
+  //
   // Getters / setters
+  //
+  /**************************************************/
 
   /**
   * Get the current error from the behavior subject.
@@ -38,7 +53,12 @@ export default abstract class StoreService
     this._error.next(error);
   }
 
+  /**************************************************/
+  //
   // Methods
+  //
+  /**************************************************/
 
   //
+
 }
