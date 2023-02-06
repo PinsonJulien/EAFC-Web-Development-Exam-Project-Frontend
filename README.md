@@ -41,10 +41,6 @@ Currently none.
 
 - refresh user on page change
 
-- sort the enrollments after filter by : 
-  - formation name asc
-  - status asc 
-
 - button to show in modal(?) the message on enrollment if it's not NULL. (Message for the school)
 - table header sort ? will it work ?
 

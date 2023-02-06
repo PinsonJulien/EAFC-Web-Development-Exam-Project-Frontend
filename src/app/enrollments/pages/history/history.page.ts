@@ -86,7 +86,18 @@ export class HistoryEnrollmentsPage implements OnInit
 
         const enrollments: Enrollment[] = user.relations.enrollments;
 
-        return this.filterEnrollmentsByStatus(enrollments, statuses);
+        const filtered = this.filterEnrollmentsByStatus(enrollments, statuses);
+
+        // Sort by formation name ASC ; updatedAt DESC
+        const sorted = filtered.sort((a: Enrollment, b: Enrollment) => {
+          return (
+            (a.formation!.name !== b.formation!.name)
+            ? a.formation!.name.localeCompare(b.formation!.name)
+            : b.updatedAt.getTime() - a.updatedAt.getTime()
+          );
+        });
+
+        return sorted;
       })
     );
 
