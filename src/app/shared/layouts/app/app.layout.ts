@@ -30,6 +30,37 @@ import { MatListModule } from "@angular/material/list";
 })
 export class AppLayout implements OnInit
 {
+  /************************************************************/
+  //
+  // Properties
+  //
+  /************************************************************/
+
+  public user!: User | null;
+  public isAdminRoute: boolean = false;
+
+  public leftDrawerPages: AppLayout['basePages'] = [];
+
+  public basePages = [
+    {
+      name: 'Enrollments',
+      path: 'enrollments'
+    },
+  ];
+
+  public adminPages = [
+    {
+      name: 'Enrollments',
+      path: '/admin/enrollments'
+    },
+  ];
+
+  /************************************************************/
+  //
+  // Constructor
+  //
+  /************************************************************/
+
   constructor(
     private authStoreService: AuthStoreService,
     private router: Router,
@@ -37,6 +68,12 @@ export class AppLayout implements OnInit
   ) {
     //
   }
+
+  /************************************************************/
+  //
+  // Implemented Methods
+  //
+  /************************************************************/
 
   ngOnInit(): void {
     // Get the current user in store.
@@ -73,12 +110,11 @@ export class AppLayout implements OnInit
     });
   }
 
-  // Properties
-
-  public user!: User | null;
-  public isAdminRoute: boolean = false;
-
+  /************************************************************/
+  //
   // Methods
+  //
+  /************************************************************/
 
   /**
    * Logout action for the button.
@@ -99,5 +135,8 @@ export class AppLayout implements OnInit
   public updateIsAdminRoute(): void
   {
     this.isAdminRoute = this.router.url.startsWith('/admin');
+    this.leftDrawerPages = (this.isAdminRoute)
+      ? this.adminPages
+      : this.basePages;
   }
 }

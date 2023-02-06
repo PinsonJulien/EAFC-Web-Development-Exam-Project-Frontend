@@ -51,8 +51,15 @@
     mode="side"
     role="navigation"
   >
-    <mat-nav-list>
-      <a mat-list-item routerLink="enrollments">Enrollments</a>
+    <mat-nav-list
+      *ngFor="let page of leftDrawerPages"
+    >
+      <a
+        mat-list-item
+        [routerLink]="page.path"
+      >
+        {{ page.name }}
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 

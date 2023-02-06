@@ -41,9 +41,14 @@ Currently none.
 
 - refresh user on page change
 
+- Enrollment may be shown as  drawers instead for the responsibity. Tables are terrible at it.
 - button to show in modal(?) the message on enrollment if it's not NULL. (Message for the school)
 - table header sort ? will it work ?
 
+- App component should listen to the experired session and use the snackbar to signal to the user + redirect it to /login
+  - The auth will have a sessionExpired field ? Should it store the session cookie time in localstorage ?
+
+- Show loading on async pipes maybe using this solutin : https://medium.com/angular-in-depth/angular-show-loading-indicator-when-obs-async-is-not-yet-resolved-9d8e5497dd8
 
 ## Features to improve :
 - Create a custom file import component to avoid using the default input style. The style is unavailable in Angular Material.

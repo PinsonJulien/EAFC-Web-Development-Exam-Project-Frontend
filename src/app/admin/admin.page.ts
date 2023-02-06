@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { RouterModule } from "@angular/router";
 
 @Component({
   standalone: true,
@@ -6,7 +7,12 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
   templateUrl: 'admin.page.html',
   styleUrls: ['admin.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: []
+  imports: [
+    RouterModule
+  ],
+  providers: [
+    //
+  ],
 })
 export class AdminPage
 {

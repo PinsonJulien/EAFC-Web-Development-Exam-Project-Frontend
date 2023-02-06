@@ -15,6 +15,9 @@ export default class EnrollmentStoreService extends StoreService
   //
   /**************************************************/
 
+  protected _enrollments = new BehaviorSubject<Enrollment[] | null>(null);
+  public enrollments$ = this._enrollments.asObservable();
+
   protected _createdEnrollment = new BehaviorSubject<Enrollment | null>(null);
   public createdEnrollment$ = this._createdEnrollment.asObservable();
 
@@ -38,6 +41,27 @@ export default class EnrollmentStoreService extends StoreService
   // Getters / setters
   //
   /**************************************************/
+
+  /**
+   * Get the current enrollments from the behavior subject.
+   *
+   * @returns Enrollment[] | null
+   */
+  public get enrollments(): Enrollment[] | null
+  {
+    return this._enrollments.getValue();
+  }
+
+  /**
+  * Set the value of the enrollments behavior subject.
+  *
+  * @param enrollments Formation[] | null
+  * @returns void
+  */
+  protected set enrollments(enrollments: Enrollment[] | null)
+  {
+    this._enrollments.next(enrollments);
+  }
 
   /**
    * Get the current createdEnrollment from the behavior subject.
@@ -86,6 +110,25 @@ export default class EnrollmentStoreService extends StoreService
   // Methods
   //
   /**************************************************/
+
+   /**
+    * Refresh the list of enrollments and update it's behavior subject.
+    * Uses the EnrollmentApiService to get all enrollments.
+    *
+    * @returns void
+    */
+  public refreshEnrollments(): void
+  {
+    this.enrollmentApiService.get().subscribe({
+      next: (enrollments: Enrollment[]) => {
+        this.enrollments = enrollments;
+        this.error = null;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.error = error.error;
+      }
+    });
+  }
 
   /**
    * Create a new enrollment using the Enrollment api.

@@ -23,6 +23,21 @@ export default class EnrollmentApiService extends ApiService
   /**************************************************/
 
   /**
+   * Fetch all enrollments and stream them as Observable.
+   * On success the data is mapped to an array of Enrollment.
+   *
+   * @returns Observable<Enrollment[]>
+   */
+  public get(): Observable<Enrollment[]>
+  {
+    return this.request<Enrollment[]>(RequestAction.GET, '', {}).pipe(
+      map((response: any) => {
+        return response.data.map((enrollment: Enrollment) => new Enrollment(enrollment));
+      })
+    );
+  }
+
+  /**
    * Create a new enrollment and stream it as Observable.
    * On success the data is mapped to an instance of Enrollment.
    *
