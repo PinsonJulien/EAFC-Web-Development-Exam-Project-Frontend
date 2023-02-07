@@ -32,14 +32,6 @@ Run `ng serve` and access the application at `http://127.0.0.1:4200/`.
 - Unit test (Karma): `ng test`
 - E2E test : `ng e2e`
 
-
-
-# WIP CURRENTLY WRITING
-
-
-
-
-
 ### Project evolutions
 
 ### Ideas
@@ -48,62 +40,58 @@ Run `ng serve` and access the application at `http://127.0.0.1:4200/`.
 
 ### Possible improvements / todo
 
+- Overall styling :
+  - Customize the color scheme of Angular Material.
+
 - AppComponent
   - Should handle the session expiration by listening to every store errors, will redirecto to /login
-  - 
 
+- AuthLayout
+  - Fix the styling.
+
+- RegisterPage (Lot of rework)
+  - Form should be in a [linear stepper](https://material.angular.io/components/stepper/overview)
+  - Mark invalid the username or email on 422 error + specified field.
+    - Keep already existing email/username in an array for validation.
+  - Use the CountryStore instead of the service. Only fetch once.
+
+- RegisterPage & LoginPage
+  - Should have a function called "setupFormErrors()"
+    - Remove all the "get...ErrorMessage" methods.
+    - Errors will be set like so : `control.setErrors({'required': 'Field is required'});`
+    - Html : Errors will be handled like so :
+```
+<div *ngIf="form.get('fieldName').invalid && form.get('fieldName').touched">
+  <div *ngIf="form.get('fieldName').errors['required']">
+    {{ form.get('fieldName').errors['required'] }}
+  </div>
+  <div *ngIf="form.get('fieldName').errors['custom']">
+    {{ form.get('fieldName').errors['custom'] }}
+  </div>
+</div>
+```
+
+- Enrollments : History
+  - Show enrollments in drawers instead for tables for better responsivity.
+  - Button to show the message that are not null, on enrollments that aren't *pending*
+
+- Admin
+  - Enrollments
+    - Table sort by the header, triggers a change in array of sorts
+
+- AuthStoreService : 
+  - Store the session expiration date and react to it for automatic disconnection ? Localstorage ?
+
+- User experience : 
+  - Show loading on async pipes maybe using this solution : https://medium.com/angular-in-depth/angular-show-loading-indicator-when-obs-async-is-not-yet-resolved-9d8e5497dd8
+  - Always show a snackBar on requests where the user interacts (post, patch, delete)
+  - On login, if  the role is secretary, redirect to */admin* instead of */home*
 
 
 ### Backend features that aren't implemented 
 
-## Todo
-- Register form will be in a linear stepper https://material.angular.io/components/stepper/overview
-- Register : Mark invalid the email on 422 error
-  - Store every failed attempt in a Set to ensure uniqueness. (trigger validation after insert)
-  - Check every input. (with custom validator ? NotInArray ?)
-
-- Fix style issue in auth.layout
-
-- refresh user on page change
-
-- Enrollment may be shown as  drawers instead for the responsibity. Tables are terrible at it.
-- button to show in modal(?) the message on enrollment if it's not NULL. (Message for the school)
-- table header sort ? will it work ?
-
-- App component should listen to the experired session and use the snackbar to signal to the user + redirect it to /login
-  - The auth will have a sessionExpired field ? Should it store the session cookie time in localstorage ?
-
-- Show loading on async pipes maybe using this solutin : https://medium.com/angular-in-depth/angular-show-loading-indicator-when-obs-async-is-not-yet-resolved-9d8e5497dd8
-
-## Features to improve :
-- Create a custom file import component to avoid using the default input style. The style is unavailable in Angular Material.
-- AuthStore should only store the user id in local storage and perform a getById on instantiation. This will ensure the right user is logged in and no personal data is locally stored. If the UserApiService got an authorization error, the store will trigger the logout().
-
-- login/register If role is secretary, go to /admin instead of /courses
-
-## Planned refactors :
-### Login / register
-- should have a function called "setupFormErrors()"
-
-    Normal error methods will be removed.
-
-    which will consist of these for each fields and errors :
-    control.setErrors({'required': 'Field is required'});
-
-    Errors will be handled like so : 
-    `<div *ngIf="form.get('fieldName').invalid && form.get('fieldName').touched">
-      <div *ngIf="form.get('fieldName').errors['required']">
-        {{ form.get('fieldName').errors['required'] }}
-      </div>
-      <div *ngIf="form.get('fieldName').errors['custom']">
-        {{ form.get('fieldName').errors['custom'] }}
-      </div>
-    </div>
-    `
-
-- Register should use a CountryStore instead of the service. Only one fetch will be necessary.
-
-
 ## Urgent todo :
 - Banned page (fast) + fix the routes in backend to allow disconnect.
 - Fix user storage to be on ID.
+
+- AuthStore should only store the user id in local storage and perform a getById on instantiation. This will ensure the right user is logged in and no personal data is locally stored. If the UserApiService got an authorization error, the store will trigger the logout().
