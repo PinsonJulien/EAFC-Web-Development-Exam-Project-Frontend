@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import Enrollment from "../../models/Enrollment";
 import { CreateEnrollmentBody } from "../../types/api/enrollments/create-enrollment-body";
+import { GetAllEnrollmentsParams } from "../../types/api/enrollments/get-all-enrollments-params";
 import { UpdateEnrollmentBody } from "../../types/api/enrollments/update-enrollment-body";
 import EnrollmentApiService from "../api/enrollment-api.service";
 import StoreService from "./store.service";
@@ -142,9 +143,9 @@ export default class EnrollmentStoreService extends StoreService
     *
     * @returns void
     */
-  public refreshEnrollments(): void
+  public refreshEnrollments(options: GetAllEnrollmentsParams = {}): void
   {
-    this.enrollmentApiService.get().subscribe({
+    this.enrollmentApiService.get(options).subscribe({
       next: (enrollments: Enrollment[]) => {
         this.enrollments = enrollments;
         this.error = null;

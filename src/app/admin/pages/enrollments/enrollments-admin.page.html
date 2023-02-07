@@ -2,6 +2,52 @@
   *ngIf="enrollments | async as enrollments"
 >
 
+  <div id="filter-row">
+    <span>
+      Filters :
+    </span>
+
+    <mat-form-field
+      *ngIf="statuses | async as statuses"
+      subscriptSizing="dynamic"
+    >
+      <mat-label>
+        Status
+      </mat-label>
+      <mat-select
+        [formControl]="statusFilter"
+      >
+        <mat-option [value]="null">None</mat-option>
+        <mat-option
+          *ngFor="let status of statuses"
+          [value] = "status"
+        >
+          {{ status.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field
+      *ngIf="formations | async as formations"
+      subscriptSizing="dynamic"
+    >
+      <mat-label>
+        Formation
+      </mat-label>
+      <mat-select
+        [formControl]="formationFilter"
+      >
+        <mat-option [value]="null">None</mat-option>
+        <mat-option
+          *ngFor="let formation of formations"
+          [value] = "formation"
+        >
+          {{ formation.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <table
     mat-table
     multiTemplateDataRows

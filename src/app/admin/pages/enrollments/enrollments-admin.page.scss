@@ -32,3 +32,14 @@ form {
     font-size: 1.2em;
   }
 }
+
+#filter-row {
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+
+  > * {
+    margin: auto 0 auto 0;
+  }
+}

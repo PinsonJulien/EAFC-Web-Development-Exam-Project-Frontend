@@ -9,12 +9,16 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatTableModule } from "@angular/material/table";
-import { first, Observable, skip } from "rxjs";
+import { combineLatest, first, Observable, skip, startWith } from "rxjs";
 import Enrollment from "src/app/core/models/Enrollment";
+import Formation from "src/app/core/models/Formation";
 import Status from "src/app/core/models/Status";
 import EnrollmentStoreService from "src/app/core/services/store/enrollment-store.service";
+import FormationStoreService from "src/app/core/services/store/formation-store.service";
 import StatusStoreService from "src/app/core/services/store/status-store.service";
 import { ApiError } from "src/app/core/types/api/api-error";
+import { EnrollmentFilters } from "src/app/core/types/api/enrollments/enrollment-filters";
+import { GetAllEnrollmentsParams } from "src/app/core/types/api/enrollments/get-all-enrollments-params";
 import { UpdateEnrollmentBody } from "src/app/core/types/api/enrollments/update-enrollment-body";
 import { UserCardComponent } from "src/app/shared/components/user-card/user-card.component";
 
@@ -57,7 +61,11 @@ export class EnrollmentsAdminPage implements OnInit
 
   // Data properties
   protected statuses!: Observable<Status[]|null>;
+  protected formations!: Observable<Formation[]|null>;
   protected enrollments!: Observable<Enrollment[]|null>;
+
+  // Refresh related properties
+  protected enrollmentFilters: EnrollmentFilters = {};
 
   // Table properties
   protected tableColumns = ['formation', 'status', 'action'];
@@ -75,6 +83,10 @@ export class EnrollmentsAdminPage implements OnInit
     message: this.updateMessageField,
   });
 
+  // Filtering properties
+  protected statusFilter = new FormControl<Status|null>(null);
+  protected formationFilter = new FormControl<Formation|null>(null);
+
   /************************************************************/
   //
   // Constructor
@@ -84,6 +96,7 @@ export class EnrollmentsAdminPage implements OnInit
   constructor(
     protected enrollmentStoreService: EnrollmentStoreService,
     protected statusStoreService: StatusStoreService,
+    protected formationStoreService: FormationStoreService,
     protected snackBar: MatSnackBar,
   ) {
     //
@@ -98,13 +111,33 @@ export class EnrollmentsAdminPage implements OnInit
   public ngOnInit(): void {
     // Create references to the stores observables.
     this.statuses = this.statusStoreService.statuses$;
+    this.formations = this.formationStoreService.formations$;
     this.enrollments = this.enrollmentStoreService.enrollments$;
 
     // Refresh data, if necessary.
-    this.enrollmentStoreService.refreshEnrollments();
+    this.refreshEnrollments();
 
     if (!this.statusStoreService.statuses)
       this.statusStoreService.refreshStatuses();
+
+    if (!this.formationStoreService.formations)
+      this.formationStoreService.refreshFormations();
+
+    // Listen to filter changes and refresh the page
+    combineLatest([
+      this.statusFilter.valueChanges.pipe(startWith(null)),
+      this.formationFilter.valueChanges.pipe(startWith(null))
+    ]).subscribe(([statusFilter, formationFilter]: [statusFilter: Status | null, formationFilter: Formation | null]) => {
+      // refresh the filter property
+      this.enrollmentFilters = {};
+      if (statusFilter)
+        this.enrollmentFilters.statusId = statusFilter.id;
+      if (formationFilter)
+        this.enrollmentFilters.formationId = formationFilter.id;
+
+      // refresh the enrollments.
+      this.refreshEnrollments();
+    });
   }
 
   /************************************************************/
@@ -172,6 +205,22 @@ export class EnrollmentsAdminPage implements OnInit
   protected resetUpdateFormFields() : void
   {
     this.updateForm.reset();
+  }
+
+  /**
+   * Refresh the enrollments using the store and the generated options
+   * Handles : filters
+   *
+   * @returns void
+   */
+  protected refreshEnrollments(): void
+  {
+    const options: GetAllEnrollmentsParams = {};
+
+    if (Object.keys(this.enrollmentFilters).length)
+      options.filters = this.enrollmentFilters;
+
+    this.enrollmentStoreService.refreshEnrollments(options);
   }
 
 }
