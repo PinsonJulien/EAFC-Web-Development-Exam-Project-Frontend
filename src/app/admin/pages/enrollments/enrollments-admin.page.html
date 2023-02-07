@@ -1,7 +1,7 @@
 <ng-container
   *ngIf="enrollments | async as enrollments"
 >
-
+  <!-- Filters row -->
   <div id="filter-row">
     <span>
       Filters :
@@ -46,6 +46,30 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
+
+  <!-- Export row, for admins -->
+  <div
+    id="export-row"
+    *ngIf="user && user.isAdministrator()"
+  >
+    <span> Export: </span>
+
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="export('csv')"
+    >
+      CSV
+    </button>
+
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="export('json')"
+    >
+      JSON
+    </button>
   </div>
 
   <table

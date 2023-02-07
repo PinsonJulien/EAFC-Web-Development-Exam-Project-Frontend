@@ -65,7 +65,12 @@ export class ApiService
    * @param body Object
    * @returns Observable<T>
    */
-  protected request<T extends (object|object[]|void)>(action: RequestAction, path: string|number, parameters: RequestParameters = {}, body: Object = {}): Observable<T>
+  protected request<T extends (object|object[]|void)>(
+    action: RequestAction,
+    path: string|number,
+    parameters: RequestParameters = {},
+    body: Object = {}
+  ): Observable<T>
   {
     const url = `${this.apiURL}/${this.apiRoute}/${path}`;
 
@@ -96,4 +101,28 @@ export class ApiService
         throw new Error(`Invalid HTTP action : ${action}`);
     }
   }
+
+  /**
+   * Call the given path on GET request expecting a response type of "text"
+   *
+   * @param path string|number
+   * @param parameters RequestParameters
+   * @returns Observable<any>
+   */
+  protected exportRequest(
+    path: string|number,
+    parameters: RequestParameters = {},
+  ): Observable<any>
+  {
+    const url = `${this.apiURL}/${this.apiRoute}/${path}`;
+
+    const params = new HttpParams({ fromObject: parameters });
+
+    return this.http.get(url, {
+      ...this.httpOptions,
+      params: params,
+      responseType: 'text'
+    });
+  }
+
 }

@@ -3,8 +3,10 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import Enrollment from "../../models/Enrollment";
 import { CreateEnrollmentBody } from "../../types/api/enrollments/create-enrollment-body";
+import { ExportEnrollmentsParams } from "../../types/api/enrollments/export-enrollments-params";
 import { GetAllEnrollmentsParams } from "../../types/api/enrollments/get-all-enrollments-params";
 import { UpdateEnrollmentBody } from "../../types/api/enrollments/update-enrollment-body";
+import { ExportExtension } from "../../types/api/export-extention";
 import EnrollmentApiService from "../api/enrollment-api.service";
 import StoreService from "./store.service";
 
@@ -217,4 +219,35 @@ export default class EnrollmentStoreService extends StoreService
     });
   }
 
+  /**
+   * Export all enrollments using parameters, automatically triggers the download.
+   * Uses the EnrollmentApiService to export.
+   *
+   * @param extension ExportExtension
+   * @param options ExportEnrollmentsParams
+   */
+  public export(extension: ExportExtension, options: ExportEnrollmentsParams): void
+  {
+    this.enrollmentApiService.export(extension, options).subscribe(
+      {
+        next: (data:any) => {
+          // On success, trigger the file download.
+          const blob = new Blob([data], { type: 'text/'+extension});
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = 'enrollments.'+extension;
+          document.body.appendChild(a);
+          a.click();
+          URL.revokeObjectURL(url);
+
+          this.error = null;
+        },
+        error: (error: HttpErrorResponse) => {
+          this.error = error.error;
+        }
+      }
+    );
+  }
 }

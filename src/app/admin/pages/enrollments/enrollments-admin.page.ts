@@ -13,13 +13,17 @@ import { combineLatest, first, Observable, skip, startWith } from "rxjs";
 import Enrollment from "src/app/core/models/Enrollment";
 import Formation from "src/app/core/models/Formation";
 import Status from "src/app/core/models/Status";
+import User from "src/app/core/models/User";
+import AuthStoreService from "src/app/core/services/store/auth-store.service";
 import EnrollmentStoreService from "src/app/core/services/store/enrollment-store.service";
 import FormationStoreService from "src/app/core/services/store/formation-store.service";
 import StatusStoreService from "src/app/core/services/store/status-store.service";
 import { ApiError } from "src/app/core/types/api/api-error";
 import { EnrollmentFilters } from "src/app/core/types/api/enrollments/enrollment-filters";
+import { ExportEnrollmentsParams } from "src/app/core/types/api/enrollments/export-enrollments-params";
 import { GetAllEnrollmentsParams } from "src/app/core/types/api/enrollments/get-all-enrollments-params";
 import { UpdateEnrollmentBody } from "src/app/core/types/api/enrollments/update-enrollment-body";
+import { ExportExtension } from "src/app/core/types/api/export-extention";
 import { UserCardComponent } from "src/app/shared/components/user-card/user-card.component";
 
 @Component({
@@ -60,6 +64,7 @@ export class EnrollmentsAdminPage implements OnInit
   /************************************************************/
 
   // Data properties
+  protected user !: User|null;
   protected statuses!: Observable<Status[]|null>;
   protected formations!: Observable<Formation[]|null>;
   protected enrollments!: Observable<Enrollment[]|null>;
@@ -94,6 +99,7 @@ export class EnrollmentsAdminPage implements OnInit
   /************************************************************/
 
   constructor(
+    protected authStoreService: AuthStoreService,
     protected enrollmentStoreService: EnrollmentStoreService,
     protected statusStoreService: StatusStoreService,
     protected formationStoreService: FormationStoreService,
@@ -109,6 +115,7 @@ export class EnrollmentsAdminPage implements OnInit
   /************************************************************/
 
   public ngOnInit(): void {
+    this.user = this.authStoreService.user;
     // Create references to the stores observables.
     this.statuses = this.statusStoreService.statuses$;
     this.formations = this.formationStoreService.formations$;
@@ -221,6 +228,23 @@ export class EnrollmentsAdminPage implements OnInit
       options.filters = this.enrollmentFilters;
 
     this.enrollmentStoreService.refreshEnrollments(options);
+  }
+
+  /**
+   * Triggers a request to export the data
+   * Handles: filters
+   *
+   * @param extension ExportExtension
+   * @retuns void
+   */
+  protected export(extension: ExportExtension): void
+  {
+    const options: ExportEnrollmentsParams = {};
+
+    if (Object.keys(this.enrollmentFilters).length)
+      options.filters = this.enrollmentFilters;
+
+    this.enrollmentStoreService.export(extension, options);
   }
 
 }

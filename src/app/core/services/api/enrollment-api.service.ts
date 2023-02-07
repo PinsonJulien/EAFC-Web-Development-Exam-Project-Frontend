@@ -2,8 +2,10 @@ import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import Enrollment from "../../models/Enrollment";
 import { CreateEnrollmentBody } from "../../types/api/enrollments/create-enrollment-body";
+import { ExportEnrollmentsParams } from "../../types/api/enrollments/export-enrollments-params";
 import { GetAllEnrollmentsParams } from "../../types/api/enrollments/get-all-enrollments-params";
 import { UpdateEnrollmentBody } from "../../types/api/enrollments/update-enrollment-body";
+import { ExportExtension } from "../../types/api/export-extention";
 import { RequestAction } from "../../types/requests/request-action.enum";
 import { ApiService } from "./api.service";
 
@@ -99,6 +101,37 @@ export default class EnrollmentApiService extends ApiService
   public delete(id: number): Observable<void>
   {
     return this.request<void>(RequestAction.DELETE, id);
+  }
+
+  /**
+   * Export all enrollments and stream them as Observable.
+   * On success the data is mapped to an array of Enrollment.
+   * Use the given params to prepare a specific request.
+   *
+   * @param extension ExportExtension
+   * @param params ExportEnrollmentsParams
+   * @returns Observable<Enrollment[]>
+   */
+  public export(extension: ExportExtension, params: ExportEnrollmentsParams = {}): Observable<any>
+  {
+    const parameters: any = {
+      extension,
+    };
+
+    // Prepare the filter parameters
+    if (params) {
+      const filters = params.filters;
+      if (filters) {
+        if (filters.formationId)
+          parameters['formationId[eq]'] = filters.formationId;
+        if (filters.statusId)
+          parameters['statusId[eq]'] = filters.statusId;
+        if (filters.userId)
+          parameters['userId[eq]'] = filters.userId;
+      }
+    }
+
+    return this.exportRequest('export', parameters);
   }
 
 }
