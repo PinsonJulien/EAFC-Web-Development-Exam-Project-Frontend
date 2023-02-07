@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import Enrollment from "../../models/Enrollment";
 import { CreateEnrollmentBody } from "../../types/api/enrollments/create-enrollment-body";
+import { UpdateEnrollmentBody } from "../../types/api/enrollments/update-enrollment-body";
 import { RequestAction } from "../../types/requests/request-action.enum";
 import { ApiService } from "./api.service";
 
@@ -51,6 +52,23 @@ export default class EnrollmentApiService extends ApiService
         return new Enrollment(response.data);
       })
     )
+  }
+
+  /**
+   * Update a given enrollment and stream it as Observable.
+   * On success the data is mapped to an instance of Enrollment.
+   *
+   * @param id number
+   * @param body UpdateEnrollmentBody
+   * @returns Observable<Enrollment>
+   */
+  public update(id: number, body: UpdateEnrollmentBody): Observable<Enrollment>
+  {
+    return this.request<Enrollment>(RequestAction.PATCH, id, {}, body).pipe(
+      map((response: any) => {
+        return new Enrollment(response.data);
+      })
+    );
   }
 
   /**

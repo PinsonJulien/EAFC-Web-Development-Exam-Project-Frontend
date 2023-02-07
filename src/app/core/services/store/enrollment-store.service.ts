@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import Enrollment from "../../models/Enrollment";
 import { CreateEnrollmentBody } from "../../types/api/enrollments/create-enrollment-body";
+import { UpdateEnrollmentBody } from "../../types/api/enrollments/update-enrollment-body";
 import EnrollmentApiService from "../api/enrollment-api.service";
 import StoreService from "./store.service";
 
@@ -20,6 +21,9 @@ export default class EnrollmentStoreService extends StoreService
 
   protected _createdEnrollment = new BehaviorSubject<Enrollment | null>(null);
   public createdEnrollment$ = this._createdEnrollment.asObservable();
+
+  protected _updatedEnrollment = new BehaviorSubject<Enrollment | null>(null);
+  public updatedEnrollment$ = this._updatedEnrollment.asObservable();
 
   protected _deletedEnrollment = new BehaviorSubject<boolean>(false);
   public deletedEnrollment$ = this._deletedEnrollment.asObservable();
@@ -85,6 +89,27 @@ export default class EnrollmentStoreService extends StoreService
   }
 
   /**
+   * Get the current updatedEnrollment from the behavior subject.
+   *
+   * @returns Enrollment | null
+   */
+  public get updatedEnrollment(): Enrollment| null
+  {
+    return this._updatedEnrollment.getValue();
+  }
+
+  /**
+  * Set the value of the updatedEnrollment behavior subject.
+  *
+  * @param updatedEnrollment Enrollment | null
+  * @returns void
+  */
+  protected set updatedEnrollment(updatedEnrollment: Enrollment | null)
+  {
+    this._updatedEnrollment.next(updatedEnrollment);
+  }
+
+  /**
    * Get the current deletedEnrollment from the behavior subject.
    *
    * @returns boolean
@@ -142,6 +167,26 @@ export default class EnrollmentStoreService extends StoreService
     this.enrollmentApiService.create(body).subscribe({
       next: (enrollment: Enrollment) => {
         this.createdEnrollment = enrollment;
+        this.error = null;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.error = error.error;
+      }
+    });
+  }
+
+  /**
+   * Update a given enrollment using the Enrollment api
+   * Streams the updated enrollment on success, or the error received.
+   *
+   * @param id number
+   * @param body UpdateEnrollmentBody
+   */
+  public update(id: number, body: UpdateEnrollmentBody): void
+  {
+    this.enrollmentApiService.update(id, body).subscribe({
+      next: (enrollment: Enrollment) => {
+        this.updatedEnrollment = enrollment;
         this.error = null;
       },
       error: (error: HttpErrorResponse) => {

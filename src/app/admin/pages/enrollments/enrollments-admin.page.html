@@ -56,6 +56,49 @@
             [user]="enrollment.user"
           >
           </user-card>
+
+          <form
+            *ngIf="enrollment.status.isPending()"
+            [formGroup]="updateForm"
+            (ngSubmit)="onUpdateSubmit()"
+          >
+            <mat-form-field
+              *ngIf="statuses | async as statuses"
+            >
+              <mat-label>
+                Status
+              </mat-label>
+              <mat-select
+                [formControl]="updateStatusField"
+              >
+                <mat-option
+                  *ngFor="let status of statuses"
+                  [value] = "status"
+                >
+                  {{ status.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Message</mat-label>
+              <textarea
+                [formControl]="updateMessageField"
+                matInput
+                placeholder="Ex. You don't have the prerequisite for...">
+              </textarea>
+            </mat-form-field>
+
+            <button
+              type="submit"
+              mat-raised-button
+              color="primary"
+              [disabled]="!updateForm.valid"
+            >
+              Update
+            </button>
+          </form>
+
         </div>
       </td>
     </ng-container>
