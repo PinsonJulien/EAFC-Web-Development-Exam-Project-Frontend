@@ -10,6 +10,7 @@ import { ApiError } from "src/app/core/types/api/api-error";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatListModule } from "@angular/material/list";
+import { first, skip } from "rxjs";
 
 @Component({
   standalone: true,
@@ -91,13 +92,6 @@ export class AppLayout implements OnInit
       this.user = user;
     });
 
-    // Listen to user store errors.
-    this.authStoreService.error$.subscribe((error: ApiError | null) => {
-      if (!error) return;
-
-      this.snackBar.open(error.message, 'close');
-    });
-
     // Listen to router navigation changes.
     this.isAdminRoute = this.router.url.startsWith('/admin');
 
@@ -125,6 +119,15 @@ export class AppLayout implements OnInit
   public logout(): void
   {
     this.authStoreService.logout();
+
+    // Listen to next user store error
+    this.authStoreService.error$
+    .pipe(skip(1), first())
+    .subscribe((error: ApiError | null) => {
+      if (!error) return;
+
+      this.snackBar.open(error.message, 'close');
+    });
   }
 
   /**
