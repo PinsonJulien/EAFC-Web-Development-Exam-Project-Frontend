@@ -1,36 +1,62 @@
-# School Website Frontend Angular
+# (ARCHIVED) School Website Frontend Angular
 
-# WORK IN PROGRESS
+## Archive note
+This repository will be archived as of **08/02/2022 (D/M/Y), 9PM (UTC+1 Brussels)** for school access.
+You can find the forked repository (here)[  WRITE URL ]
 
-## System requirements
-- NodeJS v16.13.1
+## Context
+This repository is part of the web development course of my bachelor degree in Business Computing, 2nd year.
+You can consult the *scope statement* (in French) in the `scope.pdf` file at root.
+
+I chose to use **Angular 15** for my frontend.
+This frontend should match the same URL set in the backend, as it relies on CSRF protection by cookies.
+
+## Minimal requirements
+- [NodeJS v16.13.1](https://nodejs.org/en/download/)
+- NPM v8.3.0 (included with NodeJS)
+- Backend from this [repository](https://github.com/PinsonJulien/school-website-backend-laravel)
+- [Angular CLI v15.1.4](https://angular.io/guide/setup-local#install-the-angular-cli)
+
+## Initial setup 
+- If it's not done, install the Angular CLI : `npm install -g @angular/cli`
+- run `npm install`
+- In `src/environments/enronment.ts`, make sure the `baseUrl` matches the backend URL, including the port.
 
 ## Development server
 Run `ng serve` and access the application at `http://127.0.0.1:4200/`.
 
-## Build
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Contribution tools
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Useful commands
+- Build : `ng build`
+- Unit test (Karma): `ng test`
+- E2E test : `ng e2e`
 
 
 
-## Features to implement
-- if any request times out the token; delete from the cookies, and redirect to /login. (disconnect method in auth service) (https://angular.io/guide/router) (https://angular.io/guide/http#intercepting-requests-and-responses)
+# WIP CURRENTLY WRITING
 
+
+
+
+
+### Project evolutions
+
+### Ideas
 - Accessibility with theme color pickers.
-
 - Keep the favorite language (or the one selected before login / register) in state, use it to fill the favorite language field default value on registration.
 
-## Todo
-- Must use the snackbar for every failed/successful requests.
+### Possible improvements / todo
 
+- AppComponent
+  - Should handle the session expiration by listening to every store errors, will redirecto to /login
+  - 
+
+
+
+### Backend features that aren't implemented 
+
+## Todo
 - Register form will be in a linear stepper https://material.angular.io/components/stepper/overview
 - Register : Mark invalid the email on 422 error
   - Store every failed attempt in a Set to ensure uniqueness. (trigger validation after insert)
@@ -56,7 +82,6 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 - login/register If role is secretary, go to /admin instead of /courses
 
 ## Planned refactors :
-
 ### Login / register
 - should have a function called "setupFormErrors()"
 
@@ -77,3 +102,8 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
     `
 
 - Register should use a CountryStore instead of the service. Only one fetch will be necessary.
+
+
+## Urgent todo :
+- Banned page (fast) + fix the routes in backend to allow disconnect.
+- Fix user storage to be on ID.
