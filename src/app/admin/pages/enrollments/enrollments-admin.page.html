@@ -52,7 +52,10 @@
           class="expanded-content"
           [@detailExpand]="enrollment == expandedElement ? 'expanded' : 'collapsed'"
         >
-          CONTENT
+          <user-card
+            [user]="enrollment.user"
+          >
+          </user-card>
         </div>
       </td>
     </ng-container>

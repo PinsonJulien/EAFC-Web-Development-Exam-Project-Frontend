@@ -10,6 +10,7 @@ import Enrollment from "src/app/core/models/Enrollment";
 import Status from "src/app/core/models/Status";
 import EnrollmentStoreService from "src/app/core/services/store/enrollment-store.service";
 import StatusStoreService from "src/app/core/services/store/status-store.service";
+import { UserCardComponent } from "src/app/shared/components/user-card/user-card.component";
 
 @Component({
   standalone: true,
@@ -23,6 +24,7 @@ import StatusStoreService from "src/app/core/services/store/status-store.service
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    UserCardComponent,
   ],
   providers: [
     //

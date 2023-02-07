@@ -1,0 +1,91 @@
+<mat-card>
+  <mat-card-header>
+    <div class="container">
+      <div class="left">
+        <img [src]="user.picture" class="avatar">
+      </div>
+
+      <div class="right">
+        <span class="full-name">
+          {{ user.personal.identity.lastname + ' ' + user.personal.identity.firstname }}
+        </span>
+
+        <span
+          *ngIf="user.account"
+        >
+          {{ 'Last login: ' + user.account.lastLogin.toLocaleDateString() }}
+        </span>
+      </div>
+    </div>
+
+
+  </mat-card-header>
+
+  <mat-card-content
+    *ngIf="user.personal.identity && user.account && user.personal.contact"
+  >
+    <mat-tab-group>
+      <mat-tab label="Identity">
+        <div class="container">
+          <div>
+            <span>Lastname</span>
+            <span>{{user.personal.identity.lastname}}</span>
+          </div>
+          <div>
+            <span>Firstname</span>
+            <span>{{user.personal.identity.firstname}}</span>
+          </div>
+          <div>
+            <span>Nationality</span>
+            <span>{{user.personal.identity.nationality!.name}}</span>
+          </div>
+          <div>
+            <span>Birthdate</span>
+            <span>{{user.personal.identity.birthdate!.toLocaleDateString()}}</span>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Contact">
+        <div class="container">
+          <div>
+            <span>Phone</span>
+            <span>{{user.personal.contact.phone}}</span>
+          </div>
+          <div>
+            <span>Complete address</span>
+            <span>
+              {{
+                user.personal.contact.address + '\n' +
+                user.personal.contact.postalCode + '\n' +
+                user.personal.contact.country.name
+              }}
+            </span>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Account">
+        <div class="container">
+          <div>
+            <span>Username</span>
+            <span>{{user.account.username}}</span>
+          </div>
+          <div>
+            <span>Email</span>
+            <span>{{user.account.email}}</span>
+          </div>
+          <div>
+            <span>Site Role</span>
+            <span>{{user.account.siteRole.name}}</span>
+          </div>
+          <div>
+            <span>Last Login</span>
+            <span>{{user.account.lastLogin.toLocaleDateString()}}</span>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+
+</mat-card>

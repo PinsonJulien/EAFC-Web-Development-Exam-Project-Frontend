@@ -1,0 +1,54 @@
+:host {}
+
+mat-card-header {
+  .container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    gap: 2em;
+
+    > div:first-child {
+      > img {
+        width: 100%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+
+    > div:last-child {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      justify-content: center;
+    }
+  }
+}
+
+mat-tab-group {
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3em;
+
+      span {
+        white-space: pre-line;
+      }
+
+      :first-child {
+        font-size: 0.8em;
+      }
+
+      :last-child {
+        font-size: 1.1em;
+      }
+    }
+  }
+
+}
