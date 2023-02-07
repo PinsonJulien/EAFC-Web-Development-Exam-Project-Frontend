@@ -17,3 +17,18 @@ form {
   gap: 1em;
   justify-content: center;
 }
+
+.status-message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  justify-content: center;
+
+  :first-child {
+    font-size: 1.4em;
+  }
+
+  :last-child {
+    font-size: 1.2em;
+  }
+}
