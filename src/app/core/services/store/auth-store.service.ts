@@ -40,7 +40,7 @@ export default class AuthStoreService extends StoreService
     // On instantiation, the store service will retrieve the locally stored user.
     const userId = this.retrieveUserFromLocalStorage();
 
-    // If the store is empty, redirects to login.
+    // If the local storage is empty, redirects to login.
     if (!userId) {
       this.router.navigate(['login']);
       return;
@@ -56,7 +56,10 @@ export default class AuthStoreService extends StoreService
       if (!user)
         this.router.navigate(['login']);
 
-      this.router.navigate(['home']);
+      // On success, redirect to the last saved route.
+      this.router.navigate([
+        this.localStorageService.getItem('previousRoute')
+      ]);
     });
   }
 
