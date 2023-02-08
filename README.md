@@ -88,8 +88,4 @@ Run `ng serve --host 127.0.0.1 --port 5000 --open` and access the application at
   - Always show a snackBar on requests where the user interacts (post, patch, delete)
   - On login, if  the role is secretary, redirect to */admin* instead of */home*
 
-
 ### Backend features that aren't implemented 
-
-
-
