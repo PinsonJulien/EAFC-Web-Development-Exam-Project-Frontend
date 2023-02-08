@@ -27,6 +27,15 @@ export class BannedGuard implements CanActivate
   //
   /**************************************************/
 
+  /**
+  * Protect routes by checking if the user has the banned site role.
+  * If it does, the route is redirected to /banned
+  * If it doesn't or, he isn't logged in, pass the guard.
+  *
+  * @param route ActivatedRouteSnapshot
+  * @param state RouterStateSnapshot
+  * @returns Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+  */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
