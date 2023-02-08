@@ -14,22 +14,27 @@ I chose to use **Angular 15** for my frontend.
 This frontend should match the same URL set in the backend, as it relies on CSRF protection by cookies.
 
 ## Minimal requirements
+
 - [NodeJS v16.13.1](https://nodejs.org/en/download/)
 - NPM v8.3.0 (included with NodeJS)
 - Backend from this [repository](https://github.com/PinsonJulien/school-website-backend-laravel)
 - [Angular CLI v15.1.4](https://angular.io/guide/setup-local#install-the-angular-cli)
 
 ## Initial setup 
+
+- Clone this repository
 - If it's not done already, install the Angular CLI : `npm install -g @angular/cli`
 - run `npm install`
 - In `src/environments/enronment.ts`, make sure the `baseUrl` matches `127.0.0.1:8000/`.
 
 ## Development server
+
 Run `ng serve --host 127.0.0.1 --port 5000 --open` and access the application at `http://127.0.0.1:5000/`.
 
 ## Contribution tools
 
 ### Useful commands
+
 - Build : `ng build`
 - Unit test (Karma): `ng test`
 - E2E test : `ng e2e`
