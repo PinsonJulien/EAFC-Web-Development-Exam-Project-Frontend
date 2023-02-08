@@ -1,0 +1,31 @@
+:host {
+  min-width: 100%;
+  min-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #FFBA6B;
+
+  > .container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3em;
+
+    > span {
+      font-size: 2em;
+      text-align: center;
+      color: #F3EAED;
+    }
+
+    > button {
+
+    }
+
+  }
+
+}

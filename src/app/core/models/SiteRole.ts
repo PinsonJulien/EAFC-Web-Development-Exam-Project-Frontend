@@ -60,4 +60,15 @@ export default class SiteRole extends Model
   {
     return this.id === SiteRole.ADMINISTRATOR;
   }
+
+  /**
+   * Checks if the site role is banned
+   *
+   * @returns boolean
+   */
+  public isBanned(): boolean
+  {
+    return this.id === SiteRole.BANNED;
+  }
+
 }

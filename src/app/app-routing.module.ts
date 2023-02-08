@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth/auth.guard';
+import { BannedGuard } from './core/guards/banned/banned.guard';
 import { SiteRoleGuard } from './core/guards/site-role/site-role.guard';
 import SiteRole from './core/models/SiteRole';
 
@@ -17,7 +18,10 @@ const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./shared/layouts/app/app.layout').then((m) => m.AppLayout),
-    canActivate: [AuthGuard],
+    canActivate: [
+      AuthGuard,
+      BannedGuard,
+    ],
     data: {
       authentified: true,
       redirect: 'login',
@@ -44,7 +48,10 @@ const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./shared/layouts/auth/auth.layout').then((m) => m.AuthLayout),
-    canActivate: [AuthGuard],
+    canActivate: [
+      AuthGuard,
+      BannedGuard
+    ],
     data: {
       authentified: false,
       redirect: 'home',
@@ -61,6 +68,17 @@ const routes: Routes = [
         loadChildren: () => import('./register/routes').then((m) => m.routes),
       }
     ]
+  },
+  {
+    path: 'banned',
+    loadComponent: () => import('./banned/banned.page').then((m) => m.BannedPage),
+    canActivate: [
+      SiteRoleGuard,
+    ],
+    data: {
+      acceptedRoles: [SiteRole.BANNED],
+      redirect: 'home'
+    },
   },
 ];
 

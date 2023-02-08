@@ -147,4 +147,17 @@ export default class User extends Model {
   {
     return (this.isSecretary() || this.isAdministrator());
   }
+
+  /**
+   * Checks if the user site role is Banned.
+   *
+   * @returns boolean
+   */
+  public isBanned(): boolean
+  {
+    if (!this.account) return false;
+
+    return this.account.siteRole.isBanned();
+  }
+
 }
