@@ -21,7 +21,7 @@ export default class User extends Model {
     email: string;
     emailVerifiedAt: string;
     siteRole: SiteRole,
-    lastLogin: Date;
+    lastLogin: Date| null;
   };
 
   public personal: {
@@ -63,7 +63,7 @@ export default class User extends Model {
         email: account.email,
         emailVerifiedAt: account.emailVerifiedAt,
         siteRole: new SiteRole(account.siteRole),
-        lastLogin: new Date(account.lastLogin),
+        lastLogin: (account.lastLogin) ? new Date(account.lastLogin) : null,
       };
 
     const identity = object.personal.identity;

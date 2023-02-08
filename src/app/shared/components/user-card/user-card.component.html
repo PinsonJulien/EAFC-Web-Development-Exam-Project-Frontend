@@ -2,7 +2,16 @@
   <mat-card-header>
     <div class="container">
       <div class="left">
-        <img [src]="user.picture" class="avatar">
+        <img
+          *ngIf="!user.picture"
+          [src]="user.picture"
+          class="avatar"
+        >
+        <div class="avatar">
+          <mat-icon>
+            person
+          </mat-icon>
+        </div>
       </div>
 
       <div class="right">
@@ -11,7 +20,7 @@
         </span>
 
         <span
-          *ngIf="user.account"
+          *ngIf="user.account && user.account.lastLogin"
         >
           {{ 'Last login: ' + user.account.lastLogin.toLocaleDateString() }}
         </span>
@@ -79,9 +88,11 @@
             <span>Site Role</span>
             <span>{{user.account.siteRole.name}}</span>
           </div>
-          <div>
+          <div
+            *ngIf="user.account.lastLogin"
+          >
             <span>Last Login</span>
-            <span>{{user.account.lastLogin.toLocaleDateString()}}</span>
+            <span>{{ user.account.lastLogin.toLocaleDateString()}}</span>
           </div>
         </div>
       </mat-tab>

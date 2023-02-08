@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { MatCardModule } from "@angular/material/card";
+import { MatIconModule } from "@angular/material/icon";
 import { MatTabsModule } from "@angular/material/tabs";
 import User from "src/app/core/models/User";
 
@@ -17,6 +18,7 @@ import User from "src/app/core/models/User";
     CommonModule,
     MatTabsModule,
     MatCardModule,
+    MatIconModule
   ],
   providers : [
     //

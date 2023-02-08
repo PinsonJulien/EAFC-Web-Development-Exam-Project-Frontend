@@ -93,11 +93,6 @@ Run `ng serve` and access the application at `http://127.0.0.1:4200/`.
 
 ## Urgent todo :
 
-- Fix missing image when the user doesn't have one / ui and cards.
-- Last login check if null.
-
-
-
 - Missing filter when not administrator in enrollments/history.
     - Apparently on reload
 

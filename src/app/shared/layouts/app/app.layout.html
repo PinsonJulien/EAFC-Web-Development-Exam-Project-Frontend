@@ -27,17 +27,22 @@
 
   <button
     mat-icon-button
-    color="primary"
+    color="white"
     (click)="rightSideNav.toggle()"
   >
     <mat-icon>
       <img
-        [src]="(user) ? user.picture : ''"
+        *ngIf="user && user.picture; else elseBlock"
+        [src]="user.picture"
         alt="user avatar"
         class="avatar"
       />
+      <ng-template
+        #elseBlock
+      >
+        person
+      </ng-template>
     </mat-icon>
-
   </button>
 
 </mat-toolbar>
