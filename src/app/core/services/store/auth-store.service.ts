@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { Router } from "@angular/router";
+import { BehaviorSubject, first, skip } from "rxjs";
 import User, { UserRelations } from "../../models/User";
+import { ApiError } from "../../types/api/api-error";
 import { LoginRequestBody } from "../../types/auth/login-request-body";
 import { RegisterRequestBody } from "../../types/auth/register-request-body";
 import AuthApiService from "../api/auth-api.service";
@@ -31,14 +33,31 @@ export default class AuthStoreService extends StoreService
     protected authApiService: AuthApiService,
     protected localStorageService: LocalStorageService,
     protected userApiService: UserApiService,
+    protected router: Router,
   ) {
     super();
 
     // On instantiation, the store service will retrieve the locally stored user.
-    this.user = this.retrieveUserFromLocalStorage();
+    const userId = this.retrieveUserFromLocalStorage();
 
-    // Refresh the user to get it's relational data.
-    this.refreshUser();
+    // If the store is empty, redirects to login.
+    if (!userId) {
+      this.router.navigate(['login']);
+      return;
+    }
+
+    // Refresh the user using the api service.
+    this.refreshUserById(userId);
+
+    // Listen to user to automatically redirect.
+    this.user$
+    .pipe(skip(1), first())
+    .subscribe((user : User|null) => {
+      if (!user)
+        this.router.navigate(['login']);
+
+      this.router.navigate(['home']);
+    });
   }
 
   /**************************************************/
@@ -151,7 +170,8 @@ export default class AuthStoreService extends StoreService
 
   /**
    * Refresh the current authenticated user and update it's behavior subject.
-   * Uses the UserApiService getById and asks for specific relations to be included.
+   * Call the refreshById method using the logged user id.
+   * This method role is to allow public usage of user refresh, without dealing with the user data.
    *
    * @returns void
    */
@@ -166,8 +186,18 @@ export default class AuthStoreService extends StoreService
       return;
     }
 
-    const id = this.user.id;
+    this.refreshUserById(this.user.id);
+  }
 
+  /**
+   * Refresh the data of the logged user and update it's behavior subject.
+   * Uses the UserApiService getById and asks for specific relations to be included.
+   *
+   * @param id number
+   * @returns void
+   */
+  protected refreshUserById(id: number): void
+  {
     // Include relations
     const relations: UserRelations[] = [
       'enrollments',
@@ -193,37 +223,35 @@ export default class AuthStoreService extends StoreService
   /**************************************************/
 
   /**
-   * Retrieve the user model that is stored in the local storage.
+   * Retrieve the user id that is stored in the local storage.
    *
-   * @returns User | null
+   * @returns number | null
    */
-  protected retrieveUserFromLocalStorage(): User | null
+  protected retrieveUserFromLocalStorage(): number | null
   {
-    const user = this.localStorageService.getItem('user');
+    const userId = this.localStorageService.getItem('userId');
 
-    return (user)
-      ? new User(user)
-      : null;
+    return userId ?? null;
   }
 
   /**
-   * Store the user model to the local storage for data persistance.
+   * Store the user id to the local storage for data persistance.
    *
    * @param user User
    * @returns void
    */
   protected storeUserInLocalStorage(user: User): void
   {
-    this.localStorageService.setItem('user', user);
+    this.localStorageService.setItem('userId', user.id);
   }
 
   /**
-   * Remove the user model from the local storage
+   * Remove the user id from the local storage
    *
    * @returns void
    */
   protected removeUserFromLocalStorage(): void
   {
-    this.localStorageService.removeItem('user');
+    this.localStorageService.removeItem('userId');
   }
 }

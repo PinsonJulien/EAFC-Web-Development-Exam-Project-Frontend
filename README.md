@@ -92,9 +92,6 @@ Run `ng serve` and access the application at `http://127.0.0.1:4200/`.
 ### Backend features that aren't implemented 
 
 ## Urgent todo :
-- Fix user storage to be on ID.
-
-- AuthStore should only store the user id in local storage and perform a getById on instantiation. This will ensure the right user is logged in and no personal data is locally stored. If the UserApiService got an authorization error, the store will trigger the logout().
 
 - Fix missing image when the user doesn't have one / ui and cards.
 - Last login check if null.
