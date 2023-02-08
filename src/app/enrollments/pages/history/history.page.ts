@@ -13,7 +13,6 @@ import StatusStoreService from "src/app/core/services/store/status-store.service
 import {MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from "@angular/material/button";
 
-
 @Component({
   standalone: true,
   selector: 'app-enrollments-history',

@@ -23,7 +23,7 @@ This frontend should match the same URL set in the backend, as it relies on CSRF
 - In `src/environments/enronment.ts`, make sure the `baseUrl` matches the backend URL, including the port.
 
 ## Development server
-Run `ng serve` and access the application at `http://127.0.0.1:4200/`.
+Run `ng serve --host 127.0.0.1 --port 5000 --open` and access the application at `http://127.0.0.1:5000/`.
 
 ## Contribution tools
 
@@ -43,9 +43,6 @@ Run `ng serve` and access the application at `http://127.0.0.1:4200/`.
 
 - Overall styling :
   - Customize the color scheme of Angular Material.
-
-- AppComponent
-  - Should handle the session expiration by listening to every store errors, will redirecto to /login
 
 - AuthLayout
   - Fix the styling.
@@ -79,6 +76,7 @@ Run `ng serve` and access the application at `http://127.0.0.1:4200/`.
 - Admin
   - Enrollments
     - Table sort by the header, triggers a change in array of sorts
+    - Table pagination using the backend route parameter.
 
 - AuthStoreService : 
   - Store the session expiration date and react to it for automatic disconnection ? Localstorage ?
@@ -91,10 +89,5 @@ Run `ng serve` and access the application at `http://127.0.0.1:4200/`.
 
 ### Backend features that aren't implemented 
 
-## Urgent todo :
-
-- Missing filter when not administrator in enrollments/history.
-    - Apparently on reload
 
 
-ng serve --host 127.0.0.1 --port 5000
