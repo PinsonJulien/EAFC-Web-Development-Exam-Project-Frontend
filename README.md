@@ -1,11 +1,13 @@
 # (ARCHIVED) EAFC Web Development Exam Project Frontend
 
 ## Archive note
+
 This repository will be archived as of **08/02/2022 (D/M/Y), 9PM (UTC+1 Brussels)** for school access.
 You can find the forked repository [here](https://github.com/PinsonJulien/EAFC-Web-Development-Exam-Project-Frontend)
 
 ## Context
-This repository is part of the web development course of my bachelor degree in Business Computing, 2nd year.
+
+This repository is related to my Web Development Exam from my bachelor degree in Business Computing, 2nd year.
 You can consult the *scope statement* (in French) in the `scope.pdf` file at root.
 
 I chose to use **Angular 15** for my frontend.
@@ -18,9 +20,9 @@ This frontend should match the same URL set in the backend, as it relies on CSRF
 - [Angular CLI v15.1.4](https://angular.io/guide/setup-local#install-the-angular-cli)
 
 ## Initial setup 
-- If it's not done, install the Angular CLI : `npm install -g @angular/cli`
+- If it's not done already, install the Angular CLI : `npm install -g @angular/cli`
 - run `npm install`
-- In `src/environments/enronment.ts`, make sure the `baseUrl` matches the backend URL, including the port.
+- In `src/environments/enronment.ts`, make sure the `baseUrl` matches `127.0.0.1:8000/`.
 
 ## Development server
 Run `ng serve --host 127.0.0.1 --port 5000 --open` and access the application at `http://127.0.0.1:5000/`.
