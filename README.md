@@ -1,13 +1,10 @@
-# (ARCHIVED) EAFC Web Development Exam Project Frontend
-
-## Archive note
-
-This repository will be archived as of **08/02/2022 (D/M/Y), 9PM (UTC+1 Brussels)** for school access.
-You can find the forked repository [here](https://github.com/PinsonJulien/EAFC-Web-Development-Exam-Project-Frontend)
+# EAFC Web Development Exam Project Frontend
 
 ## Context
 
 This repository is related to my Web Development Exam from my bachelor degree in Business Computing, 2nd year.
+The archived repository for the exam can be found [here](https://github.com/PinsonJulien/EAFC-Web-Development-Exam-Project-Frontend-Archive)
+
 You can consult the *scope statement* (in French) in the `scope.pdf` file at root.
 
 I chose to use **Angular 15** for my frontend.
